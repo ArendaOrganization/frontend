@@ -1,9 +1,10 @@
 import {useDispatch, useSelector} from "react-redux";
-import {logIn, updateEmailInput, updatePasswordInput} from "../../redux/mainReducer";
-
+import {login} from "../../../redux/reducers/authSlice";
+import {updateEmailInput, updatePasswordInput} from "../../../redux/reducers/authSlice";
 
 const Authentication = function () {
-    const initialData = useSelector(state => state.authReducer)
+    const authSlice = useSelector(state => state.auth);
+    const messageSlice = useSelector(state => state.authMessage)
     const dispatch = useDispatch();
 
     return (
@@ -12,7 +13,7 @@ const Authentication = function () {
             <input
                 type="text"
                 placeholder="email"
-                value={initialData.currentEmailInput}
+                value={authSlice.currentEmailInput}
                 onChange={(e) => {
                     dispatch(updateEmailInput(e.target.value))
                 }}
@@ -21,14 +22,17 @@ const Authentication = function () {
             <input
                 type="text"
                 placeholder="password"
-                value={initialData.currentPasswordInput}
+                value={authSlice.currentPasswordInput}
                 onChange={(e) => {
                     dispatch(updatePasswordInput(e.target.value))
                 }}
             />
             <p>testuser</p>
             <button onClick={() => {
-                dispatch(logIn())
+                dispatch(login({
+                    email:authSlice.currentEmailInput,
+                    password:authSlice.currentPasswordInput
+                }))
             }}>
                 Log
             </button>

@@ -1,13 +1,22 @@
-import Authentication from "./containers/Authentication/Authentication.jsx";
-import Registration from "./containers/Registration/Registration";
+import {useDispatch, useSelector} from "react-redux";
+import {BrowserRouter, Route, Routes} from "react-router-dom";
+import AuthReg from "./containers/AuthRegPage/AuthReg";
+import HomePage from "./containers/HomePage/HomePage";
+import ProtectedRoutes from "./ProtectedRoutes";
 
 function App() {
+    const initialData = useSelector(state => state.authReducer);
+    const dispatch = useDispatch();
+
     return (
-        <div>
-            <h1>Hello world!</h1>
-            <Authentication/>
-            <Registration/>
-        </div>
+        <BrowserRouter>
+            <Routes>
+                <Route path="/" element={<AuthReg/>}/>
+                <Route element={<ProtectedRoutes/>}>
+                    <Route path="/HomePage" element={<HomePage/>}/>
+                </Route>
+            </Routes>
+        </BrowserRouter>
     );
 }
 
