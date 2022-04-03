@@ -2,6 +2,7 @@ import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import basicData from "../initalState";
 import AuthService from "../../services/auth.service";
 import {setMessage} from "./messageAuthSlice";
+import {useNavigate} from "react-router";
 
 const user = JSON.parse(localStorage.getItem("user"));
 
@@ -74,7 +75,6 @@ const authSlice = createSlice({
         makeRegVisible(state) {
             state.isRegVisible = true;
             state.isLogVisible = false;
-            console.log(initialState);
         },
         makeLogVisible(state) {
             state.isRegVisible = false;
