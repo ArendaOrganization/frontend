@@ -2,9 +2,11 @@ import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import basicData from "../initalState";
 import AuthService from "../../services/auth.service";
 import {setMessage} from "./messageAuthSlice";
-import {useNavigate} from "react-router";
+import mapService from "../../services/map.service";
+import authService from "../../services/auth.service";
 
 const user = JSON.parse(localStorage.getItem("user"));
+const mapAll = JSON.parse(localStorage.getItem("mapAll"));
 
 export const register = createAsyncThunk(
     "auth/register",
@@ -16,10 +18,10 @@ export const register = createAsyncThunk(
         } catch (error) {
             const message =
                 (error.response &&
-                error.response.data &&
-                error.response.data.message) ||
-            error.message ||
-            error.toString();
+                    error.response.data &&
+                    error.response.data.message) ||
+                error.message ||
+                error.toString();
             thunkAPI.dispatch(setMessage(message));
             return thunkAPI.rejectWithValue();
         }
@@ -31,6 +33,8 @@ export const login = createAsyncThunk(
     async ({email, password}, thunkAPI) => {
         try {
             const data = await AuthService.login(email, password);
+            const mapData = await mapService.getMapData();
+            thunkAPI.dispatch(setMapData(mapData));
             return {user: data};
         } catch (error) {
             const message =
@@ -50,8 +54,8 @@ export const logout = createAsyncThunk("auth/logout", async () => {
 });
 
 const initialState = user
-    ? {isLoggedIn: true, user, ...basicData}
-    : {isLoggedIn: false, user: null, ...basicData};
+    ? {isLoggedIn: true, user, mapAll, ...basicData}
+    : {isLoggedIn: false, user: null, mapAll: null, ...basicData};
 
 const authSlice = createSlice({
     name: 'auth',
@@ -80,6 +84,9 @@ const authSlice = createSlice({
             state.isRegVisible = false;
             state.isLogVisible = true;
         },
+        setMapData(state,action) {
+            state.mapAll = action.payload;
+        }
     },
     extraReducers: {
         [register.fulfilled]: (state, action) => {
@@ -111,5 +118,6 @@ export const {
     updateRegPasswordChecker,
     makeRegVisible,
     makeLogVisible,
+    setMapData,
 } = authSlice.actions
 export default authSlice.reducer

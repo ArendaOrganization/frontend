@@ -3,17 +3,15 @@ import {makeLogVisible, makeRegVisible} from "../../redux/reducers/authSlice";
 import Authentication from "./Authentication/Authentication";
 import Registration from "./Registration/Registration";
 import {useLocation, useNavigate} from "react-router";
-import {useContext, useEffect} from "react";
+import {Link} from "react-router-dom";
+import authRegStyle from "./AuthReg.module.css";
+import {useEffect} from "react";
 
 const AuthReg = function () {
     const authSlice = useSelector(state => state.auth);
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const location = useLocation();
-
-    if (location.state?.from) {
-        navigate("HomePage");
-    }
 
     return (
         <div>
@@ -35,9 +33,9 @@ const AuthReg = function () {
                 {authSlice.isLoggedIn ? "true" : "false"}
             </p>
             <p>
-                <button onClick={() => navigate("HomePage")}>
-                    To HomePage
-                </button>
+                <Link to={"/HomePage"} className={authRegStyle.button}>
+                    ToHomePage
+                </Link>
             </p>
         </div>
     );

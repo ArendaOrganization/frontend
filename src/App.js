@@ -3,7 +3,7 @@ import {BrowserRouter, Route, Routes} from "react-router-dom";
 import AuthReg from "./containers/AuthRegPage/AuthReg";
 import HomePage from "./containers/HomePage/HomePage";
 import ProtectedRoutes from "./ProtectedRoutes";
-import {useNavigate} from "react-router";
+import MapPage from "./containers/MapPage/MapPage";
 
 function App() {
     const authSlice = useSelector(state => state.auth);
@@ -16,6 +16,7 @@ function App() {
                 <Route path="*" element={<h1>Wrong address!</h1>}/>
                 <Route element={<ProtectedRoutes/>}>
                     <Route path="/HomePage" element={<HomePage/>}/>
+                    <Route path="/MapPage" element={<MapPage/>}/>
                 </Route>
             </Routes>
         </BrowserRouter>

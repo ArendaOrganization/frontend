@@ -6,6 +6,7 @@ const initialState = {
     regPasswordChecker:"",
     isRegVisible: false,
     isLogVisible: false,
+    coords:[],
 };
 
 export default initialState;
