@@ -1,13 +1,13 @@
 import {useDispatch, useSelector} from "react-redux";
 import {Link} from "react-router-dom";
 import mapPageStyle from "./MapPage.module.css"
-import {Map, Placemark, YMaps} from "react-yandex-maps";
+import {Clusterer, Map, Placemark, YMaps} from "react-yandex-maps";
+import {getMapElemData} from "../../redux/reducers/authSlice";
 
 const MapPage = function () {
     const authSlice = useSelector(state => state.auth);
     const dispatch = useDispatch();
     const centerCoords = [authSlice.mapAll[0].latitude, authSlice.mapAll[0].longitude];
-
 
     return (
         <div>
@@ -29,19 +29,41 @@ const MapPage = function () {
                         width={1000}
                         height={600}
                     >
-                        {
-                            authSlice.mapAll.map(elem => {
-                                return <Placemark
-                                    id={elem.id}
-                                    geometry={[elem.latitude, elem.longitude]}
-                                    options={{preset: 'islands#redDotIcon'}}
-                                    key={elem.id}
-                                />
-                            })
-                        }
+                        <Clusterer
+                            options={{
+                                preset: 'islands#invertedVioletClusterIcons',
+                                groupByCoordinates: false,
+                            }}
+                        >
+                            {
+                                authSlice.mapAll.map(elem => {
+                                    return (
+                                        <Placemark
+                                            id={elem.id}
+                                            geometry={[elem.latitude, elem.longitude]}
+                                            options={{preset: 'islands#redCircleDotIcon'}}
+                                            key={elem.id}
+                                            onClick={() => dispatch(getMapElemData({id: elem.id}))}
+                                        />
+                                    )
+                                })
+                            }
+                        </Clusterer>
                     </Map>
                 </div>
             </YMaps>
+            <p>
+                {
+                    authSlice.mapElem ?
+                        <p>
+                            id:{authSlice.mapElem.id}<br/>
+                            address:{authSlice.mapElem.address}<br/>
+                            lat:{authSlice.mapElem.latitude}<br/>
+                            long:{authSlice.mapElem.longitude}<br/>
+                        </p>
+                        : null
+                }
+            </p>
         </div>
     );
 };

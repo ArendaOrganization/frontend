@@ -7,6 +7,7 @@ import authService from "../../services/auth.service";
 
 const user = JSON.parse(localStorage.getItem("user"));
 const mapAll = JSON.parse(localStorage.getItem("mapAll"));
+const mapElem = JSON.parse(localStorage.getItem("mapElem"));
 
 export const register = createAsyncThunk(
     "auth/register",
@@ -49,13 +50,33 @@ export const login = createAsyncThunk(
     }
 );
 
+export const getMapElemData = createAsyncThunk(
+    "auth/mapElem",
+    async ({id}, thunkAPI) => {
+        try {
+            const mapElemData = await mapService.getMapElemData(id);
+            thunkAPI.dispatch(setMapElemData(mapElemData));
+            return mapElemData;
+        } catch (error) {
+            const message =
+                (error.response &&
+                    error.response.data &&
+                    error.response.data.message) ||
+                error.message ||
+                error.toString();
+            thunkAPI.dispatch(setMessage(message));
+            return thunkAPI.rejectWithValue();
+        }
+    }
+);
+
 export const logout = createAsyncThunk("auth/logout", async () => {
     await AuthService.logout();
 });
 
 const initialState = user
-    ? {isLoggedIn: true, user, mapAll, ...basicData}
-    : {isLoggedIn: false, user: null, mapAll: null, ...basicData};
+    ? {isLoggedIn: true, user, mapAll, mapElem, ...basicData}
+    : {isLoggedIn: false, user: null, mapAll: null, mapElem: null, ...basicData};
 
 const authSlice = createSlice({
     name: 'auth',
@@ -84,9 +105,12 @@ const authSlice = createSlice({
             state.isRegVisible = false;
             state.isLogVisible = true;
         },
-        setMapData(state,action) {
+        setMapData(state, action) {
             state.mapAll = action.payload;
-        }
+        },
+        setMapElemData(state, action) {
+            state.mapElem = action.payload;
+        },
     },
     extraReducers: {
         [register.fulfilled]: (state, action) => {
@@ -119,5 +143,6 @@ export const {
     makeRegVisible,
     makeLogVisible,
     setMapData,
+    setMapElemData,
 } = authSlice.actions
 export default authSlice.reducer
