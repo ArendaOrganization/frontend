@@ -1,10 +1,10 @@
 import {useDispatch, useSelector} from "react-redux";
 import {Link} from "react-router-dom";
-import mapPageStyle from "./MapPage.module.css"
+import rentYourPageStyle from "./RentYourPage.module.css"
 import {Clusterer, Map, Placemark, YMaps} from "react-yandex-maps";
-import {getMapElemData, updateCurrentOnClickCoords} from "../../redux/reducers/authSlice";
+import {updateCurrentOnClickCoords} from "../../redux/reducers/authSlice";
 
-const MapPage = function () {
+const RentYourPage = function () {
     const authSlice = useSelector(state => state.auth);
     const dispatch = useDispatch();
     const centerCoords = [authSlice.mapAll[0].latitude, authSlice.mapAll[0].longitude];
@@ -12,16 +12,16 @@ const MapPage = function () {
     return (
         <div>
             <p>
-                <Link to={"/HomePage"} className={mapPageStyle.button}>
+                <Link to={"/HomePage"} className={rentYourPageStyle.button}>
                     ToHomePage
                 </Link>
-                <Link to={"/RentYourPage"} className={mapPageStyle.button}>
-                    ToRentYourPage
+                <Link to={"/MapPage"} className={rentYourPageStyle.button}>
+                    ToMapPage
                 </Link>
             </p>
             <YMaps>
                 <div>
-                    My awesome application with maps!
+                    Click on map!
                     <Map
                         defaultState={{
                             center: centerCoords,
@@ -31,6 +31,7 @@ const MapPage = function () {
                         modules={['control.ZoomControl', 'control.FullscreenControl']}
                         width={1000}
                         height={600}
+                        onClick={(e) => dispatch(updateCurrentOnClickCoords(e.get('coords')))}
                     >
                         <Clusterer
                             options={{
@@ -39,17 +40,13 @@ const MapPage = function () {
                             }}
                         >
                             {
-                                authSlice.mapAll.map(elem => {
-                                    return (
-                                        <Placemark
-                                            id={elem.id}
-                                            geometry={[elem.latitude, elem.longitude]}
-                                            options={{preset: 'islands#redCircleDotIcon'}}
-                                            key={elem.id}
-                                            onClick={() => dispatch(getMapElemData({id: elem.id}))}
-                                        />
-                                    )
-                                })
+                                authSlice.currentOnClickCoords.length !== 0 ?
+                                    <Placemark
+                                        geometry={[authSlice.currentOnClickCoords[0], authSlice.currentOnClickCoords[1]]}
+                                        options={{preset: 'islands#redCircleDotIcon'}}
+                                        key={authSlice.currentOnClickCoords[0]}
+                                    /> :
+                                    null
                             }
                         </Clusterer>
                     </Map>
@@ -57,18 +54,15 @@ const MapPage = function () {
             </YMaps>
             <div>
                 {
-                    authSlice.mapElem ?
+                    authSlice.currentOnClickCoords.length !== 0 ?
                         <p>
-                            id:{authSlice.mapElem.id}<br/>
-                            address:{authSlice.mapElem.address}<br/>
-                            lat:{authSlice.mapElem.latitude}<br/>
-                            long:{authSlice.mapElem.longitude}<br/>
-                        </p>
-                        : null
+                            {authSlice.currentOnClickCoords[0]} : {authSlice.currentOnClickCoords[1]}
+                        </p> :
+                        null
                 }
             </div>
         </div>
     );
 };
 
-export default MapPage;
+export default RentYourPage;

@@ -7,6 +7,7 @@ const initialState = {
     isRegVisible: false,
     isLogVisible: false,
     coords:[],
+    currentOnClickCoords:[],
 };
 
 export default initialState;

@@ -111,6 +111,10 @@ const authSlice = createSlice({
         setMapElemData(state, action) {
             state.mapElem = action.payload;
         },
+        updateCurrentOnClickCoords(state, action) {
+            state.currentOnClickCoords = action.payload;
+            console.log(state.currentOnClickCoords);
+        },
     },
     extraReducers: {
         [register.fulfilled]: (state, action) => {
@@ -144,5 +148,6 @@ export const {
     makeLogVisible,
     setMapData,
     setMapElemData,
+    updateCurrentOnClickCoords,
 } = authSlice.actions
 export default authSlice.reducer
