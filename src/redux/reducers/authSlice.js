@@ -70,6 +70,17 @@ export const getMapElemData = createAsyncThunk(
     }
 );
 
+export const getAddressByCoords = createAsyncThunk(
+    "auth/mapAddressGeocodeByCoords",
+    async ({coords}) => {
+        try {
+            return await mapService.getAddressByCoords(coords);
+        } catch (err) {
+            console.log("ERROR in getAddressByCoords");
+        }
+    }
+);
+
 export const logout = createAsyncThunk("auth/logout", async () => {
     await AuthService.logout();
 });
@@ -113,7 +124,6 @@ const authSlice = createSlice({
         },
         updateCurrentOnClickCoords(state, action) {
             state.currentOnClickCoords = action.payload;
-            console.log(state.currentOnClickCoords);
         },
     },
     extraReducers: {
@@ -134,6 +144,12 @@ const authSlice = createSlice({
         [logout.fulfilled]: (state, action) => {
             state.isLoggedIn = false;
             state.user = null;
+        },
+        [getAddressByCoords.fulfilled]: (state, action) => {
+            state.currentOnClickAddress = action.payload;
+        },
+        [getAddressByCoords.rejected]: (state, action) => {
+            state.currentOnClickAddress = "ERROR";
         },
     },
 })

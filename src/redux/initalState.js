@@ -3,11 +3,12 @@ const initialState = {
     currentEmailInput: "",
     currentMobileInput: "",
     currentPasswordInput: "",
-    regPasswordChecker:"",
+    regPasswordChecker: "",
     isRegVisible: false,
     isLogVisible: false,
-    coords:[],
-    currentOnClickCoords:[],
+    coords: [],
+    currentOnClickCoords: [],
+    currentOnClickAddress: "",
 };
 
 export default initialState;
