@@ -1,13 +1,27 @@
-import Authentication from "./containers/Authentication/Authentication.jsx";
-import Registration from "./containers/Registration/Registration";
+import {useDispatch, useSelector} from "react-redux";
+import {BrowserRouter, Route, Routes} from "react-router-dom";
+import AuthReg from "./containers/AuthRegPage/AuthReg";
+import HomePage from "./containers/HomePage/HomePage";
+import ProtectedRoutes from "./ProtectedRoutes";
+import MapPage from "./containers/MapPage/MapPage";
+import RentYourPage from "./containers/RentYourPage/RentYourPage";
 
 function App() {
+    const authSlice = useSelector(state => state.auth);
+    const dispatch = useDispatch();
+
     return (
-        <div>
-            <h1>Hello world!</h1>
-            <Authentication/>
-            <Registration/>
-        </div>
+        <BrowserRouter>
+            <Routes>
+                <Route path="/" element={<AuthReg/>}/>
+                <Route path="*" element={<h1>Wrong address!</h1>}/>
+                <Route element={<ProtectedRoutes/>}>
+                    <Route path="/HomePage" element={<HomePage/>}/>
+                    <Route path="/MapPage" element={<MapPage/>}/>
+                    <Route path="/RentYourPage" element={<RentYourPage/>}/>
+                </Route>
+            </Routes>
+        </BrowserRouter>
     );
 }
 
