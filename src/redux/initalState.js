@@ -1,5 +1,7 @@
 const initialState = {
     currentNameInput: "",
+    currentSurnameInput: "",
+    currentPatronymicInput: "",
     currentEmailInput: "",
     currentMobileInput: "",
     currentPasswordInput: "",

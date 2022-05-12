@@ -1,22 +1,28 @@
 import axios from "axios";
 
-const ALL_API_URL = "http://localhost:8081/rest/map/getAllMapPoints";
-const ELEM_API_URL = "http://localhost:8081/rest/map/getMapPoint";
+const ALL_API_URL = "http://localhost:8081/map/getAllMapPoints";
+const ELEM_API_URL = "http://localhost:8081/map/getMapPoint";
 
 const user = JSON.parse(localStorage.getItem("user"));
 
+const headers = {
+    'Content-Type': 'application/json',
+    'Authorization': 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyMi1lbWlsQG1haWwucnUiLCJhdXRoIjp7Im5hbWUiOiJVU0VSIn0sImlhdCI6MTY1MjM1MjE0NiwiZXhwIjoxNjUyNDgxNzQ2fQ.wtM8c_7Rz7hzx8fYqXnrplrYsEOUC7Y1xOz42TPgTP4'
+}
+
 const getMapData = () => {
     return axios
-        .get(ALL_API_URL)
+        .get(ALL_API_URL,{headers: {...headers}})
         .then((response) => {
             localStorage.setItem("mapAll", JSON.stringify(response.data));
+            console.log(response.data);
             return response.data;
         });
 };
 
 const getMapElemData = (id) => {
     return axios
-        .get(ELEM_API_URL + `?id=${id}`)
+        .get(ELEM_API_URL + `?id=${id}`,{headers: {...headers}})
         .then((response) => {
             localStorage.setItem("mapElem", JSON.stringify(response.data));
             return response.data;

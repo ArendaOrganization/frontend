@@ -19,7 +19,7 @@ const Authentication = function () {
                     dispatch(updateEmailInput(e.target.value))
                 }}
             />
-            <p>test@user.com</p>
+            <p>22-emil@mail.ru</p>
             <input
                 type="text"
                 placeholder="password"
@@ -40,5 +40,11 @@ const Authentication = function () {
         </div>
     );
 };
+/*
+{
+    "email":"danya.vshivtsev@gmail.com",
+    "password":"daniil"
+}
+*/
 
 export default Authentication

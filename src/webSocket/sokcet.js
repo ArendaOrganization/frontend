@@ -3,14 +3,18 @@ import {Stomp} from '@stomp/stompjs'
 
 
 let stompClient = null
-const handlers = []
+const handlers = [
+    function hello(message) {
+        console.log(message);
+    },
+]
 
 export function connect() {
-    const socket = new SockJS('http://localhost:8081/rest/gs-guide-websocket')
+    const socket = new SockJS('http://localhost:8081/gs-guide-websocket')
     stompClient = Stomp.over(socket)
     stompClient.connect({}, frame => {
         console.log('Connected: ' + frame)
-        stompClient.subscribe('/rest/topic/activity', message => {
+        stompClient.subscribe('/topic/activity', message => {
             handlers.forEach(handler => handler(JSON.parse(message.body)))
         })
     })
@@ -28,12 +32,11 @@ export function disconnect() {
 }
 
 export function sendMessage(message) {
-    stompClient.send("/rest/app/changeMessage", {}, JSON.stringify(
+    stompClient.send("/app/changeMessage", {}, JSON.stringify(
         {
-            value: "Hello!",
+            value: message,
             author: {
-                id: 2014
-
+                id: 38
             }
         }
     ))

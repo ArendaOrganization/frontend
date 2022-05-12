@@ -1,22 +1,5 @@
 import {useDispatch, useSelector} from "react-redux";
 import "./Navbar.css";
-import {
-    Navbar,
-    NavbarBrand,
-    Nav,
-    NavbarToggler,
-    Collapse,
-    NavItem,
-    Button,
-    Modal,
-    ModalBody,
-    ModalHeader,
-    FormGroup,
-    Label,
-    Input,
-    Form,
-    NavLink,
-} from "reactstrap";
 
 const NavigationBar = function () {
     const authSlice = useSelector(state => state.auth);
@@ -32,7 +15,7 @@ const NavigationBar = function () {
                     <ul className="navbar-nav mr-auto">
                         <li className="nav-item active"><a className="nav-link" href="#"><span
                             className="fa fa-home fa-lg"></span> Main Page</a></li>
-                        <li className="nav-item"><a className="nav-link" href="#" onClick={() => alert("NIGGA!!!")}><span
+                        <li className="nav-item"><a className="nav-link" href="#"><span
                             className="fa fa-info fa-lg"></span> About</a></li>
                         <li className="nav-item"><a className="nav-link" href="#"><span
                             className="fa fa-list fa-lg"></span> Personal data</a></li>

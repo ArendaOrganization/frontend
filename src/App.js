@@ -5,6 +5,7 @@ import HomePage from "./containers/HomePage/HomePage";
 import ProtectedRoutes from "./ProtectedRoutes";
 import MapPage from "./containers/MapPage/MapPage";
 import RentYourPage from "./containers/RentYourPage/RentYourPage";
+import MainPage from "./containers/MainPage/MainPage";
 
 function App() {
     const authSlice = useSelector(state => state.auth);

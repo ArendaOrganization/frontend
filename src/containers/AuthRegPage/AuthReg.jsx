@@ -40,5 +40,19 @@ const AuthReg = function () {
         </div>
     );
 };
+/*
+{
+    "name": "Даниил2",
+    "surname": "Вшивцев2",
+    "patronymic": "Павлович2",
+    "email":"danya.vshivtsev@gmail.com",
+    "mobile":"+7 912 123 12 12",
+    "password":"daniil"
+}
+{
+    "email":"danya.vshivtsev@gmail.com",
+    "password":"daniil"
+}
+*/
 
 export default AuthReg

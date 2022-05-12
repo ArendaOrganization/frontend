@@ -11,9 +11,9 @@ const mapElem = JSON.parse(localStorage.getItem("mapElem"));
 
 export const register = createAsyncThunk(
     "auth/register",
-    async ({username, email, mobile, password}, thunkAPI) => {
+    async ({name, surname, patronymic, email, mobile, password}, thunkAPI) => {
         try {
-            const response = await AuthService.register(username, email, mobile, password);
+            const response = await AuthService.register(name, surname, patronymic, email, mobile, password);
             thunkAPI.dispatch(setMessage(response.data.message));
             return response.data;
         } catch (error) {
@@ -28,6 +28,16 @@ export const register = createAsyncThunk(
         }
     }
 );
+/*
+{
+    "name": "Даниил2",
+    "surname": "Вшивцев2",
+    "patronymic": "Павлович2",
+    "email":"danya.vshivtsev@gmail.com",
+    "mobile":"+7 912 123 12 12",
+    "password":"daniil"
+}
+*/
 
 export const login = createAsyncThunk(
     "auth/login",
@@ -96,6 +106,12 @@ const authSlice = createSlice({
         updateNameInput(state, action) {
             state.currentNameInput = action.payload;
         },
+        updateSurnameInput(state, action) {
+            state.currentSurnameInput = action.payload;
+        },
+        updatePatronymicInput(state, action) {
+            state.currentPatronymicInput = action.payload;
+        },
         updateEmailInput(state, action) {
             state.currentEmailInput = action.payload;
         },
@@ -156,6 +172,8 @@ const authSlice = createSlice({
 
 export const {
     updateNameInput,
+    updateSurnameInput,
+    updatePatronymicInput,
     updateEmailInput,
     updateMobileInput,
     updatePasswordInput,

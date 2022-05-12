@@ -3,7 +3,7 @@ import LogOut from "../AuthRegPage/LogOut/LogOut";
 import {useNavigate} from "react-router";
 import {Link} from "react-router-dom";
 import homePageStyle from "./HomePage.module.css"
-import {connect} from "../../webSocket/sokcet";
+import {connect, sendMessage} from "../../webSocket/sokcet";
 import NavigationBar from "../Navbar/Navbar";
 
 const HomePage = function () {
@@ -11,11 +11,8 @@ const HomePage = function () {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    connect();
-
     return (
         <div>
-            <NavigationBar/>
             <h1>Hello world!</h1>
             <h3>You are:</h3>
             {authSlice.user.name}
@@ -25,6 +22,7 @@ const HomePage = function () {
             <Link to={"/MapPage"} className={homePageStyle.button}>
                 ToMapPage
             </Link>
+            <button onClick={() => sendMessage("Hello!")}>Отправить сообщение</button>
         </div>
     );
 };
