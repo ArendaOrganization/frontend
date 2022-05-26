@@ -2,12 +2,20 @@ import {useDispatch, useSelector} from "react-redux";
 import {Link} from "react-router-dom";
 import mapPageStyle from "./MapPage.module.css"
 import {Clusterer, Map, Placemark, YMaps} from "react-yandex-maps";
-import {getMapElemData, updateCurrentOnClickCoords} from "../../redux/reducers/authSlice";
+import {getAllMapData, getMapElemData, setMapData, updateCurrentOnClickCoords} from "../../redux/reducers/authSlice";
+import {useEffect} from "react";
+import mapService from "../../services/map.service";
 
 const MapPage = function () {
     const authSlice = useSelector(state => state.auth);
     const dispatch = useDispatch();
-    const centerCoords = [authSlice.mapAll[0].latitude, authSlice.mapAll[0].longitude];
+    const centerCoords = (authSlice.mapAll)&&(authSlice.mapAll.length > 0)
+        ? [authSlice.mapAll[0].latitude, authSlice.mapAll[0].longitude]
+        : [56.845130, 60.626060];
+
+    useEffect(() => {
+        dispatch(getAllMapData());
+    })
 
     return (
         <div>
@@ -39,17 +47,19 @@ const MapPage = function () {
                             }}
                         >
                             {
-                                authSlice.mapAll.map(elem => {
-                                    return (
-                                        <Placemark
-                                            id={elem.id}
-                                            geometry={[elem.latitude, elem.longitude]}
-                                            options={{preset: 'islands#redCircleDotIcon'}}
-                                            key={elem.id}
-                                            onClick={() => dispatch(getMapElemData({id: elem.id}))}
-                                        />
-                                    )
-                                })
+                                (authSlice.mapAll)&&(authSlice.mapAll.length > 0)
+                                    ? authSlice.mapAll.map(elem => {
+                                        return (
+                                            <Placemark
+                                                id={elem.id}
+                                                geometry={[elem.latitude, elem.longitude]}
+                                                options={{preset: 'islands#redCircleDotIcon'}}
+                                                key={elem.id}
+                                                onClick={() => dispatch(getMapElemData({id: elem.id}))}
+                                            />
+                                        )
+                                    })
+                                    : null
                             }
                         </Clusterer>
                     </Map>

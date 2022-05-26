@@ -1,13 +1,19 @@
-import SockJS from 'sockjs-client'
-import {Stomp} from '@stomp/stompjs'
+import SockJS from 'sockjs-client';
+import {Stomp} from '@stomp/stompjs';
 
+const user = JSON.parse(localStorage.getItem("user"));
 
-let stompClient = null
+const headers = {
+    'Content-Type': 'application/json',
+    'Authorization': user ? user.token : "",
+};
+
+let stompClient = null;
 const handlers = [
     function hello(message) {
-        console.log(message);
+        console.log(JSON.parse(message.body));
     },
-]
+];
 
 export function connect() {
     const socket = new SockJS('http://localhost:8081/gs-guide-websocket')
@@ -15,7 +21,7 @@ export function connect() {
     stompClient.connect({}, frame => {
         console.log('Connected: ' + frame)
         stompClient.subscribe('/topic/activity', message => {
-            handlers.forEach(handler => handler(JSON.parse(message.body)))
+            handlers.forEach(handler => handler(JSON.parse(message.body)));
         })
     })
 }
@@ -36,7 +42,7 @@ export function sendMessage(message) {
         {
             value: message,
             author: {
-                id: 38
+                id: 2
             }
         }
     ))

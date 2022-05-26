@@ -6,11 +6,12 @@ const initialState = {
     currentMobileInput: "",
     currentPasswordInput: "",
     regPasswordChecker: "",
-    isRegVisible: false,
-    isLogVisible: false,
+    regOrLogVisibility: true,
+    leftMenuToggle: false,
     coords: [],
     currentOnClickCoords: [],
     currentOnClickAddress: "",
+    isAuth: false,
 };
 
 export default initialState;

@@ -2,39 +2,12 @@ import {useDispatch, useSelector} from "react-redux";
 import {Link} from "react-router-dom";
 import rentYourPageStyle from "./RentYourPage.module.css"
 import {Clusterer, Map, Placemark, YMaps} from "react-yandex-maps";
-import {getAddressByCoords, updateCurrentOnClickCoords} from "../../redux/reducers/authSlice";
+import {getAddressByCoords, postRentAddress, updateCurrentOnClickCoords} from "../../redux/reducers/authSlice";
 
 const RentYourPage = function () {
     const authSlice = useSelector(state => state.auth);
     const dispatch = useDispatch();
-    const centerCoords = [authSlice.mapAll[0].latitude, authSlice.mapAll[0].longitude];
-
-    /*
-    // Определяем адрес по координатам (обратное геокодирование).
-    function getAddress(coords) {
-        myPlacemark.properties.set('iconCaption', 'поиск...');
-        ymaps.geocode(coords).then(function (res) {
-            var firstGeoObject = res.geoObjects.get(0);
-
-            myPlacemark.properties
-                .set({
-                    // Формируем строку с данными об объекте.
-                    iconCaption: [
-                        // Название населенного пункта или вышестоящее административно-территориальное образование.
-                        firstGeoObject.getLocalities().length ? firstGeoObject.getLocalities() : firstGeoObject.getAdministrativeAreas(),
-                        // Получаем путь до топонима, если метод вернул null, запрашиваем наименование здания.
-                        firstGeoObject.getThoroughfare() || firstGeoObject.getPremise()
-                    ].filter(Boolean).join(', '),
-                    // В качестве контента балуна задаем строку с адресом объекта.
-                    balloonContent: firstGeoObject.getAddressLine()
-                });
-        });
-    }
-    */
-    /*YMaps.geocode(centerCoords).then(function (res) {
-        let firstGeoObject = res.geoObjects.get(0);
-        console.log(firstGeoObject);
-    });*/
+    const centerCoords = authSlice.mapAll.length > 0 ? [authSlice.mapAll[0].latitude, authSlice.mapAll[0].longitude] : [56.845130, 60.626060];
 
     return (
         <div>
@@ -98,6 +71,14 @@ const RentYourPage = function () {
                         null
                 }
             </div>
+            <button
+                onClick={() => dispatch(postRentAddress({
+                    address: authSlice.currentOnClickAddress,
+                    latitude: authSlice.currentOnClickCoords[0],
+                    longitude: authSlice.currentOnClickCoords[1]
+                }))}
+            >PostData
+            </button>
         </div>
     );
 };

@@ -9,6 +9,43 @@ const user = JSON.parse(localStorage.getItem("user"));
 const mapAll = JSON.parse(localStorage.getItem("mapAll"));
 const mapElem = JSON.parse(localStorage.getItem("mapElem"));
 
+export const login = createAsyncThunk(
+    "auth/login",
+    async ({email, password}, thunkAPI) => {
+        try {
+            const data = await AuthService.login(email, password);
+            return {user: data};
+        } catch (error) {
+            const message =
+                (error.response &&
+                    error.response.data &&
+                    error.response.data.message) ||
+                error.message ||
+                error.toString();
+            thunkAPI.dispatch(setMessage(message));
+            return thunkAPI.rejectWithValue();
+        }
+    }
+);
+
+export const logOut = createAsyncThunk(
+    "auth/logOut",
+    async ({}, thunkAPI) => {
+        try {
+            AuthService.logout();
+        } catch (error) {
+            const message =
+                (error.response &&
+                    error.response.data &&
+                    error.response.data.message) ||
+                error.message ||
+                error.toString();
+            thunkAPI.dispatch(setMessage(message));
+            return thunkAPI.rejectWithValue();
+        }
+    }
+);
+
 export const register = createAsyncThunk(
     "auth/register",
     async ({name, surname, patronymic, email, mobile, password}, thunkAPI) => {
@@ -28,6 +65,26 @@ export const register = createAsyncThunk(
         }
     }
 );
+/**/
+export const getAllMessages = createAsyncThunk(
+    "auth/getMessages",
+    async ({}, thunkAPI) => {
+        try {
+            const response = await mapService.getAllMessages();
+            return response.data;
+        } catch (error) {
+            const message =
+                (error.response &&
+                    error.response.data &&
+                    error.response.data.message) ||
+                error.message ||
+                error.toString();
+            thunkAPI.dispatch(setMessage(message));
+            return thunkAPI.rejectWithValue();
+        }
+    }
+)
+/**/
 /*
 {
     "name": "Даниил2",
@@ -39,14 +96,13 @@ export const register = createAsyncThunk(
 }
 */
 
-export const login = createAsyncThunk(
-    "auth/login",
-    async ({email, password}, thunkAPI) => {
+export const getAllMapData = createAsyncThunk(
+    "auth/mapAllData",
+    async ({}, thunkAPI) => {
         try {
-            const data = await AuthService.login(email, password);
             const mapData = await mapService.getMapData();
             thunkAPI.dispatch(setMapData(mapData));
-            return {user: data};
+            return mapData;
         } catch (error) {
             const message =
                 (error.response &&
@@ -91,6 +147,20 @@ export const getAddressByCoords = createAsyncThunk(
     }
 );
 
+export const postRentAddress = createAsyncThunk(
+    "auth/postRentAddress",
+    async ({address, latitude, longitude}, thunkAPI) => {
+        try {
+            let postRentDataResp = await mapService.postRentAddress(address, latitude, longitude);
+            const mapData = await mapService.getMapData();
+            thunkAPI.dispatch(setMapData(mapData));
+            return postRentDataResp;
+        } catch (err) {
+            console.log("ERROR in getAddressByCoords");
+        }
+    }
+);
+
 export const logout = createAsyncThunk("auth/logout", async () => {
     await AuthService.logout();
 });
@@ -124,13 +194,8 @@ const authSlice = createSlice({
         updateRegPasswordChecker(state, action) {
             state.regPasswordChecker = action.payload;
         },
-        makeRegVisible(state) {
-            state.isRegVisible = true;
-            state.isLogVisible = false;
-        },
-        makeLogVisible(state) {
-            state.isRegVisible = false;
-            state.isLogVisible = true;
+        updateRegOrLogVisibility(state) {
+            state.regOrLogVisibility = !state.regOrLogVisibility;
         },
         setMapData(state, action) {
             state.mapAll = action.payload;
@@ -140,6 +205,9 @@ const authSlice = createSlice({
         },
         updateCurrentOnClickCoords(state, action) {
             state.currentOnClickCoords = action.payload;
+        },
+        leftMenuToggler(state) {
+            state.leftMenuToggle = !state.leftMenuToggle;
         },
     },
     extraReducers: {
@@ -167,6 +235,9 @@ const authSlice = createSlice({
         [getAddressByCoords.rejected]: (state, action) => {
             state.currentOnClickAddress = "ERROR";
         },
+        [getAllMessages.fulfilled]: (state, action) => {
+            console.log(action.payload);
+        }
     },
 })
 
@@ -178,8 +249,8 @@ export const {
     updateMobileInput,
     updatePasswordInput,
     updateRegPasswordChecker,
-    makeRegVisible,
-    makeLogVisible,
+    updateRegOrLogVisibility,
+    leftMenuToggler,
     setMapData,
     setMapElemData,
     updateCurrentOnClickCoords,

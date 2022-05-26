@@ -1,28 +1,42 @@
 import axios from "axios";
+import initalState from "../redux/initalState";
 
 const ALL_API_URL = "http://localhost:8081/map/getAllMapPoints";
 const ELEM_API_URL = "http://localhost:8081/map/getMapPoint";
+const API_URL = "http://localhost:8081/premises/addPremises";
 
 const user = JSON.parse(localStorage.getItem("user"));
+/**/
 
-const headers = {
-    'Content-Type': 'application/json',
-    'Authorization': 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyMi1lbWlsQG1haWwucnUiLCJhdXRoIjp7Im5hbWUiOiJVU0VSIn0sImlhdCI6MTY1MjM1MjE0NiwiZXhwIjoxNjUyNDgxNzQ2fQ.wtM8c_7Rz7hzx8fYqXnrplrYsEOUC7Y1xOz42TPgTP4'
-}
-
-const getMapData = () => {
+const getAllMessages = () => {
     return axios
-        .get(ALL_API_URL,{headers: {...headers}})
+        .get("http://localhost:8081/getAllMessages")
         .then((response) => {
-            localStorage.setItem("mapAll", JSON.stringify(response.data));
-            console.log(response.data);
+            console.log(response.data)
             return response.data;
         });
 };
 
-const getMapElemData = (id) => {
+
+/**/
+
+const headers = {
+    'Content-Type': 'application/json',
+    'Authorization': user ? user.token : "",
+};
+
+const getMapData = () => {
     return axios
-        .get(ELEM_API_URL + `?id=${id}`,{headers: {...headers}})
+        .get(ALL_API_URL, {headers: {...headers}})
+        .then((response) => {
+            localStorage.setItem("mapAll", JSON.stringify(response.data));
+            return response.data;
+        });
+};
+
+const getMapElemData = (id, {headers: {...headers}}) => {
+    return axios
+        .get(ELEM_API_URL + `?id=${id}`, {headers: {...headers}})
         .then((response) => {
             localStorage.setItem("mapElem", JSON.stringify(response.data));
             return response.data;
@@ -46,9 +60,21 @@ const getAddressByCoords = (coords) => {
         });
 };
 
+const postRentAddress = (address, latitude, longitude) => {
+    return axios
+        .post(API_URL, {address, latitude: latitude, longitude: longitude}, {headers: {...headers}})
+        .then(response => {
+            return response.data;
+        }).catch(error => {
+            console.log(error);
+        });
+}
+
 const mapService = {
     getMapData,
     getMapElemData,
-    getAddressByCoords
+    getAddressByCoords,
+    postRentAddress,
+    getAllMessages
 };
 export default mapService;

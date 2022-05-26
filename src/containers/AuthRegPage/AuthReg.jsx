@@ -1,11 +1,10 @@
 import {useDispatch, useSelector} from "react-redux";
-import {makeLogVisible, makeRegVisible} from "../../redux/reducers/authSlice";
-import Authentication from "./Authentication/Authentication";
-import Registration from "./Registration/Registration";
+import {updateRegOrLogVisibility} from "../../redux/reducers/authSlice";
+import Authentication from "./AuthenticationpPage/Authentication";
+import Registration from "./RegistrationPage/Registration";
 import {useLocation, useNavigate} from "react-router";
-import {Link} from "react-router-dom";
-import authRegStyle from "./AuthReg.module.css";
-import {useEffect} from "react";
+import LeftMenu from "../LeftMenu/LeftMenu";
+import "../mainStyle.css";
 
 const AuthReg = function () {
     const authSlice = useSelector(state => state.auth);
@@ -14,45 +13,19 @@ const AuthReg = function () {
     const location = useLocation();
 
     return (
-        <div>
-            <input
-                type="submit"
-                value="Login"
-                onClick={() => {
-                    dispatch(makeLogVisible())
-                }}
-            />
-            <input
-                type="submit"
-                value="Registration"
-                onClick={() => dispatch(makeRegVisible())}
-            />
-            {authSlice.isLogVisible ? <Authentication/> : ""}
-            {authSlice.isRegVisible ? <Registration/> : ""}
-            <p>
-                {authSlice.isLoggedIn ? "true" : "false"}
-            </p>
-            <p>
-                <Link to={"/HomePage"} className={authRegStyle.button}>
-                    ToHomePage
-                </Link>
-            </p>
+        <div className="main">
+            <LeftMenu/>
+            <div className={authSlice.leftMenuToggle ? "main__inner translated" : "main__inner"}>
+                {authSlice.regOrLogVisibility ? <Authentication/> : ""}
+                {!authSlice.regOrLogVisibility ? <Registration/> : ""}
+                <div className="menu-right">
+                    <a onClick={() => dispatch(updateRegOrLogVisibility())} className="menu-right__link">
+                        {authSlice.regOrLogVisibility ? "Зарегистрироваться" : "Вход"}
+                    </a>
+                </div>
+            </div>
         </div>
     );
 };
-/*
-{
-    "name": "Даниил2",
-    "surname": "Вшивцев2",
-    "patronymic": "Павлович2",
-    "email":"danya.vshivtsev@gmail.com",
-    "mobile":"+7 912 123 12 12",
-    "password":"daniil"
-}
-{
-    "email":"danya.vshivtsev@gmail.com",
-    "password":"daniil"
-}
-*/
 
 export default AuthReg
