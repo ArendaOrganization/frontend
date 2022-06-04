@@ -27,6 +27,7 @@ const login = (email, password) => {
 const logout = () => {
     localStorage.removeItem("user");
     localStorage.removeItem("mapAll");
+    localStorage.removeItem("myCompanies");
 };
 const authService = {
     register,

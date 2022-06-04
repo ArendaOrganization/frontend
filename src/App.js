@@ -5,6 +5,7 @@ import HomePage from "./containers/HomePage/HomePage";
 import ProtectedRoutes from "./ProtectedRoutes";
 import MapPage from "./containers/MapPage/MapPage";
 import RentYourPage from "./containers/RentYourPage/RentYourPage";
+import Companies from "./containers/CompaniesPage/Companies";
 
 function App() {
     const authSlice = useSelector(state => state.auth);
@@ -19,6 +20,7 @@ function App() {
                     <Route path="/HomePage" element={<HomePage/>}/>
                     <Route path="/MapPage" element={<MapPage/>}/>
                     <Route path="/RentYourPage" element={<RentYourPage/>}/>
+                    <Route path="/Companies" element={<Companies/>}/>
                 </Route>
             </Routes>
         </BrowserRouter>

@@ -9,7 +9,6 @@ import {
     updatePatronymicInput,
     updateSurnameInput
 } from "../../../redux/reducers/authSlice";
-import axios from "axios";
 import "../../mainStyle.css";
 
 

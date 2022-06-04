@@ -1,6 +1,5 @@
 import {useDispatch, useSelector} from "react-redux";
-import {useLocation, useNavigate} from "react-router";
-import {leftMenuToggler} from "../../redux/reducers/authSlice";
+import {leftMenuToggler} from "../../../redux/reducers/authSlice";
 
 const LeftMenu = function () {
     const authSlice = useSelector(state => state.auth);
@@ -19,13 +18,13 @@ const LeftMenu = function () {
             </div>
             <ul className="left-menu__ul">
                 <li>
-                    <a href="">Главная</a>
+                    <a href="src/containers/Menus/MenuLeft/LeftMenu">Главная</a>
                 </li>
                 <li>
-                    <a href="">Карта помещений</a>
+                    <a href="src/containers/Menus/MenuLeft/LeftMenu">Карта помещений</a>
                 </li>
                 <li>
-                    <a href="">Помощь</a>
+                    <a href="src/containers/Menus/MenuLeft/LeftMenu">Помощь</a>
                 </li>
             </ul>
         </div>

@@ -1,9 +1,11 @@
 import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router";
-import LeftMenu from "../LeftMenu/LeftMenu";
+import LeftMenu from "../Menus/MenuLeft/LeftMenu";
 import avatar from "./img/user.png";
 import {logout} from "../../redux/reducers/authSlice";
 import "../mainStyle.css"
+import PagesManu from "../Menus/PagesMenu/PagesManu";
+import MenuRightLogined from "../Menus/MenuRightLogined/MenuRightLogined";
 
 const HomePage = function () {
     const authSlice = useSelector(state => state.auth);
@@ -14,19 +16,7 @@ const HomePage = function () {
             <LeftMenu/>
             <div className="main__inner" id="main__inner">
                 <div className="container container-m">
-                    <div className="pages-menu">
-                        <ul className="pages-menu__ul">
-                            <li>
-                                <a href="">Мои компании</a>
-                            </li>
-                            <li>
-                                <a href="">Мессенджер</a>
-                            </li>
-                            <li>
-                                <a onClick={() => dispatch(logout())}>Выйти</a>
-                            </li>
-                        </ul>
-                    </div>
+                    <PagesManu/>
                     <h1 className="container__h">Личный кабинет пользователя</h1>
                     <div className="container__inner">
                         <div className="row">
@@ -60,13 +50,7 @@ const HomePage = function () {
                         </div>
                     </div>
                 </div>
-
-                <div className="menu-right logined">
-                    <a href="" className="menu-right__link">
-                        Имя пользователя
-                    </a>
-                    <img src={avatar} alt="" className="user-avatar"/>
-                </div>
+                <MenuRightLogined/>
             </div>
         </div>
     );

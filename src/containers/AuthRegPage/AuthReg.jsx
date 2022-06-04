@@ -3,7 +3,7 @@ import {updateRegOrLogVisibility} from "../../redux/reducers/authSlice";
 import Authentication from "./AuthenticationpPage/Authentication";
 import Registration from "./RegistrationPage/Registration";
 import {useLocation, useNavigate} from "react-router";
-import LeftMenu from "../LeftMenu/LeftMenu";
+import LeftMenu from "../Menus/MenuLeft/LeftMenu";
 import "../mainStyle.css";
 
 const AuthReg = function () {

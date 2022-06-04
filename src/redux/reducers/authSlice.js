@@ -3,11 +3,12 @@ import basicData from "../initalState";
 import AuthService from "../../services/auth.service";
 import {setMessage} from "./messageAuthSlice";
 import mapService from "../../services/map.service";
-import authService from "../../services/auth.service";
+import companyService from "../../services/companies.service";
 
 const user = JSON.parse(localStorage.getItem("user"));
 const mapAll = JSON.parse(localStorage.getItem("mapAll"));
 const mapElem = JSON.parse(localStorage.getItem("mapElem"));
+const myCompanies = JSON.parse(localStorage.getItem("myCompanies"));
 
 export const login = createAsyncThunk(
     "auth/login",
@@ -28,23 +29,9 @@ export const login = createAsyncThunk(
     }
 );
 
-export const logOut = createAsyncThunk(
-    "auth/logOut",
-    async ({}, thunkAPI) => {
-        try {
-            AuthService.logout();
-        } catch (error) {
-            const message =
-                (error.response &&
-                    error.response.data &&
-                    error.response.data.message) ||
-                error.message ||
-                error.toString();
-            thunkAPI.dispatch(setMessage(message));
-            return thunkAPI.rejectWithValue();
-        }
-    }
-);
+export const logout = createAsyncThunk("auth/logout", async () => {
+    await AuthService.logout();
+});
 
 export const register = createAsyncThunk(
     "auth/register",
@@ -65,36 +52,6 @@ export const register = createAsyncThunk(
         }
     }
 );
-/**/
-export const getAllMessages = createAsyncThunk(
-    "auth/getMessages",
-    async ({}, thunkAPI) => {
-        try {
-            const response = await mapService.getAllMessages();
-            return response.data;
-        } catch (error) {
-            const message =
-                (error.response &&
-                    error.response.data &&
-                    error.response.data.message) ||
-                error.message ||
-                error.toString();
-            thunkAPI.dispatch(setMessage(message));
-            return thunkAPI.rejectWithValue();
-        }
-    }
-)
-/**/
-/*
-{
-    "name": "Даниил2",
-    "surname": "Вшивцев2",
-    "patronymic": "Павлович2",
-    "email":"danya.vshivtsev@gmail.com",
-    "mobile":"+7 912 123 12 12",
-    "password":"daniil"
-}
-*/
 
 export const getAllMapData = createAsyncThunk(
     "auth/mapAllData",
@@ -160,13 +117,69 @@ export const postRentAddress = createAsyncThunk(
         }
     }
 );
+/**/
+export const getAllMessages = createAsyncThunk(
+    "auth/getMessages",
+    async ({}, thunkAPI) => {
+        try {
+            const response = await mapService.getAllMessages();
+            return response.data;
+        } catch (error) {
+            const message =
+                (error.response &&
+                    error.response.data &&
+                    error.response.data.message) ||
+                error.message ||
+                error.toString();
+            thunkAPI.dispatch(setMessage(message));
+            return thunkAPI.rejectWithValue();
+        }
+    }
+)
+/**/
 
-export const logout = createAsyncThunk("auth/logout", async () => {
-    await AuthService.logout();
-});
+export const getCompanies = createAsyncThunk(
+    "auth/getCompanies",
+    async ({}, thunkAPI) => {
+        try {
+            console.log("asdfasf");
+            const response = await companyService.getMyCompanies();
+            return response.data;
+        } catch (error) {
+            const message =
+                (error.response &&
+                    error.response.data &&
+                    error.response.data.message) ||
+                error.message ||
+                error.toString();
+            thunkAPI.dispatch(setMessage(message));
+            return thunkAPI.rejectWithValue();
+        }
+    }
+)
+
+export const createCompany = createAsyncThunk(
+    "auth/createCompany",
+    async ({name, description, inn, addressMainOffice, phone, email}, thunkAPI) => {
+        try {
+            const response = await companyService.makeCompanies(name, description, inn, addressMainOffice, phone, email);
+            thunkAPI(getCompanies());
+            return response.data;
+        } catch (error) {
+            const message =
+                (error.response &&
+                    error.response.data &&
+                    error.response.data.message) ||
+                error.message ||
+                error.toString();
+            thunkAPI.dispatch(setMessage(message));
+            return thunkAPI.rejectWithValue();
+        }
+    }
+);
 
 const initialState = user
-    ? {isLoggedIn: true, user, mapAll, mapElem, ...basicData}
+    ? {isLoggedIn: true, user, mapAll, mapElem, userCompanies: [], ...basicData}
     : {isLoggedIn: false, user: null, mapAll: null, mapElem: null, ...basicData};
 
 const authSlice = createSlice({
@@ -209,6 +222,24 @@ const authSlice = createSlice({
         leftMenuToggler(state) {
             state.leftMenuToggle = !state.leftMenuToggle;
         },
+        updateCompanyNameInput(state, action) {
+            state.currentCompanyNameInput = action.payload;
+        },
+        updateCompanyDescriptionInput(state, action) {
+            state.currentCompanyDescriptionInput = action.payload;
+        },
+        updateCompanyINNInput(state, action) {
+            state.currentCompanyINNInput = action.payload;
+        },
+        updateCompanyAddressInput(state, action) {
+            state.currentCompanyAddressInput = action.payload;
+        },
+        updateCompanyPhoneInput(state, action) {
+            state.currentCompanyPhoneInput = action.payload;
+        },
+        updateCompanyEmailInput(state, action) {
+            state.currentCompanyEmailInput = action.payload;
+        },
     },
     extraReducers: {
         [register.fulfilled]: (state, action) => {
@@ -237,6 +268,12 @@ const authSlice = createSlice({
         },
         [getAllMessages.fulfilled]: (state, action) => {
             console.log(action.payload);
+        },
+        [getCompanies.fulfilled]: (state, action) => {
+            state.userCompanies = myCompanies;
+        },
+        [createCompany.fulfilled]: (state, action) => {
+            state.hasCompany = true;
         }
     },
 })
@@ -254,5 +291,11 @@ export const {
     setMapData,
     setMapElemData,
     updateCurrentOnClickCoords,
+    updateCompanyNameInput,
+    updateCompanyDescriptionInput,
+    updateCompanyINNInput,
+    updateCompanyAddressInput,
+    updateCompanyPhoneInput,
+    updateCompanyEmailInput,
 } = authSlice.actions
 export default authSlice.reducer

@@ -12,6 +12,12 @@ const initialState = {
     currentOnClickCoords: [],
     currentOnClickAddress: "",
     isAuth: false,
+    currentCompanyNameInput:"",
+    currentCompanyDescriptionInput:"",
+    currentCompanyINNInput:"",
+    currentCompanyAddressInput:"",
+    currentCompanyPhoneInput:"",
+    currentCompanyEmailInput:"",
 };
 
 export default initialState;

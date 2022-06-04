@@ -1,11 +1,14 @@
 import axios from "axios";
-import initalState from "../redux/initalState";
 
 const ALL_API_URL = "http://localhost:8081/map/getAllMapPoints";
 const ELEM_API_URL = "http://localhost:8081/map/getMapPoint";
 const API_URL = "http://localhost:8081/premises/addPremises";
 
 const user = JSON.parse(localStorage.getItem("user"));
+const headers = {
+    'Content-Type': 'application/json',
+    'Authorization': user ? user.token : "",
+};
 /**/
 
 const getAllMessages = () => {
@@ -19,11 +22,6 @@ const getAllMessages = () => {
 
 
 /**/
-
-const headers = {
-    'Content-Type': 'application/json',
-    'Authorization': user ? user.token : "",
-};
 
 const getMapData = () => {
     return axios
@@ -75,6 +73,6 @@ const mapService = {
     getMapElemData,
     getAddressByCoords,
     postRentAddress,
-    getAllMessages
+    getAllMessages,
 };
 export default mapService;
