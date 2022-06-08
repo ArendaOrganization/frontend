@@ -26,7 +26,7 @@ a {
 
 .main {
     min-height: 100vh;
-    background: url("./img/bg.png");
+    background: url(./img/bg.png);
     -webkit-background-size: cover;
     background-size: cover;
     background-attachment: fixed;
@@ -1236,7 +1236,7 @@ a {
     display: block;
     width: 23px;
     height: 26px;
-    background: url("./img/addfile.svg");
+    background: url(./img/addfile.svg);
     -webkit-background-size: cover;
     background-size: cover;
     border: none;
@@ -1260,7 +1260,7 @@ a {
     display: block;
     width: 19px;
     height: 26px;
-    background: url("./img/play.svg");
+    background: url(./img/play.svg);
     -webkit-background-size: cover;
     background-size: cover;
     border: none;
@@ -1419,6 +1419,122 @@ a {
 
 
 /* map */
+.map {
+    margin-left: 57px;
+    width: calc(100% - 57px);
+    height: 100vh;
+    background: #fff;
+}
+
+.map__inner {
+    position: relative;
+}
+
+.map__info {
+    position: fixed;
+    right: -350px;
+    top: 0;
+    z-index: 12;
+    width: 350px;
+    height: 100%;
+    padding-top: 35px;
+    box-shadow: 0px -4px 12px rgb(0 0 0 / 40%);
+    overflow: auto;
+    background: #fff;
+    transition: linear .3s;
+    box-sizing: border-box;
+}
+
+.map__info.opened {
+    right: 0;
+}
+
+.map__info-block {
+    padding: 20px 20px 15px;
+    border-bottom: 1px solid #CDCDCD;
+}
+
+.map__info__close {
+    position: absolute;
+    right: 40px;
+    top: 25px;
+    cursor: pointer;
+}
+
+.map__info__close::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    width: 25px;
+    height: 2px;
+    background: #333;
+    transition: .2s;
+    transform: rotate(45deg);
+}
+
+.map__info__close::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    width: 25px;
+    height: 2px;
+    background: #333;
+    transition: .2s;
+    transform: rotate(-45deg);
+}
+
+.map__image {
+
+}
+
+.map__image img {
+    width: 100%;
+}
+
+.map__name {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    display: inline-block;
+    border-bottom: 1px solid #FF5E03;
+    font-size: 20px;
+    font-weight: 500;
+    color: inherit;
+}
+
+.map__name:hover {
+    border-bottom: 1px solid transparent;
+}
+
+.map__name a {
+    color: #FF5E03;
+}
+
+.map__text {
+    margin-bottom: 5px;
+}
+
+@media screen and (max-width: 1000px) {
+    .map {
+        margin-left: 0;
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 850px) {
+    .map {
+        overflow: auto;
+    }
+    .map__info {
+        height: auto;
+        position: static;
+        width: 100%;
+    }
+}
+
 /* map */
 
 

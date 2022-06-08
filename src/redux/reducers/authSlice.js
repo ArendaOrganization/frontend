@@ -80,9 +80,9 @@ export const changePassword = createAsyncThunk(
 
 export const sendNewPasswordToBackEnd = createAsyncThunk(
     "auth/changePassword",
-    async ({password,code,secondCode}, thunkAPI) => {
+    async ({password, code, secondCode}, thunkAPI) => {
         try {
-            const response = await AuthService.sendNewPassword(password,code,secondCode);
+            const response = await AuthService.sendNewPassword(password, code, secondCode);
             return response.data;
         } catch (error) {
             const message =
@@ -228,12 +228,17 @@ export const postPremise = createAsyncThunk(
     "auth/postPromise",
     async ({
                name, description, squareMetersNumber, numberOfFloor, hasInternet, privatePremises,
-               phone, costPerMonth, address, latitude, longitude
+               phone, costPerMonth, address, latitude, longitude, mainImage, planImg, imqsImg
            }, thunkAPI) => {
         try {
             const response = await premiseService.postPremise(name, description, squareMetersNumber, numberOfFloor,
                 hasInternet, privatePremises, phone, costPerMonth, address, latitude, longitude);
-            thunkAPI.dispatch(postImgForPremise({id: response.id}));
+            thunkAPI.dispatch(postImgForPremise({
+                id: response.id,
+                mainImage,
+                planImg,
+                imqsImg
+            }));
             return response.data;
         } catch (error) {
             const message =
@@ -249,12 +254,15 @@ export const postPremise = createAsyncThunk(
 
 export const postImgForPremise = createAsyncThunk(
     "auth/postPromise",
-    async ({id}, thunkAPI) => {
+    async ({id,mainImage,planImg,imqsImg}, thunkAPI) => {
+        console.log("main: " + mainImage);
+        console.log("plan: " + planImg);
+        console.log("imgs: " + imqsImg);
         try {
             const formData = new FormData();
-            formData.append("mainImg", cartinka);
-            formData.append("plan", cartinka);
-            formData.append("imgs", cartinka);
+            formData.append("mainImg", mainImage);
+            formData.append("plan", planImg);
+            formData.append("imgs", imqsImg);
             //const response = await premiseService.postPremiseImg(id);
             const response = await axios({
                 method: "post",
@@ -369,11 +377,20 @@ const authSlice = createSlice({
         updateEmailForPasswordChangeInput(state, action) {
             state.emailForPasswordChangeInput = action.payload;
         },
-        updatePasswordToChangePasswordInput(state,action) {
+        updatePasswordToChangePasswordInput(state, action) {
             state.passwordToChangePassword = action.payload;
         },
-        updatePasswordCheckerToChangePasswordInput(state,action) {
+        updatePasswordCheckerToChangePasswordInput(state, action) {
             state.passwordCheckerToChangePassword = action.payload;
+        },
+        addMainImageToState(state, action) {
+            state.mainImg = action.payload;
+        },
+        addPlanImageToState(state, action) {
+            state.plan = action.payload;
+        },
+        addImgsToState(state, action) {
+            state.imgs = action.payload;
         },
     },
     extraReducers: {
@@ -444,6 +461,9 @@ export const {
     toggleIsMapOpenOnCreatePage,
     updateEmailForPasswordChangeInput,
     updatePasswordToChangePasswordInput,
-    updatePasswordCheckerToChangePasswordInput
+    updatePasswordCheckerToChangePasswordInput,
+    addMainImageToState,
+    addPlanImageToState,
+    addImgsToState
 } = authSlice.actions
 export default authSlice.reducer

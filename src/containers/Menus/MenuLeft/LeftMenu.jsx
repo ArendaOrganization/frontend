@@ -1,12 +1,14 @@
 import {useDispatch, useSelector} from "react-redux";
 import {leftMenuToggler} from "../../../redux/reducers/authSlice";
+import {useNavigate} from "react-router";
 
 const LeftMenu = function () {
     const authSlice = useSelector(state => state.auth);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     return (
-        <div className={authSlice.leftMenuToggle ? "left-menu opened" : "left-menu"}  id="main__inner">
+        <div className={authSlice.leftMenuToggle ? "left-menu opened" : "left-menu"} id="main__inner">
             <div
                 className="left-menu__togler"
                 id="left-menu__togler"
@@ -21,7 +23,7 @@ const LeftMenu = function () {
                     <a href="src/containers/Menus/MenuLeft/LeftMenu">Главная</a>
                 </li>
                 <li>
-                    <a href="src/containers/Menus/MenuLeft/LeftMenu">Карта помещений</a>
+                    <a onClick={() => navigate("../MapPage", {replace: true})}>Карта помещений</a>
                 </li>
                 <li>
                     <a href="src/containers/Menus/MenuLeft/LeftMenu">Помощь</a>

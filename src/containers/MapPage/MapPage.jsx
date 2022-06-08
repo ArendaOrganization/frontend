@@ -1,33 +1,114 @@
 import {useDispatch, useSelector} from "react-redux";
-import {Link} from "react-router-dom";
-import mapPageStyle from "./MapPage.module.css"
+import "./MapPageStyle.css";
 import {Clusterer, Map, Placemark, YMaps} from "react-yandex-maps";
 import {getAllMapData, getMapElemData, setMapData, updateCurrentOnClickCoords} from "../../redux/reducers/authSlice";
 import {useEffect} from "react";
-import mapService from "../../services/map.service";
+import MenuRightLogined from "../Menus/MenuRightLogined/MenuRightLogined";
+import LeftMenu from "../Menus/MenuLeft/LeftMenu";
+import examplePlace from "./img/example-place.png"
 
 const MapPage = function () {
     const authSlice = useSelector(state => state.auth);
     const dispatch = useDispatch();
-    const centerCoords = (authSlice.mapAll)&&(authSlice.mapAll.length > 0)
+    const centerCoords = (authSlice.mapAll) && (authSlice.mapAll.length > 0)
         ? [authSlice.mapAll[0].latitude, authSlice.mapAll[0].longitude]
         : [56.845130, 60.626060];
 
     useEffect(() => {
-        dispatch(getAllMapData());
+        dispatch(getAllMapData({}));
     })
 
     return (
-        <div>
-            <p>
-                <Link to={"/HomePage"} className={mapPageStyle.button}>
-                    ToHomePage
-                </Link>
-                <Link to={"/RentYourPage"} className={mapPageStyle.button}>
-                    ToRentYourPage
-                </Link>
-            </p>
-            <YMaps>
+        <div className="main">
+            <LeftMenu/>
+            <div className="main__inner" id="main__inner">
+
+                <div className="map">
+                    <div className="map__inner">
+                        <button className="main-btn" id="map-toggler"> Пример</button>
+                        <div
+                            id="map__info"
+                            className={
+                                authSlice.isMapMenuVisible ? "map__info opened" : "map__info"
+                            }
+                        >
+                            <div className="map__info__close" id="map__info__close"></div>
+                            <div className="map__info-block">
+                                <div className="map__image">
+                                    <a href="">
+                                        <img
+                                            src={examplePlace}
+                                            alt=""/>
+                                    </a>
+                                </div>
+                                <p className="map__name">
+                                    <a href="/">Название</a>
+                                </p>
+                                <p className="map__text">Адрес</p>
+                                <p className="map__text">Количество квадратных метров</p>
+                                <p className="map__text">Стоимость</p>
+                            </div>
+                            <div className="map__info-block">
+                                <div className="map__image">
+                                    <a href="">
+                                        <img
+                                            src={examplePlace}
+                                            alt=""/>
+                                    </a>
+                                </div>
+                                <p className="map__name">
+                                    <a href="/">Название</a>
+                                </p>
+                                <p className="map__text">Адрес</p>
+                                <p className="map__text">Количество квадратных метров</p>
+                                <p className="map__text">Стоимость</p>
+                            </div>
+                            <div className="map__info-block">
+                                <div className="map__image">
+                                    <a href="">
+                                        <img
+                                            src={examplePlace}
+                                            alt=""/>
+                                    </a>
+                                </div>
+                                <p className="map__name">
+                                    <a href="/">Название</a>
+                                </p>
+                                <p className="map__text">Адрес</p>
+                                <p className="map__text">Количество квадратных метров</p>
+                                <p className="map__text">Стоимость</p>
+                            </div>
+                            <div className="map__info-block">
+                                <div className="map__image">
+                                    <a href="">
+                                        <img
+                                            src={examplePlace}
+                                            alt=""/>
+                                    </a>
+                                </div>
+                                <p className="map__name">
+                                    <a href="/">Название</a>
+                                </p>
+                                <p className="map__text">Адрес</p>
+                                <p className="map__text">Количество квадратных метров</p>
+                                <p className="map__text">Стоимость</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="menu-right logined">
+                    <a href="" className="menu-right__link">
+                        Имя пользователя
+                    </a>
+                    <img src="img/user.png" alt="" className="user-avatar"/>
+                </div>
+            </div>
+        </div>
+    );
+};
+/*
+<YMaps>
                 <div>
                     My awesome application with maps!
                     <Map
@@ -65,20 +146,11 @@ const MapPage = function () {
                     </Map>
                 </div>
             </YMaps>
-            <div>
-                {
-                    authSlice.mapElem ?
-                        <p>
-                            id:{authSlice.mapElem.id}<br/>
-                            address:{authSlice.mapElem.address}<br/>
-                            lat:{authSlice.mapElem.latitude}<br/>
-                            long:{authSlice.mapElem.longitude}<br/>
-                        </p>
-                        : null
-                }
-            </div>
-        </div>
-    );
-};
+
+            className={
+                                authSlice.isMapMenuVisible ? "map__info opened" : "map__info"
+                            }
+*/
+
 
 export default MapPage;

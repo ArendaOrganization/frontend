@@ -30,6 +30,10 @@ const initialState = {
     emailForPasswordChangeInput: "",
     passwordToChangePassword:"",
     passwordCheckerToChangePassword:"",
+    mainImg: null,
+    plan: null,
+    imgs: null,
+    isMapMenuVisible: false,
 };
 
 export default initialState;

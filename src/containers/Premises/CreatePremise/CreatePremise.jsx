@@ -5,7 +5,7 @@ import "../PremisesStyle.css";
 import {useEffect} from "react";
 import examplePLace from "../img/example-place.png";
 import {
-    postPremise, toggleIsMapOpenOnCreatePage,
+    addImgsToState, addMainImageToState, addPlanImageToState, postPremise, toggleIsMapOpenOnCreatePage,
     updateCurrentPremiseArea, updateCurrentPremiseCost, updateCurrentPremiseDescription, updateCurrentPremiseFloor,
     updateCurrentPremiseName, updateCurrentPremisePhone, updateIsPremisePrivate, updatePremiseHasInternet
 } from "../../../redux/reducers/authSlice";
@@ -112,6 +112,34 @@ const CreatePremise = function () {
                             </div>
                             <div className="col-md-6">
                                 <div className="form-row">
+                                    <p className="form-label">Основное фото **</p>
+                                    <div className="form-images">
+                                        <div className="form-image selected notempty">
+                                            <input type="file" name="" id="f1"/>
+                                            <label htmlFor="f1" className="form-image__label">
+                                                <div className="form-image__mask">
+                                                    <button>Удалить</button>
+                                                </div>
+                                                <img src={examplePLace} alt=""/>
+                                            </label>
+                                        </div>
+                                        <div className="form-image">
+                                            <input
+                                                type="file"
+                                                id="f4"
+                                                onChange={
+                                                    (e) => {
+                                                        console.log("main: ")
+                                                        console.log(e.target.files[0]);
+                                                        dispatch(addMainImageToState(e.target.files[0]));
+                                                    }
+                                                }
+                                            />
+                                            <label htmlFor="f4" className="form-image__label"></label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="form-row">
                                     <p className="form-label">Фото помещения</p>
                                     <div className="form-images">
                                         <div className="form-image selected notempty">
@@ -146,8 +174,18 @@ const CreatePremise = function () {
                                             </label>
                                         </div>
                                         <div className="form-image">
-                                            <input type="file" name="" id="f4"/>
-                                            <label htmlFor="f4" className="form-image__label"></label>
+                                            <input
+                                                type="file"
+                                                id="f5"
+                                                onChange={
+                                                    (e) => {
+                                                        console.log("imgs: ")
+                                                        console.log(e.target.files[0]);
+                                                        dispatch(addImgsToState(e.target.files[0]));
+                                                    }
+                                                }
+                                            />
+                                            <label htmlFor="f5" className="form-image__label"></label>
                                         </div>
                                     </div>
                                 </div>
@@ -186,7 +224,17 @@ const CreatePremise = function () {
                                             </label>
                                         </div>
                                         <div className="form-image">
-                                            <input type="file" name="" id="f8"/>
+                                            <input
+                                                type="file"
+                                                id="f8"
+                                                onChange={
+                                                    (e) => {
+                                                        console.log("plan: ")
+                                                        console.log(e.target.files[0]);
+                                                        dispatch(addPlanImageToState(e.target.files[0]));
+                                                    }
+                                                }
+                                            />
                                             <label htmlFor="f8" className="form-image__label"></label>
                                         </div>
                                     </div>
@@ -268,7 +316,10 @@ const CreatePremise = function () {
                                                         costPerMonth: authSlice.currentPremiseCost,
                                                         address: authSlice.currentOnClickAddress,
                                                         latitude: authSlice.currentOnClickCoords[0],
-                                                        longitude: authSlice.currentOnClickCoords[1]
+                                                        longitude: authSlice.currentOnClickCoords[1],
+                                                        mainImage: authSlice.mainImg,
+                                                        planImg: authSlice.plan,
+                                                        imqsImg: authSlice.imgs
                                                     }
                                                 ))
                                             }
