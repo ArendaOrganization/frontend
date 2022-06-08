@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const ALL_API_URL = "http://localhost:8081/map/getAllMapPoints";
-const ELEM_API_URL = "http://localhost:8081/map/getMapPoint";
+const ELEM_API_URL = "http://localhost:8081/map/getPremisesByMapPoint?mapPointId=";
 const API_URL = "http://localhost:8081/premises/addPremises";
 
 const user = JSON.parse(localStorage.getItem("user"));
@@ -32,9 +32,10 @@ const getMapData = () => {
         });
 };
 
-const getMapElemData = (id, {headers: {...headers}}) => {
+const getMapElemData = (id) => {
+    console.log(id);
     return axios
-        .get(ELEM_API_URL + `?id=${id}`, {headers: {...headers}})
+            .get(ELEM_API_URL+id, {headers: {...headers}})
         .then((response) => {
             localStorage.setItem("mapElem", JSON.stringify(response.data));
             return response.data;

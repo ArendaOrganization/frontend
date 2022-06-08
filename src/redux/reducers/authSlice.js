@@ -103,7 +103,6 @@ export const getAllMapData = createAsyncThunk(
     async ({}, thunkAPI) => {
         try {
             const mapData = await mapService.getMapData();
-            thunkAPI.dispatch(setMapData(mapData));
             return mapData;
         } catch (error) {
             const message =
@@ -317,9 +316,6 @@ const authSlice = createSlice({
         updateRegOrLogVisibility(state) {
             state.regOrLogVisibility = !state.regOrLogVisibility;
         },
-        setMapData(state, action) {
-            state.mapAll = action.payload;
-        },
         setMapElemData(state, action) {
             state.mapElem = action.payload;
         },
@@ -392,6 +388,9 @@ const authSlice = createSlice({
         addImgsToState(state, action) {
             state.imgs = action.payload;
         },
+        openOrCloseMapSlider(state) {
+            state.isMapMenuVisible = !state.isMapMenuVisible;
+        }
     },
     extraReducers: {
         [register.fulfilled]: (state, action) => {
@@ -427,6 +426,9 @@ const authSlice = createSlice({
         },
         [createCompany.fulfilled]: (state, action) => {
             state.hasCompany = true;
+        },
+        [getAllMapData.fulfilled]: (state, action) => {
+            state.mapAll = action.payload;
         }
     },
 })
@@ -441,7 +443,6 @@ export const {
     updateRegPasswordChecker,
     updateRegOrLogVisibility,
     leftMenuToggler,
-    setMapData,
     setMapElemData,
     updateCurrentOnClickCoords,
     updateCompanyNameInput,
@@ -464,6 +465,7 @@ export const {
     updatePasswordCheckerToChangePasswordInput,
     addMainImageToState,
     addPlanImageToState,
-    addImgsToState
+    addImgsToState,
+    openOrCloseMapSlider
 } = authSlice.actions
 export default authSlice.reducer

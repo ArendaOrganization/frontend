@@ -1,9 +1,9 @@
 import {useDispatch, useSelector} from "react-redux";
 import CompanyPagesMenu from "../../Menus/CompanyPagesManu/CompanyPagesMenu";
 import MenuRightLogined from "../../Menus/MenuRightLogined/MenuRightLogined";
-import "../PremisesStyle.css";
+import "../../mainStyle.css";
 import {useEffect} from "react";
-import examplePLace from "../img/example-place.png";
+import examplePLace from "../../img/example-place.png";
 import {
     addImgsToState, addMainImageToState, addPlanImageToState, postPremise, toggleIsMapOpenOnCreatePage,
     updateCurrentPremiseArea, updateCurrentPremiseCost, updateCurrentPremiseDescription, updateCurrentPremiseFloor,

@@ -1,5 +1,5 @@
 import {useDispatch, useSelector} from "react-redux";
-import {leftMenuToggler} from "../../../redux/reducers/authSlice";
+import {getAllMapData, leftMenuToggler} from "../../../redux/reducers/authSlice";
 import {useNavigate} from "react-router";
 
 const LeftMenu = function () {
@@ -20,13 +20,34 @@ const LeftMenu = function () {
             </div>
             <ul className="left-menu__ul">
                 <li>
+                    <a
+                        onClick={() => navigate("../HomePage", {replace: true})}
+                        className="leftMenuA"
+                    >Личный Кабинет</a>
+                </li>
+                <li>
                     <a href="src/containers/Menus/MenuLeft/LeftMenu">Главная</a>
                 </li>
                 <li>
-                    <a onClick={() => navigate("../MapPage", {replace: true})}>Карта помещений</a>
+                    <a
+                        onClick={
+                            () => {
+                                navigate("../MapPage", {replace: true});
+                                dispatch(getAllMapData({}));
+                            }
+                        }
+                        className="leftMenuA"
+                    >Карта помещений</a>
                 </li>
                 <li>
-                    <a href="src/containers/Menus/MenuLeft/LeftMenu">Помощь</a>
+                    <a
+                        onClick={
+                            () => {
+                                navigate("../HelpPage", {replace: true})
+                            }
+                        }
+                        className="leftMenuA"
+                    >Помощь</a>
                 </li>
             </ul>
         </div>

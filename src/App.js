@@ -13,6 +13,7 @@ import CheckYourEmailSign from "./containers/ChangePassword/CheckYourEmailSign";
 import ChangePassword from "./containers/ChangePassword/ChangePassword";
 import PasswordChangeConfirmation from "./containers/ChangePassword/PasswordChangeConfirmationSign";
 import WrongData from "./containers/AuthRegPage/AuthorisationErrors/WrongAuthData";
+import HelpPage from "./containers/HelpPage/HelpPage";
 
 function App() {
     const authSlice = useSelector(state => state.auth);
@@ -29,6 +30,7 @@ function App() {
                 <Route path="/CheckYourEmailSign" element={<CheckYourEmailSign/>}/>
                 <Route path="/PasswordChangeConfirmation" element={<PasswordChangeConfirmation/>}/>
                 <Route path="/WrongData" element={<WrongData/>}/>
+                <Route path="/HelpPage" element={<HelpPage/>}/>
                 <Route element={<ProtectedRoutes/>}>
                     <Route path="/HomePage" element={<HomePage/>}/>
                     <Route path="/MapPage" element={<MapPage/>}/>
