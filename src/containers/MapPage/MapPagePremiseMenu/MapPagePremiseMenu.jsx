@@ -29,7 +29,7 @@ const MapPagePremiseMenu = function () {
                             <div className="map__image">
                                 <a href="">
                                     <img
-                                        src={examplePlace}
+                                        src={"http://localhost:8081"+elem.mainImg.downloadLink}
                                         alt=""/>
                                 </a>
                             </div>
