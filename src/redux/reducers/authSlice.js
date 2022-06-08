@@ -4,11 +4,19 @@ import AuthService from "../../services/auth.service";
 import {setMessage} from "./messageAuthSlice";
 import mapService from "../../services/map.service";
 import companyService from "../../services/companies.service";
+import premiseService from "../../services/premise.service";
+import axios from "axios";
+import cartinka from "../../containers/Menus/img/user.png";
 
 const user = JSON.parse(localStorage.getItem("user"));
+const authError = JSON.parse(localStorage.getItem("authError"));
 const mapAll = JSON.parse(localStorage.getItem("mapAll"));
 const mapElem = JSON.parse(localStorage.getItem("mapElem"));
 const myCompanies = JSON.parse(localStorage.getItem("myCompanies"));
+
+const headers = {
+    'Authorization': user ? user.token : "",
+};
 
 export const login = createAsyncThunk(
     "auth/login",
@@ -23,8 +31,7 @@ export const login = createAsyncThunk(
                     error.response.data.message) ||
                 error.message ||
                 error.toString();
-            thunkAPI.dispatch(setMessage(message));
-            return thunkAPI.rejectWithValue();
+            return message;
         }
     }
 );
@@ -52,6 +59,44 @@ export const register = createAsyncThunk(
         }
     }
 );
+
+export const changePassword = createAsyncThunk(
+    "auth/changePassword",
+    async ({email}, thunkAPI) => {
+        try {
+            const response = await AuthService.sendEmailToChangePassword(email);
+            return response.data;
+        } catch (error) {
+            const message =
+                (error.response &&
+                    error.response.data &&
+                    error.response.data.message) ||
+                error.message ||
+                error.toString();
+            return message;
+        }
+    }
+);
+
+export const sendNewPasswordToBackEnd = createAsyncThunk(
+    "auth/changePassword",
+    async ({password,code,secondCode}, thunkAPI) => {
+        try {
+            const response = await AuthService.sendNewPassword(password,code,secondCode);
+            return response.data;
+        } catch (error) {
+            const message =
+                (error.response &&
+                    error.response.data &&
+                    error.response.data.message) ||
+                error.message ||
+                error.toString();
+            return message;
+        }
+    }
+);
+
+/*Map*/
 
 export const getAllMapData = createAsyncThunk(
     "auth/mapAllData",
@@ -103,7 +148,7 @@ export const getAddressByCoords = createAsyncThunk(
         }
     }
 );
-
+/*//Old
 export const postRentAddress = createAsyncThunk(
     "auth/postRentAddress",
     async ({address, latitude, longitude}, thunkAPI) => {
@@ -116,8 +161,8 @@ export const postRentAddress = createAsyncThunk(
             console.log("ERROR in getAddressByCoords");
         }
     }
-);
-/**/
+);*/
+/*Messenger*/
 export const getAllMessages = createAsyncThunk(
     "auth/getMessages",
     async ({}, thunkAPI) => {
@@ -136,13 +181,12 @@ export const getAllMessages = createAsyncThunk(
         }
     }
 )
-/**/
+/*Companies*/
 
 export const getCompanies = createAsyncThunk(
     "auth/getCompanies",
     async ({}, thunkAPI) => {
         try {
-            console.log("asdfasf");
             const response = await companyService.getMyCompanies();
             return response.data;
         } catch (error) {
@@ -178,9 +222,64 @@ export const createCompany = createAsyncThunk(
     }
 );
 
+/*Premises*/
+
+export const postPremise = createAsyncThunk(
+    "auth/postPromise",
+    async ({
+               name, description, squareMetersNumber, numberOfFloor, hasInternet, privatePremises,
+               phone, costPerMonth, address, latitude, longitude
+           }, thunkAPI) => {
+        try {
+            const response = await premiseService.postPremise(name, description, squareMetersNumber, numberOfFloor,
+                hasInternet, privatePremises, phone, costPerMonth, address, latitude, longitude);
+            thunkAPI.dispatch(postImgForPremise({id: response.id}));
+            return response.data;
+        } catch (error) {
+            const message =
+                (error.response &&
+                    error.response.data &&
+                    error.response.data.message) ||
+                error.message ||
+                error.toString();
+            return message;
+        }
+    }
+);
+
+export const postImgForPremise = createAsyncThunk(
+    "auth/postPromise",
+    async ({id}, thunkAPI) => {
+        try {
+            const formData = new FormData();
+            formData.append("mainImg", cartinka);
+            formData.append("plan", cartinka);
+            formData.append("imgs", cartinka);
+            //const response = await premiseService.postPremiseImg(id);
+            const response = await axios({
+                method: "post",
+                url: `http://localhost:8081/premises/addPremisesImg?premisesId=${id}`,
+                data: formData,
+                headers: {
+                    ...headers
+                },
+            });
+            return response.data;
+        } catch (error) {
+            const message =
+                (error.response &&
+                    error.response.data &&
+                    error.response.data.message) ||
+                error.message ||
+                error.toString();
+            return message;
+        }
+    }
+);
+
 const initialState = user
-    ? {isLoggedIn: true, user, mapAll, mapElem, userCompanies: [], ...basicData}
-    : {isLoggedIn: false, user: null, mapAll: null, mapElem: null, ...basicData};
+    ? {isLoggedIn: true, user, mapAll, mapElem, authError: false, userCompanies: [], ...basicData}
+    : {isLoggedIn: false, user: null, mapAll: null, mapElem: null, authError, ...basicData};
 
 const authSlice = createSlice({
     name: 'auth',
@@ -240,10 +339,47 @@ const authSlice = createSlice({
         updateCompanyEmailInput(state, action) {
             state.currentCompanyEmailInput = action.payload;
         },
+        updateCurrentPremiseName(state, action) {
+            state.currentPremiseName = action.payload;
+        },
+        updateCurrentPremiseArea(state, action) {
+            state.currentPremiseArea = action.payload;
+        },
+        updateCurrentPremiseFloor(state, action) {
+            state.currentPremiseFloor = action.payload;
+        },
+        updateCurrentPremiseDescription(state, action) {
+            state.currentPremiseDescription = action.payload;
+        },
+        updateCurrentPremiseCost(state, action) {
+            state.currentPremiseCost = action.payload;
+        },
+        updateCurrentPremisePhone(state, action) {
+            state.currentPremisePhone = action.payload;
+        },
+        updatePremiseHasInternet(state, action) {
+            state.premiseHasInternet = action.payload;
+        },
+        updateIsPremisePrivate(state, action) {
+            state.isPremisePrivate = action.payload;
+        },
+        toggleIsMapOpenOnCreatePage(state, action) {
+            state.isMapOpened = action.payload;
+        },
+        updateEmailForPasswordChangeInput(state, action) {
+            state.emailForPasswordChangeInput = action.payload;
+        },
+        updatePasswordToChangePasswordInput(state,action) {
+            state.passwordToChangePassword = action.payload;
+        },
+        updatePasswordCheckerToChangePasswordInput(state,action) {
+            state.passwordCheckerToChangePassword = action.payload;
+        },
     },
     extraReducers: {
         [register.fulfilled]: (state, action) => {
             state.isLoggedIn = false;
+            state.isAuthDataWrong = false;
         },
         [register.rejected]: (state, action) => {
             state.isLoggedIn = false;
@@ -297,5 +433,17 @@ export const {
     updateCompanyAddressInput,
     updateCompanyPhoneInput,
     updateCompanyEmailInput,
+    updateCurrentPremiseName,
+    updateCurrentPremiseArea,
+    updateCurrentPremiseFloor,
+    updateCurrentPremiseDescription,
+    updateCurrentPremiseCost,
+    updateCurrentPremisePhone,
+    updatePremiseHasInternet,
+    updateIsPremisePrivate,
+    toggleIsMapOpenOnCreatePage,
+    updateEmailForPasswordChangeInput,
+    updatePasswordToChangePasswordInput,
+    updatePasswordCheckerToChangePasswordInput
 } = authSlice.actions
 export default authSlice.reducer

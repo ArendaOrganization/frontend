@@ -10,6 +10,7 @@ const Authentication = function () {
     const messageSlice = useSelector(state => state.authMessage)
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const authError = JSON.parse(localStorage.getItem("authError"));
 
     const authorize = () => {
         dispatch(
@@ -19,7 +20,7 @@ const Authentication = function () {
             })
         )
     };
-
+    console.log(authError);
     async function handleSubmit(event) {
         event.preventDefault();
         await authorize();
@@ -28,6 +29,8 @@ const Authentication = function () {
 
     if (authSlice.user) {
         return <Navigate to="/HomePage" />;
+    } else if (authError) {
+        return <Navigate to="/WrongData" />;
     }
 
     return (
@@ -67,7 +70,10 @@ const Authentication = function () {
                                 />
                             </div>
                             <div className="form-row">
-                                <a href="" className="form-link">Забыли пароль</a>
+                                <a
+                                    className="form-link"
+                                    onClick={() => navigate("../SendEmailToChangePassword",{replace: true})}
+                                >Забыли пароль</a>
                             </div>
                         </div>
                     </div>

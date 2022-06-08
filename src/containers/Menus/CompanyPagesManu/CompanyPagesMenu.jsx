@@ -6,11 +6,17 @@ const CompanyPagesMenu = function () {
     const authSlice = useSelector(state => state.auth);
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
     return (
         <div className="pages-menu c-pages-menu">
             <ul className="pages-menu__ul">
                 <li>
-                    <a href="">Помещения</a>
+                    <a onClick={
+                        () => {
+                            navigate("../Premises", {replace: true});
+                        }}
+                    >
+                        Помещения</a>
                 </li>
                 <li>
                     <a href="">Документы</a>

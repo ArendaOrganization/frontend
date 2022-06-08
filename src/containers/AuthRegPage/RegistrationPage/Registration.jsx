@@ -22,7 +22,7 @@ const Registration = function () {
         <div className="container container-sm">
             <h1 className="container__h">Регистрация</h1>
             <div className="container__inner">
-                <form action="" className="main-form">
+                <div  className="main-form">
                     <div className="row">
                         <div className="col-md-6">
                             <div className="form-row">
@@ -138,7 +138,7 @@ const Registration = function () {
                             </div>
                         </div>
                     </div>
-                </form>
+                </div>
             </div>
         </div>
         /*

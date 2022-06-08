@@ -2,7 +2,6 @@ import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router";
 import LeftMenu from "../Menus/MenuLeft/LeftMenu";
 import avatar from "./img/user.png";
-import {logout} from "../../redux/reducers/authSlice";
 import "../mainStyle.css"
 import PagesManu from "../Menus/PagesMenu/PagesManu";
 import MenuRightLogined from "../Menus/MenuRightLogined/MenuRightLogined";
