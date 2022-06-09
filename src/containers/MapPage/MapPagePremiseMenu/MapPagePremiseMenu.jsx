@@ -27,7 +27,7 @@ const MapPagePremiseMenu = function () {
                 authSlice.mapElem === null
                     ? ""
                     : authSlice.mapElem.map((elem) => {
-                        const downloadLinq = authSlice.mapElem !== null ? "http://localhost:8081" + elem.mainImg.downloadLink : "";
+                        const downloadLinq = authSlice.mapElem.downloadLink !== null ? "http://localhost:8081" + elem.mainImg.downloadLink : "";
                         return (
                             <div
                                 key={elem.id}

@@ -6,6 +6,7 @@ import MenuRightLogined from "../../Menus/MenuRightLogined/MenuRightLogined";
 import SwiperTeg from "./Swiper/Swiper";
 import {useNavigate} from "react-router";
 import {Clusterer, Map, Placemark, YMaps} from "react-yandex-maps";
+import {getCompanyById} from "../../../redux/reducers/authSlice";
 
 const PlacePage = function () {
     const authSlice = useSelector(state => state.auth);
@@ -23,7 +24,6 @@ const PlacePage = function () {
     for (let i = 0; i < howMany; i++) {
         imgsLinqs.push("http://localhost:8081" + currentPlace.imgs.downloadLink + "_" + i + ".png");
     }
-    //"http://localhost:8081" + currentPlace.imgs.downloadLink + currentPlace.imgs.howMany;
 
     return (
         <div className="main">
@@ -77,7 +77,15 @@ const PlacePage = function () {
                                         </p>
                                     </div>
                                     <div className="col-md-6">
-                                        <p className="request__p">Владелец</p>
+                                        <a
+                                            className="request__a"
+                                            onClick={
+                                                () => {
+                                                    dispatch(getCompanyById({id: currentPlace.company.id}));
+                                                    navigate("../NotMyCompany", {replace: true});
+                                                }
+                                            }
+                                        >{currentPlace.company.name}</a>
                                     </div>
                                 </div>
                                 <div className="row">

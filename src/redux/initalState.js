@@ -34,6 +34,7 @@ const initialState = {
     plan: null,
     imgs: null,
     isMapMenuVisible: false,
+    premisesFilter: "",
 };
 
 export default initialState;

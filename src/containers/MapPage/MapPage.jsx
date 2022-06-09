@@ -2,7 +2,7 @@ import {useDispatch, useSelector} from "react-redux";
 import "../mainStyle.css";
 import {Clusterer, Map, Placemark, YMaps} from "react-yandex-maps";
 import {
-    getMapElemData,
+    getMapElemData, openMapSlider,
     openOrCloseMapSlider
 } from "../../redux/reducers/authSlice";
 import MenuRightLogined from "../Menus/MenuRightLogined/MenuRightLogined";
@@ -54,7 +54,7 @@ const MapPage = function () {
                                                             onClick={
                                                                 () => {
                                                                     dispatch(getMapElemData({id: elem.id}));
-                                                                    dispatch(openOrCloseMapSlider());
+                                                                    dispatch(openMapSlider());
                                                                 }
                                                             }
                                                         />

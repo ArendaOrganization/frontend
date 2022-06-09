@@ -34,8 +34,20 @@ const makeCompanies = (name, description, inn, addressMainOffice, phone, email) 
             {headers: {...headers}})
 }
 
+const getMyCompanyById = (id) => {
+    return axios
+        .get(`${COMPANY_URL}/getCompany?companyId=${id}`, {headers: {...headers}})
+        .then(response => {
+            localStorage.setItem("companyById", JSON.stringify(response.data));
+            return response.data;
+        }).catch(error => {
+            console.log(error);
+        });
+}
+
 const companyService = {
     getMyCompanies,
-    makeCompanies
+    makeCompanies,
+    getMyCompanyById
 };
 export default companyService;

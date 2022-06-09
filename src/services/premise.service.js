@@ -1,7 +1,7 @@
 import axios from "axios";
-import cartinka from "../img/bg.png"
 
 const API_URL = "http://localhost:8081/premises";
+// /getUserPremises
 // + "/addPremises"
 
 const user = JSON.parse(localStorage.getItem("user"));
@@ -44,7 +44,7 @@ const postPremise = (name, description, squareMetersNumber, numberOfFloor, hasIn
         });
 }
 
-const postPremiseImg = (id) => {
+/*const postPremiseImg = (id) => {
     const formData = new FormData();
     formData.append("mainImg", cartinka);
     formData.append("plan", cartinka);
@@ -58,7 +58,7 @@ const postPremiseImg = (id) => {
             {
                 headers: {
                     ...headers,
-                    //'Accept': '*/*',
+                    //'Accept': '*!/!*',
                     'Content-Type': 'multipart/form-data'
                 }
             })
@@ -67,7 +67,7 @@ const postPremiseImg = (id) => {
         }).catch(error => {
             console.log(error);
         });
-}
+}*/
 
 const getPremise = (id) => {
     return axios
@@ -86,6 +86,22 @@ const getPremise = (id) => {
         });
 }
 
+const getAllPremises = () => {
+    return axios
+        .get(
+            `${API_URL}/getUserPremises`,
+            {
+                headers: {
+                    ...headers
+                }
+            })
+        .then(response => {
+            localStorage.setItem("allPremises", JSON.stringify(response.data));
+            return response.data;
+        }).catch(error => {
+            console.log(error);
+        });
+}
 /*
 const premises = {
         name,
@@ -114,7 +130,7 @@ const premises = {
 
 const premiseService = {
     postPremise,
-    postPremiseImg,
-    getPremise
+    getPremise,
+    getAllPremises
 };
 export default premiseService;

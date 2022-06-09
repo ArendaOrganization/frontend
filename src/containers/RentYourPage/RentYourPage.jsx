@@ -3,7 +3,6 @@ import "./RentYourPage.css";
 import {Clusterer, Map, Placemark, YMaps} from "react-yandex-maps";
 import {
     getAddressByCoords,
-    postRentAddress,
     toggleIsMapOpenOnCreatePage,
     updateCurrentOnClickCoords
 } from "../../redux/reducers/authSlice";
@@ -11,7 +10,7 @@ import {
 const RentYourPage = function () {
     const authSlice = useSelector(state => state.auth);
     const dispatch = useDispatch();
-    const centerCoords = authSlice.mapAll ? [authSlice.mapAll[0].latitude, authSlice.mapAll[0].longitude] : [56.845130, 60.626060];
+    const centerCoords = [56.845130, 60.626060];
 
     return (
         <div className="modal__inner">

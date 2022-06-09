@@ -1,6 +1,7 @@
 import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router";
 import "../../mainStyle.css";
+import {getAllPremises} from "../../../redux/reducers/authSlice";
 
 const CompanyPagesMenu = function () {
     const authSlice = useSelector(state => state.auth);
@@ -13,6 +14,7 @@ const CompanyPagesMenu = function () {
                 <li>
                     <a onClick={
                         () => {
+                            dispatch(getAllPremises({}));
                             navigate("../Premises", {replace: true});
                         }}
                     >

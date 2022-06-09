@@ -13,6 +13,8 @@ const mapAll = JSON.parse(localStorage.getItem("mapAll"));
 const mapElem = JSON.parse(localStorage.getItem("mapElem"));
 const myCompanies = JSON.parse(localStorage.getItem("myCompanies"));
 const currentPlace = JSON.parse(localStorage.getItem("currentPlace"));
+const companyById = JSON.parse(localStorage.getItem("companyById"));
+const allPremises = JSON.parse(localStorage.getItem("allPremises"));
 
 const headers = {
     'Authorization': user ? user.token : "",
@@ -221,6 +223,23 @@ export const createCompany = createAsyncThunk(
     }
 );
 
+export const getCompanyById = createAsyncThunk(
+    "auth/getCompanyById",
+    async ({id}) => {
+        try {
+            const response = await companyService.getMyCompanyById(id);
+            return response.data;
+        } catch (error) {
+            const message =
+                (error.response &&
+                    error.response.data &&
+                    error.response.data.message) ||
+                error.message ||
+                error.toString();
+            return message;
+        }
+    }
+)
 /*Premises*/
 
 export const postPremise = createAsyncThunk(
@@ -253,12 +272,19 @@ export const postPremise = createAsyncThunk(
 
 export const postImgForPremise = createAsyncThunk(
     "auth/postPromise",
-    async ({id,mainImage,planImg,imqsImg}, thunkAPI) => {
+    async ({id, mainImage, planImg, imqsImg}, thunkAPI) => {
         try {
             const formData = new FormData();
             formData.append("mainImg", mainImage);
             formData.append("plan", planImg);
             formData.append("imgs", imqsImg);
+            console.log(imqsImg);
+            /*imqsImg.forEach(img => {
+                formData.append("imgs", img)
+            })*/
+            for (let i = 0; i < imqsImg.length; i++) {
+                formData.append("imgs", imqsImg[i]);
+            }
             //const response = await premiseService.postPremiseImg(id);
             const response = await axios({
                 method: "post",
@@ -299,9 +325,33 @@ export const getPremise = createAsyncThunk(
     }
 );
 
+export const getAllPremises = createAsyncThunk(
+    "auth/getPremise",
+    async ({}) => {
+        try {
+            const response = await premiseService.getAllPremises();
+            return response.data;
+        } catch (error) {
+            const message =
+                (error.response &&
+                    error.response.data &&
+                    error.response.data.message) ||
+                error.message ||
+                error.toString();
+            return message;
+        }
+    }
+);
+
 const initialState = user
-    ? {isLoggedIn: true, user, mapAll, mapElem, authError: false, userCompanies: [], currentPlace, ...basicData}
-    : {isLoggedIn: false, user: null, mapAll: null, mapElem: null, authError, currentPlace: null, ...basicData};
+    ? {
+        isLoggedIn: true, user, mapAll, mapElem, authError: false,
+        myCompanies, currentPlace, companyById, allPremises, ...basicData
+    }
+    : {
+        isLoggedIn: false, user: null, mapAll: null, mapElem: null, authError, myCompanies: null,
+        currentPlace: null, companyById: null, allPremises: null, ...basicData
+    };
 
 const authSlice = createSlice({
     name: 'auth',
@@ -405,7 +455,13 @@ const authSlice = createSlice({
         },
         openOrCloseMapSlider(state) {
             state.isMapMenuVisible = !state.isMapMenuVisible;
-        }
+        },
+        openMapSlider(state) {
+            state.isMapMenuVisible = true;
+        },
+        updatePremisesFilter(state, action) {
+            state.premisesFilter = action.payload;
+        },
     },
     extraReducers: {
         [register.fulfilled]: (state, action) => {
@@ -435,9 +491,6 @@ const authSlice = createSlice({
         },
         [getAllMessages.fulfilled]: (state, action) => {
             console.log(action.payload);
-        },
-        [getCompanies.fulfilled]: (state, action) => {
-            state.userCompanies = myCompanies;
         },
         [createCompany.fulfilled]: (state, action) => {
             state.hasCompany = true;
@@ -481,6 +534,8 @@ export const {
     addMainImageToState,
     addPlanImageToState,
     addImgsToState,
-    openOrCloseMapSlider
+    openOrCloseMapSlider,
+    openMapSlider,
+    updatePremisesFilter
 } = authSlice.actions
 export default authSlice.reducer
