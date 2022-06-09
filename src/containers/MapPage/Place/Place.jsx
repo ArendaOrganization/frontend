@@ -3,14 +3,17 @@ import "../../mainStyle.css";
 import LeftMenu from "../../Menus/MenuLeft/LeftMenu";
 import PagesManu from "../../Menus/PagesMenu/PagesManu";
 import MenuRightLogined from "../../Menus/MenuRightLogined/MenuRightLogined";
-import {useEffect} from "react";
+import SwiperTeg from "./Swiper/Swiper";
+import {useNavigate} from "react-router";
 
 const PlacePage = function () {
     const authSlice = useSelector(state => state.auth);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const currentPlace = JSON.parse(localStorage.getItem("currentPlace"));
     const downloadLinqMainImg = "http://localhost:8081" + currentPlace.mainImg.downloadLink;
     const downloadLinqPlan = "http://localhost:8081" + currentPlace.plan.downloadLink;
+    const myCompanies = JSON.parse(localStorage.getItem("myCompanies"));
     const howMany = currentPlace.imgs.howMany;
     let imgsLinqs = [];
     for (let i = 0; i < howMany; i++) {
@@ -22,7 +25,6 @@ const PlacePage = function () {
         <div className="main">
             <LeftMenu/>
             <div className="main__inner" id="main__inner">
-
                 <div className="container container-m">
                     <PagesManu/>
                     <h1 className="container__h">Помещение</h1>
@@ -72,56 +74,15 @@ const PlacePage = function () {
                                         </p>
                                     </div>
                                     <div className="col-md-6">
-                                        <p className="request__p">Владелец</p>
-                                    </div>
-                                </div>
-                                <div className="row">
-                                    <div className="col-md-6">
-                                        <p className="request__p">
-                                            <b>Статус:</b>
-                                        </p>
-                                    </div>
-                                    <div className="col-md-6">
-                                        <p className="request__p">Статус</p>
-                                    </div>
-                                </div>
-                                <div className="row">
-                                    <div className="col-md-6">
-                                        <p className="request__p">
-                                            <b>Действия:</b>
-                                        </p>
-                                    </div>
-                                    <div className="col-md-6">
-                                        <p className="request__p">
-                                            <a href="" className="form-link">Одобрить</a>
-                                            <a href="" className="form-link">Не одобрять</a>
-                                        </p>
+                                        <p
+                                            className="request__p"
+                                            onClick={() => navigate("../Companies",{replace: true})}
+                                        >{myCompanies.name}</p>
                                     </div>
                                 </div>
                                 <div className="row">
                                     <div className="col-md-12">
-                                        <div className="slider">
-                                            <p className="slider__h">Фото помещения</p>
-                                            <div className="swiper-container pages-slider">
-                                                <div className="swiper-wrapper">
-                                                    {
-                                                        imgsLinqs.map((elem) => {
-                                                            console.log(imgsLinqs);
-                                                            return (
-                                                                <div className="swiper-slide">
-                                                                    <a data-fancybox="gallery">
-                                                                        <img loading="lazy" src={elem}/>
-                                                                    </a>
-                                                                </div>
-                                                            );
-                                                        })
-                                                    }
-                                                </div>
-                                            </div>
-                                            <div className="slider-navigation slider-navigation__items">
-                                                <div className="slider-pagination pages-pagination"></div>
-                                            </div>
-                                        </div>
+                                        <SwiperTeg imgsLinqs={imgsLinqs}/>
                                         <div className="slider">
                                             <p className="slider__h">План помещения</p>
                                             <div className="swiper-container pages-slider2">

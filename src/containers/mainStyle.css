@@ -979,6 +979,17 @@ a {
 
 
 /* swiper slider */
+.swiper-button-next::after {
+    color: #ff5e03;
+}
+
+.swiper-button-prev::after {
+    color: #ff5e03;
+}
+
+.swiper-pagination-bullet-active {
+    background-color: #ff5e03 !important;
+}
 
 .swiper-container {
     position: relative;
