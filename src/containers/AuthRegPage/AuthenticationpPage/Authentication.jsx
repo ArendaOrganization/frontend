@@ -7,10 +7,8 @@ import "../../mainStyle.css";
 
 const Authentication = function () {
     const authSlice = useSelector(state => state.auth);
-    const messageSlice = useSelector(state => state.authMessage)
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const authError = JSON.parse(localStorage.getItem("authError"));
 
     const authorize = () => {
         dispatch(
@@ -20,7 +18,6 @@ const Authentication = function () {
             })
         )
     };
-    console.log(authError);
     async function handleSubmit(event) {
         event.preventDefault();
         await authorize();
@@ -29,8 +26,6 @@ const Authentication = function () {
 
     if (authSlice.user) {
         return <Navigate to="/HomePage" />;
-    } else if (authError) {
-        return <Navigate to="/WrongData" />;
     }
 
     return (

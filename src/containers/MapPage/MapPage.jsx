@@ -3,13 +3,10 @@ import "../mainStyle.css";
 import {Clusterer, Map, Placemark, YMaps} from "react-yandex-maps";
 import {
     getMapElemData,
-    openOrCloseMapSlider,
-    updateCurrentOnClickCoords
+    openOrCloseMapSlider
 } from "../../redux/reducers/authSlice";
-import {useEffect} from "react";
 import MenuRightLogined from "../Menus/MenuRightLogined/MenuRightLogined";
 import LeftMenu from "../Menus/MenuLeft/LeftMenu";
-import examplePlace from "./img/example-place.png"
 import MapPagePremiseMenu from "./MapPagePremiseMenu/MapPagePremiseMenu";
 
 const MapPage = function () {

@@ -30,6 +30,8 @@ const logout = () => {
     localStorage.removeItem("user");
     localStorage.removeItem("mapAll");
     localStorage.removeItem("myCompanies");
+    localStorage.removeItem("mapElem");
+    localStorage.removeItem("currentPlace");
 };
 const sendEmailToChangePassword = (email) => {
     return axios

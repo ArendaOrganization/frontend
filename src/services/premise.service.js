@@ -69,6 +69,23 @@ const postPremiseImg = (id) => {
         });
 }
 
+const getPremise = (id) => {
+    return axios
+        .get(
+            `${API_URL}/getPremisesById?premisesId=${id}`,
+            {
+                headers: {
+                    ...headers
+                }
+            })
+        .then(response => {
+            localStorage.setItem("currentPlace", JSON.stringify(response.data));
+            return response.data;
+        }).catch(error => {
+            console.log(error);
+        });
+}
+
 /*
 const premises = {
         name,
@@ -97,6 +114,7 @@ const premises = {
 
 const premiseService = {
     postPremise,
-    postPremiseImg
+    postPremiseImg,
+    getPremise
 };
 export default premiseService;

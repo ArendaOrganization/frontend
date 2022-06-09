@@ -6,13 +6,13 @@ import mapService from "../../services/map.service";
 import companyService from "../../services/companies.service";
 import premiseService from "../../services/premise.service";
 import axios from "axios";
-import cartinka from "../../containers/Menus/img/user.png";
 
 const user = JSON.parse(localStorage.getItem("user"));
 const authError = JSON.parse(localStorage.getItem("authError"));
 const mapAll = JSON.parse(localStorage.getItem("mapAll"));
 const mapElem = JSON.parse(localStorage.getItem("mapElem"));
 const myCompanies = JSON.parse(localStorage.getItem("myCompanies"));
+const currentPlace = JSON.parse(localStorage.getItem("currentPlace"));
 
 const headers = {
     'Authorization': user ? user.token : "",
@@ -254,9 +254,6 @@ export const postPremise = createAsyncThunk(
 export const postImgForPremise = createAsyncThunk(
     "auth/postPromise",
     async ({id,mainImage,planImg,imqsImg}, thunkAPI) => {
-        console.log("main: " + mainImage);
-        console.log("plan: " + planImg);
-        console.log("imgs: " + imqsImg);
         try {
             const formData = new FormData();
             formData.append("mainImg", mainImage);
@@ -284,9 +281,27 @@ export const postImgForPremise = createAsyncThunk(
     }
 );
 
+export const getPremise = createAsyncThunk(
+    "auth/getPremise",
+    async ({id}) => {
+        try {
+            const response = await premiseService.getPremise(id);
+            return response.data;
+        } catch (error) {
+            const message =
+                (error.response &&
+                    error.response.data &&
+                    error.response.data.message) ||
+                error.message ||
+                error.toString();
+            return message;
+        }
+    }
+);
+
 const initialState = user
-    ? {isLoggedIn: true, user, mapAll, mapElem, authError: false, userCompanies: [], ...basicData}
-    : {isLoggedIn: false, user: null, mapAll: null, mapElem: null, authError, ...basicData};
+    ? {isLoggedIn: true, user, mapAll, mapElem, authError: false, userCompanies: [], currentPlace, ...basicData}
+    : {isLoggedIn: false, user: null, mapAll: null, mapElem: null, authError, currentPlace: null, ...basicData};
 
 const authSlice = createSlice({
     name: 'auth',
