@@ -2,10 +2,12 @@ import {useDispatch, useSelector} from "react-redux";
 import "../../mainStyle.css";
 import examplePlace from "../img/example-place.png";
 import {openOrCloseMapSlider} from "../../../redux/reducers/authSlice";
+import {useNavigate} from "react-router";
 
 const MapPagePremiseMenu = function () {
     const authSlice = useSelector(state => state.auth);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     return (
         <div
@@ -24,12 +26,22 @@ const MapPagePremiseMenu = function () {
             ></div>
             {
                 authSlice.mapElem.map((elem) => {
+                    const downloadLinq = authSlice.mapElem !== null ? "http://localhost:8081" + elem.mainImg.downloadLink : "";
                     return (
-                        <div className="map__info-block">
+                        <div
+                            key={elem.id}
+                            className="map__info-block"
+                            onClick={
+                                () => {
+                                    navigate("../Place", {replace: true});
+                                    localStorage.setItem("currentPlace", JSON.stringify(elem));
+                                }
+                            }
+                        >
                             <div className="map__image">
                                 <a href="">
                                     <img
-                                        src={"http://localhost:8081"+elem.mainImg.downloadLink}
+                                        src={downloadLinq}
                                         alt=""/>
                                 </a>
                             </div>

@@ -14,6 +14,7 @@ import ChangePassword from "./containers/ChangePassword/ChangePassword";
 import PasswordChangeConfirmation from "./containers/ChangePassword/PasswordChangeConfirmationSign";
 import WrongData from "./containers/AuthRegPage/AuthorisationErrors/WrongAuthData";
 import HelpPage from "./containers/HelpPage/HelpPage";
+import Place from "./containers/MapPage/Place/Place";
 
 function App() {
     const authSlice = useSelector(state => state.auth);
@@ -37,6 +38,7 @@ function App() {
                     <Route path="/RentYourPage" element={<RentYourPage/>}/>
                     <Route path="/Companies" element={<Companies/>}/>
                     <Route path="/Premises" element={<Premises/>}/>
+                    <Route path="/Place" element={<Place/>}/>
                 </Route>
             </Routes>
         </BrowserRouter>

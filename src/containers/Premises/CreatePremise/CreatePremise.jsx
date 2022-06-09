@@ -176,6 +176,7 @@ const CreatePremise = function () {
                                         <div className="form-image">
                                             <input
                                                 type="file"
+                                                multiple
                                                 id="f5"
                                                 onChange={
                                                     (e) => {
