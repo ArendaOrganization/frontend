@@ -18,7 +18,7 @@ const CreatedCompanyPage = function () {
                         <p className="container-p container-p_wm">Название компании:</p>
                     </div>
                     <div className="col-md-9">
-                        <p className="container-p">Название компании</p>
+                        <p className="container-p">{authSlice.myCompanies.name}</p>
                     </div>
                 </div>
                 <div className="row">
@@ -27,16 +27,7 @@ const CreatedCompanyPage = function () {
                     </div>
                     <div className="col-md-9">
                         <p className="container-p">
-                            Есть много вариантов Lorem Ipsum, но большинство из них имеет не всегда
-                            приемлемые
-                            модификации, например, юмористические вставки или слова, которые даже
-                            отдалённо не
-                            напоминают латынь.
-                        </p>
-                        <p className="container-p">
-                            В результате сгенерированный Lorem Ipsum выглядит правдоподобно, не
-                            имеет повторяющихся
-                            абзацев или "невозможных" слов.
+                            {authSlice.myCompanies.description}
                         </p>
                     </div>
                 </div>
@@ -45,7 +36,7 @@ const CreatedCompanyPage = function () {
                         <p className="container-p container-p_wm">ИНН:</p>
                     </div>
                     <div className="col-md-9">
-                        <p className="container-p">01001000100010001</p>
+                        <p className="container-p">{authSlice.myCompanies.inn}</p>
                     </div>
                 </div>
                 <div className="row">
@@ -53,7 +44,7 @@ const CreatedCompanyPage = function () {
                         <p className="container-p container-p_wm">Адрес главного офиса:</p>
                     </div>
                     <div className="col-md-9">
-                        <p className="container-p">Адрес главного офиса, Адрес главного офиса</p>
+                        <p className="container-p">{authSlice.myCompanies.addressMainOffice}</p>
                     </div>
                 </div>
                 <div className="row">
@@ -61,7 +52,7 @@ const CreatedCompanyPage = function () {
                         <p className="container-p container-p_wm">Номер телефона:</p>
                     </div>
                     <div className="col-md-9">
-                        <p className="container-p">+7 (777) 777-77-77</p>
+                        <p className="container-p">{authSlice.myCompanies.phone}</p>
                     </div>
                 </div>
                 <div className="row">
@@ -69,7 +60,7 @@ const CreatedCompanyPage = function () {
                         <p className="container-p container-p_wm">Email:</p>
                     </div>
                     <div className="col-md-9">
-                        <p className="container-p">company@company.ru</p>
+                        <p className="container-p">{authSlice.myCompanies.email}</p>
                     </div>
                 </div>
                 <div className="row">

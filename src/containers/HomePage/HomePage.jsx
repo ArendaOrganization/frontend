@@ -10,6 +10,8 @@ const HomePage = function () {
     const authSlice = useSelector(state => state.auth);
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    console.log(authSlice.user);
+
     return (
         <div className="main">
             <LeftMenu/>
@@ -28,10 +30,34 @@ const HomePage = function () {
                         </div>
                         <div className="row">
                             <div className="col-md-3">
-                                <p className="container-p container-p_wm">Пароль:</p>
+                                <p className="container-p container-p_wm">Имя:</p>
                             </div>
                             <div className="col-md-9">
-                                <p className="container-p">********</p>
+                                <p className="container-p">{authSlice.user.name}</p>
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className="col-md-3">
+                                <p className="container-p container-p_wm">Фамилия:</p>
+                            </div>
+                            <div className="col-md-9">
+                                <p className="container-p">{authSlice.user.surname}</p>
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className="col-md-3">
+                                <p className="container-p container-p_wm">Отчество:</p>
+                            </div>
+                            <div className="col-md-9">
+                                <p className="container-p">{authSlice.user.patronymic}</p>
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className="col-md-3">
+                                <p className="container-p container-p_wm">Почта:</p>
+                            </div>
+                            <div className="col-md-9">
+                                <p className="container-p">{authSlice.user.email}</p>
                             </div>
                         </div>
                         <div className="row">
@@ -39,7 +65,7 @@ const HomePage = function () {
                                 <p className="container-p container-p_wm">Номер телефона:</p>
                             </div>
                             <div className="col-md-9">
-                                <p className="container-p">+7 (777) 777-77-77</p>
+                                <p className="container-p">{authSlice.user.mobile}</p>
                             </div>
                         </div>
                         <div className="row">

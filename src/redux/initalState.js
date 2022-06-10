@@ -35,6 +35,8 @@ const initialState = {
     imgs: null,
     isMapMenuVisible: false,
     premisesFilter: "",
+    bidsFilter: "",
+    bidData: [],
 };
 
 export default initialState;

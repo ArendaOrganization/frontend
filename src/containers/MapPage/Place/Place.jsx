@@ -6,7 +6,7 @@ import MenuRightLogined from "../../Menus/MenuRightLogined/MenuRightLogined";
 import SwiperTeg from "./Swiper/Swiper";
 import {useNavigate} from "react-router";
 import {Clusterer, Map, Placemark, YMaps} from "react-yandex-maps";
-import {getCompanyById} from "../../../redux/reducers/authSlice";
+import {getCompanyById, makeNewBid} from "../../../redux/reducers/authSlice";
 
 const PlacePage = function () {
     const authSlice = useSelector(state => state.auth);
@@ -15,7 +15,6 @@ const PlacePage = function () {
     const currentPlace = authSlice.currentPlace;
     const downloadLinqMainImg = "http://localhost:8081" + currentPlace.mainImg.downloadLink;
     const downloadLinqPlan = "http://localhost:8081" + currentPlace.plan.downloadLink;
-    const mapElem = JSON.parse(localStorage.getItem("mapElem"));
     const centerCoords = (authSlice.mapAll) && (authSlice.mapAll.length > 0)
         ? [authSlice.mapElem[0].coordinates.latitude, authSlice.mapElem[0].coordinates.longitude]
         : [56.845130, 60.626060];
@@ -37,6 +36,14 @@ const PlacePage = function () {
                                 <div className="page-avatar">
                                     <img src={downloadLinqMainImg} alt="" className="page-avatar__img"/>
                                     <a href="" className="main-btn">Написать</a>
+                                    {
+                                        (authSlice.myCompanies !== null && currentPlace.company?.id !== authSlice.myCompanies.id)
+                                            ? <a
+                                                className="main-btn"
+                                                onClick={() => dispatch(makeNewBid({id: currentPlace.id}))}
+                                            >Отправить заявку</a>
+                                            : ""
+                                    }
                                 </div>
                             </div>
                             <div className="col-md-9">

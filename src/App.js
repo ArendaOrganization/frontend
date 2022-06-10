@@ -17,6 +17,10 @@ import HelpPage from "./containers/HelpPage/HelpPage";
 import Place from "./containers/MapPage/Place/Place";
 import NotMyCompany from "./containers/CompaniesPage/NotMyCompany/NotMyCompany";
 import CreatePremise from "./containers/Premises/CreatePremise/CreatePremise";
+import Bid from "./containers/Bid/Bid";
+import Documents from "./containers/Documents/Documants";
+import DocumentCreator from "./containers/Documents/DocumentCreator/DocumentCreator";
+import OneDocument from "./containers/Documents/OneDocuments/OneDocuments";
 
 function App() {
     const authSlice = useSelector(state => state.auth);
@@ -43,6 +47,10 @@ function App() {
                     <Route path="/Place" element={<Place/>}/>
                     <Route path="/NotMyCompany" element={<NotMyCompany/>}/>
                     <Route path="/CreatePremise" element={<CreatePremise/>}/>
+                    <Route path="/Bid" element={<Bid/>}/>
+                    <Route path="/Documents" element={<Documents/>}/>
+                    <Route path="/OneDocument" element={<OneDocument/>}/>
+                    <Route path="/DocumentCreator" element={<DocumentCreator/>}/>
                 </Route>
             </Routes>
         </BrowserRouter>

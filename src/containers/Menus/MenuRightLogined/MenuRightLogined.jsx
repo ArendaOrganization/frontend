@@ -13,7 +13,7 @@ const RightMenu = function () {
                 className="menu-right__link"
                 onClick={() => navigate("../HomePage", {replace: true})}
             >
-                Имя пользователя
+                {authSlice.user.name}
             </a>
             <img src={logo} alt="" className="user-avatar"/>
         </div>

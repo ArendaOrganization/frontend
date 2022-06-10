@@ -21,10 +21,20 @@ const CompanyPagesMenu = function () {
                         Помещения</a>
                 </li>
                 <li>
-                    <a href="">Документы</a>
+                    <a onClick={
+                        () => {
+                            navigate("../Documents", {replace: true})
+                        }
+                    }
+                    >Документы</a>
                 </li>
                 <li>
-                    <a href="">Заявки</a>
+                    <a onClick={
+                        () => {
+                            navigate("../Bid", {replace: true})
+                        }
+                    }
+                    >Заявки</a>
                 </li>
                 <li>
                     <a href="">Мессенджер</a>

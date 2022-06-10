@@ -539,6 +539,7 @@ a {
     outline: none;
     cursor: pointer;
     box-sizing: border-box;
+    margin-bottom: 10px;
 }
 
 .main-btn:hover {
@@ -551,6 +552,7 @@ a {
     color: #FF5E03;
     border-bottom: 1px solid #FF5E03;
     cursor: pointer;
+    margin-right: 10px;
 }
 
 .form-link:hover {

@@ -11,7 +11,6 @@ const NotMyCompany = function () {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const companyById = JSON.parse(localStorage.getItem("companyById"));
-    console.log(companyById);
 
     return (
         <div className="main">

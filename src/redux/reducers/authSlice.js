@@ -6,6 +6,7 @@ import mapService from "../../services/map.service";
 import companyService from "../../services/companies.service";
 import premiseService from "../../services/premise.service";
 import axios from "axios";
+import bidService from "../../services/bid.service";
 
 const user = JSON.parse(localStorage.getItem("user"));
 const authError = JSON.parse(localStorage.getItem("authError"));
@@ -343,6 +344,80 @@ export const getAllPremises = createAsyncThunk(
     }
 );
 
+/* Bid */
+
+export const getAllCompanyBid = createAsyncThunk(
+    "auth/getAllCompanyBid",
+    async ({}) => {
+        try {
+            const response = await bidService.getAllCompanyBid();
+            return response;
+        } catch (error) {
+            const message =
+                (error.response &&
+                    error.response.data &&
+                    error.response.data.message) ||
+                error.message ||
+                error.toString();
+            return message;
+        }
+    }
+);
+
+export const makeNewBid = createAsyncThunk(
+    "auth/makeNewBid",
+    async ({id}) => {
+        try {
+            const response = await bidService.makeNewBid(id);
+            return response.data;
+        } catch (error) {
+            const message =
+                (error.response &&
+                    error.response.data &&
+                    error.response.data.message) ||
+                error.message ||
+                error.toString();
+            return message;
+        }
+    }
+);
+
+export const approveBid = createAsyncThunk(
+    "auth/approveBid",
+    async ({id}) => {
+        try {
+            const response = await bidService.approveBid(id);
+            return response.data;
+        } catch (error) {
+            const message =
+                (error.response &&
+                    error.response.data &&
+                    error.response.data.message) ||
+                error.message ||
+                error.toString();
+            return message;
+        }
+    }
+);
+
+export const disApproveBid = createAsyncThunk(
+    "auth/approveBid",
+    async ({id}) => {
+        try {
+            const response = await bidService.disApproveBid(id);
+            return response.data;
+        } catch (error) {
+            const message =
+                (error.response &&
+                    error.response.data &&
+                    error.response.data.message) ||
+                error.message ||
+                error.toString();
+            return message;
+        }
+    }
+);
+
 const initialState = user
     ? {
         isLoggedIn: true, user, mapAll, mapElem, authError: false,
@@ -462,6 +537,9 @@ const authSlice = createSlice({
         updatePremisesFilter(state, action) {
             state.premisesFilter = action.payload;
         },
+        updateBidFilter(state, action) {
+            state.bidsFilter = action.payload;
+        },
     },
     extraReducers: {
         [register.fulfilled]: (state, action) => {
@@ -497,6 +575,9 @@ const authSlice = createSlice({
         },
         [getAllMapData.fulfilled]: (state, action) => {
             state.mapAll = action.payload;
+        },
+        [getAllCompanyBid.fulfilled]: (state,action) => {
+            state.bidData = action.payload;
         }
     },
 })
@@ -536,6 +617,7 @@ export const {
     addImgsToState,
     openOrCloseMapSlider,
     openMapSlider,
-    updatePremisesFilter
+    updatePremisesFilter,
+    updateBidFilter
 } = authSlice.actions
 export default authSlice.reducer
