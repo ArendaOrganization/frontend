@@ -7,6 +7,7 @@ import companyService from "../../services/companies.service";
 import premiseService from "../../services/premise.service";
 import axios from "axios";
 import bidService from "../../services/bid.service";
+import docService from "../../services/doc.service";
 
 const user = JSON.parse(localStorage.getItem("user"));
 const authError = JSON.parse(localStorage.getItem("authError"));
@@ -418,6 +419,156 @@ export const disApproveBid = createAsyncThunk(
     }
 );
 
+/* Documents */
+
+export const getPremisesInDocPage = createAsyncThunk(
+    "auth/getPremisesInDocPage",
+    async ({}) => {
+        try {
+            const response = await docService.getPremisesInDocPage();
+            return response;
+        } catch (error) {
+            const message =
+                (error.response &&
+                    error.response.data &&
+                    error.response.data.message) ||
+                error.message ||
+                error.toString();
+            return message;
+        }
+    }
+);
+
+export const getPremiseTenantsData = createAsyncThunk(
+    "auth/getPremiseTenantsData",
+    async ({id}) => {
+        try {
+            const response = await docService.getPremiseTenantsData(id);
+            return response;
+        } catch (error) {
+            const message =
+                (error.response &&
+                    error.response.data &&
+                    error.response.data.message) ||
+                error.message ||
+                error.toString();
+            return message;
+        }
+    }
+);
+
+export const postDocument = createAsyncThunk(
+    "auth/postDocument",
+    async ({name, theme, description, tenantId, premisesId, document}, thunkAPI) => {
+        try {
+            const response = await docService.postDocument(name, theme, description, tenantId, premisesId);
+            thunkAPI.dispatch(postFileForDocument({document, id: response.id}));
+            return response.data;
+        } catch (error) {
+            const message =
+                (error.response &&
+                    error.response.data &&
+                    error.response.data.message) ||
+                error.message ||
+                error.toString();
+            return message;
+        }
+    }
+);
+
+export const postFileForDocument = createAsyncThunk(
+    "auth/postPromise",
+    async ({document, id}) => {
+        try {
+            const formData = new FormData();
+            formData.append("document", document);
+            const response = await axios({
+                method: "post",
+                url: `http://localhost:8081/contract/makeContractWithDocument?contractId=${id}`,
+                data: formData,
+                headers: {
+                    ...headers
+                },
+            });
+            return response.data;
+        } catch (error) {
+            const message =
+                (error.response &&
+                    error.response.data &&
+                    error.response.data.message) ||
+                error.message ||
+                error.toString();
+            return message;
+        }
+    }
+);
+
+export const getAllContracts = createAsyncThunk(
+    "auth/getAllContracts",
+    async ({},thunkAPI) => {
+        try {
+            const response = await docService.getAllContracts();
+            return response;
+        } catch (error) {
+            const message =
+                (error.response &&
+                    error.response.data &&
+                    error.response.data.message) ||
+                error.message ||
+                error.toString();
+            return message;
+        }
+    }
+);
+
+export const getCurrentContract = createAsyncThunk(
+    "auth/getCurrentContract",
+    async ({id}) => {
+        try {
+            const response = await docService.getCurrentContract(id);
+            return response;
+        } catch (error) {
+            const message =
+                (error.response &&
+                    error.response.data &&
+                    error.response.data.message) ||
+                error.message ||
+                error.toString();
+            return message;
+        }
+    }
+);
+
+export const downloadDocument = createAsyncThunk(
+    "auth/downloadDocument",
+    async ({id,documentName}) => {
+        try {
+            axios({
+                url: `http://localhost:8081/contract/downloadDocument?contractId=${id}`,
+                method: 'GET',
+                responseType: 'blob', // important
+            }).then((response) => {
+                const url = window.URL.createObjectURL(new Blob([response.data]));
+                const link = document.createElement('a');
+                link.href = url;
+                link.setAttribute('download', documentName+".pdf");
+                document.body.appendChild(link);
+                link.click();
+            });
+            //const response = await docService.downloadDocument(id);
+            return "response";
+        } catch (error) {
+            const message =
+                (error.response &&
+                    error.response.data &&
+                    error.response.data.message) ||
+                error.message ||
+                error.toString();
+            return message;
+        }
+    }
+);
+
 const initialState = user
     ? {
         isLoggedIn: true, user, mapAll, mapElem, authError: false,
@@ -540,6 +691,34 @@ const authSlice = createSlice({
         updateBidFilter(state, action) {
             state.bidsFilter = action.payload;
         },
+        cleanCurrentPremiseTenantsData(state) {
+            state.currentPremiseTenantsData = [];
+        },
+        updateCurrentChosenTenantId(state, action) {
+            state.currentChosenTenantId = action.payload;
+        },
+        updateCurrentChosenPremiseId(state, action) {
+            state.currentChosenPremiseId = action.payload;
+        },
+        updateCurrentDocumentNameInput(state, action) {
+            state.currentDocumentNameInput = action.payload;
+        },
+        updateCurrentDocumentThemeInput(state, action) {
+            state.currentDocumentThemeInput = action.payload;
+        },
+        updateCurrentDocumentDescriptionInput(state, action) {
+            state.currentDocumentDescriptionInput = action.payload;
+        },
+        addDocumentFileToState(state, action) {
+            state.currentDocumentFile = action.payload;
+        },
+        openQuestionById(state, action) {
+            if (state.whichQuestionIsOpened === action.payload) {
+                state.whichQuestionIsOpened = "";
+            } else {
+                state.whichQuestionIsOpened = action.payload;
+            }
+        },
     },
     extraReducers: {
         [register.fulfilled]: (state, action) => {
@@ -576,9 +755,21 @@ const authSlice = createSlice({
         [getAllMapData.fulfilled]: (state, action) => {
             state.mapAll = action.payload;
         },
-        [getAllCompanyBid.fulfilled]: (state,action) => {
+        [getAllCompanyBid.fulfilled]: (state, action) => {
             state.bidData = action.payload;
-        }
+        },
+        [getPremisesInDocPage.fulfilled]: (state, action) => {
+            state.docPremisesData = action.payload;
+        },
+        [getPremiseTenantsData.fulfilled]: (state, action) => {
+            state.currentPremiseTenantsData = action.payload;
+        },
+        [getAllContracts.fulfilled]: (state, action) => {
+            state.allContracts = action.payload;
+        },
+        [getCurrentContract.fulfilled]: (state, action) => {
+            state.currentContract = action.payload;
+        },
     },
 })
 
@@ -618,6 +809,14 @@ export const {
     openOrCloseMapSlider,
     openMapSlider,
     updatePremisesFilter,
-    updateBidFilter
+    updateBidFilter,
+    cleanCurrentPremiseTenantsData,
+    updateCurrentChosenTenantId,
+    updateCurrentDocumentNameInput,
+    updateCurrentDocumentThemeInput,
+    updateCurrentDocumentDescriptionInput,
+    updateCurrentChosenPremiseId,
+    addDocumentFileToState,
+    openQuestionById
 } = authSlice.actions
 export default authSlice.reducer

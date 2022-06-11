@@ -27,7 +27,6 @@ const postPremise = (name, description, squareMetersNumber, numberOfFloor, hasIn
                     address,
                     latitude,
                     longitude
-
                 }
             },
             {

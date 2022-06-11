@@ -26,7 +26,12 @@ const LeftMenu = function () {
                     >Личный Кабинет</a>
                 </li>
                 <li>
-                    <a href="src/containers/Menus/MenuLeft/LeftMenu">Главная</a>
+                    <a
+                        onClick={() => {
+                            navigate("../MainPage", {replace: true})
+                        }}
+                        className="leftMenuA"
+                    >Главная</a>
                 </li>
                 <li>
                     <a

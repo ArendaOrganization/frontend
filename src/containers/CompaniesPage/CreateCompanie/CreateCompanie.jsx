@@ -99,16 +99,22 @@ const CreateCompanies = function () {
                         <div className="form-row">
                             <button
                                 className="main-btn"
-                                onClick={() => dispatch(
-                                    createCompany({
-                                        name: authSlice.currentCompanyNameInput,
-                                        description: authSlice.currentCompanyDescriptionInput,
-                                        inn: authSlice.currentCompanyINNInput,
-                                        addressMainOffice: authSlice.currentCompanyAddressInput,
-                                        phone: authSlice.currentCompanyPhoneInput,
-                                        email: authSlice.currentCompanyEmailInput
-                                    }))}
-                            >Зарегестрировать</button>
+                                onClick={
+                                    () => {
+                                        dispatch(
+                                            createCompany({
+                                                name: authSlice.currentCompanyNameInput,
+                                                description: authSlice.currentCompanyDescriptionInput,
+                                                inn: authSlice.currentCompanyINNInput,
+                                                addressMainOffice: authSlice.currentCompanyAddressInput,
+                                                phone: authSlice.currentCompanyPhoneInput,
+                                                email: authSlice.currentCompanyEmailInput
+                                            }))
+                                        navigate("../Companies", {replace: true})
+                                    }
+                                }
+                            >Зарегестрировать
+                            </button>
                         </div>
                     </div>
                 </div>

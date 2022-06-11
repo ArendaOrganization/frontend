@@ -4,6 +4,7 @@ import MenuRightLogined from "../Menus/MenuRightLogined/MenuRightLogined";
 import LeftMenu from "../Menus/MenuLeft/LeftMenu";
 import PagesManu from "../Menus/PagesMenu/PagesManu";
 import "../mainStyle.css";
+import {openQuestionById} from "../../redux/reducers/authSlice";
 
 const HelpPage = function () {
     const authSlice = useSelector(state => state.auth);
@@ -16,14 +17,17 @@ const HelpPage = function () {
             <div className="main__inner" id="main__inner">
 
                 <div className="container container-m">
-                    <PagesManu/>
+                    {authSlice.user ? <PagesManu/> : ""}
                     <h1 className="container__h">Вопросы и ответы / Помощь / Поддержка</h1>
                     <div className="container__inner">
                         <p className="form-p">
                             <b>Не нашли свой вопрос? <a href="" className="form-link">Задайте его нам здесь.</a></b>
                         </p>
-                        <div className="question opened">
-                            <p className="question__h">
+                        <div className={authSlice.whichQuestionIsOpened === 1 ? "question opened" : "question"}>
+                            <p
+                                className="question__h"
+                                onClick={() => {dispatch(openQuestionById(1))}}
+                            >
                                 Некий часто задаваемый вопрос
                             </p>
                             <div className="question__text">
@@ -46,8 +50,11 @@ const HelpPage = function () {
                                 </p>
                             </div>
                         </div>
-                        <div className="question">
-                            <p className="question__h">
+                        <div className={authSlice.whichQuestionIsOpened === 2 ? "question opened" : "question"}>
+                            <p
+                                className="question__h"
+                                onClick={() => {dispatch(openQuestionById(2))}}
+                            >
                                 Некий часто задаваемый вопрос
                             </p>
                             <div className="question__text">
@@ -70,8 +77,11 @@ const HelpPage = function () {
                                 </p>
                             </div>
                         </div>
-                        <div className="question">
-                            <p className="question__h">
+                        <div className={authSlice.whichQuestionIsOpened === 3 ? "question opened" : "question"}>
+                            <p
+                                className="question__h"
+                                onClick={() => {dispatch(openQuestionById(3))}}
+                            >
                                 Некий часто задаваемый вопрос
                             </p>
                             <div className="question__text">
@@ -96,7 +106,7 @@ const HelpPage = function () {
                         </div>
                     </div>
                 </div>
-                <MenuRightLogined/>
+                {authSlice.user ? <MenuRightLogined/> : ""}
             </div>
         </div>
     );

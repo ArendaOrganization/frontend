@@ -10,7 +10,6 @@ const HomePage = function () {
     const authSlice = useSelector(state => state.auth);
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    console.log(authSlice.user);
 
     return (
         <div className="main">

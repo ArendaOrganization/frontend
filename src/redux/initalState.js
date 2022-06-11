@@ -28,8 +28,8 @@ const initialState = {
     currentOnClickAddress: "",
     isMapOpened: false,
     emailForPasswordChangeInput: "",
-    passwordToChangePassword:"",
-    passwordCheckerToChangePassword:"",
+    passwordToChangePassword: "",
+    passwordCheckerToChangePassword: "",
     mainImg: null,
     plan: null,
     imgs: null,
@@ -37,6 +37,17 @@ const initialState = {
     premisesFilter: "",
     bidsFilter: "",
     bidData: [],
+    docPremisesData: [],
+    currentPremiseTenantsData: [],
+    currentChosenTenantId: "",
+    currentChosenPremiseId: "",
+    currentDocumentNameInput: "",
+    currentDocumentThemeInput: "",
+    currentDocumentDescriptionInput: "",
+    currentDocumentFile: "",
+    whichQuestionIsOpened: "",
+    allContracts: [],
+    currentContract: "",
 };
 
 export default initialState;

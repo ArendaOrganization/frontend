@@ -21,6 +21,7 @@ import Bid from "./containers/Bid/Bid";
 import Documents from "./containers/Documents/Documants";
 import DocumentCreator from "./containers/Documents/DocumentCreator/DocumentCreator";
 import OneDocument from "./containers/Documents/OneDocuments/OneDocuments";
+import MainPage from "./containers/MainPage/MainPage";
 
 function App() {
     const authSlice = useSelector(state => state.auth);
@@ -38,6 +39,7 @@ function App() {
                 <Route path="/PasswordChangeConfirmation" element={<PasswordChangeConfirmation/>}/>
                 <Route path="/WrongData" element={<WrongData/>}/>
                 <Route path="/HelpPage" element={<HelpPage/>}/>
+                <Route path="/MainPage" element={<MainPage/>}/>
                 <Route element={<ProtectedRoutes/>}>
                     <Route path="/HomePage" element={<HomePage/>}/>
                     <Route path="/MapPage" element={<MapPage/>}/>
