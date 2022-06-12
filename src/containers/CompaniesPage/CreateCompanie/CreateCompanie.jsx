@@ -109,7 +109,6 @@ const CreateCompanies = function () {
                                                 phone: authSlice.currentCompanyPhoneInput,
                                                 email: authSlice.currentCompanyEmailInput
                                             }))
-                                        navigate("../Companies", {replace: true})
                                     }
                                 }
                             >Зарегестрировать

@@ -192,8 +192,7 @@ export const getCompanies = createAsyncThunk(
                     error.response.data.message) ||
                 error.message ||
                 error.toString();
-            thunkAPI.dispatch(setMessage(message));
-            return thunkAPI.rejectWithValue();
+            return message;
         }
     }
 )
@@ -203,7 +202,6 @@ export const createCompany = createAsyncThunk(
     async ({name, description, inn, addressMainOffice, phone, email}, thunkAPI) => {
         try {
             const response = await companyService.makeCompanies(name, description, inn, addressMainOffice, phone, email);
-            thunkAPI(getCompanies({}));
             return response.data;
         } catch (error) {
             const message =
@@ -771,16 +769,15 @@ const authSlice = createSlice({
             state.currentOnClickAddress = "ERROR";
         },
         [getCompanies.fulfilled]: (state, action) => {
-            state.myCompanies = action.payload;
+            if (action.payload.id !== -1) {
+                state.myCompanies = action.payload;
+            }
         },
         [getCompanyById.fulfilled]: (state, action) => {
             state.companyById = action.payload;
         },
         [getAllMessages.fulfilled]: (state, action) => {
             console.log(action.payload);
-        },
-        [createCompany.fulfilled]: (state, action) => {
-            state.hasCompany = true;
         },
         [getAllMapData.fulfilled]: (state, action) => {
             state.mapAll = action.payload;

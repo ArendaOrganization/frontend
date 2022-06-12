@@ -6,7 +6,7 @@ import MenuRightLogined from "../../Menus/MenuRightLogined/MenuRightLogined";
 import SwiperTeg from "./Swiper/Swiper";
 import {useNavigate} from "react-router";
 import {Clusterer, Map, Placemark, YMaps} from "react-yandex-maps";
-import {getCompanyById, getPremise, makeNewBid} from "../../../redux/reducers/authSlice";
+import {getCompanies, getCompanyById, getPremise, makeNewBid} from "../../../redux/reducers/authSlice";
 import {useSearchParams} from "react-router-dom";
 import {useEffect} from "react";
 
@@ -32,6 +32,7 @@ const PlacePage = function () {
 
         useEffect(() => {
             dispatch(getPremise({id: elementId}));
+            dispatch(getCompanies({}));
         }, [])
 
         return (
@@ -39,7 +40,7 @@ const PlacePage = function () {
                 <LeftMenu/>
                 {
                     currentPlace === null
-                        ? ""
+                        ? "..."
                         : <div className="main__inner" id="main__inner">
                             <div className="container container-m">
                                 <h1 className="container__h">Помещение</h1>
@@ -48,13 +49,15 @@ const PlacePage = function () {
                                         <div className="col-md-3">
                                             <div className="page-avatar">
                                                 <img src={downloadLinqMainImg} alt="" className="page-avatar__img"/>
-                                                <a href="" className="main-btn">Написать</a>
                                                 {
-                                                    (authSlice.myCompanies !== null && currentPlace.company?.id !== authSlice.myCompanies.id)
-                                                        ? <a
-                                                            className="main-btn"
-                                                            onClick={() => dispatch(makeNewBid({id: currentPlace.id}))}
-                                                        >Отправить заявку</a>
+                                                    (authSlice.myCompanies !== null && currentPlace.company.id !== authSlice.myCompanies.id)
+                                                        ? <div>
+                                                            <a href="" className="main-btn">Написать</a>
+                                                            <a
+                                                                className="main-btn"
+                                                                onClick={() => dispatch(makeNewBid({id: currentPlace.id}))}
+                                                            >Отправить заявку</a>
+                                                        </div>
                                                         : ""
                                                 }
                                             </div>
@@ -101,7 +104,6 @@ const PlacePage = function () {
                                                         className="request__a"
                                                         onClick={
                                                             () => {
-                                                                dispatch(getCompanyById({id: currentPlace.company.id}));
                                                                 navigate("../Companies?elementId=" + currentPlace.company.id);
                                                             }
                                                         }

@@ -18,21 +18,21 @@ const Authentication = function () {
             })
         )
     };
-    async function handleSubmit(event) {
+    /*async function handleSubmit(event) {
         event.preventDefault();
         await authorize();
         window.location.reload(false);
-    }
+    }*/
 
     if (authSlice.user) {
         return <Navigate to="/HomePage" />;
     }
-
+    /*onSubmit={handleSubmit} */
     return (
         <div className="container container-sm">
             <h1 className="container__h">Авторизация</h1>
             <div className="container__inner">
-                <form onSubmit={handleSubmit} className="main-form">
+                <div className="main-form">
                     <div className="row">
                         <div className="col-md-6">
                             <div className="form-row">
@@ -48,7 +48,12 @@ const Authentication = function () {
                                 />
                             </div>
                             <div className="form-row">
-                                <input type="submit" className="main-btn" value="Войти"/>
+                                <input
+                                    type="submit"
+                                    className="main-btn"
+                                    value="Войти"
+                                    onClick={() => authorize()}
+                                />
                             </div>
                         </div>
                         <div className="col-md-6">
@@ -72,7 +77,7 @@ const Authentication = function () {
                             </div>
                         </div>
                     </div>
-                </form>
+                </div>
             </div>
         </div>
         /*

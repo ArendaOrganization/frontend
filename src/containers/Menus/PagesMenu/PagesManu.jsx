@@ -9,10 +9,6 @@ const PagesMenu = function () {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    useEffect(() => {
-        dispatch(getCompanies({}))
-    },[])
-
     return (
         <div className="pages-menu">
             <ul className="pages-menu__ul">
@@ -21,8 +17,7 @@ const PagesMenu = function () {
                         className="active"
                         onClick={
                             () => {
-                                navigate("../Companies?elementId=" + authSlice.myCompanies.id);
-                                dispatch(getCompanyById({id: authSlice.myCompanies.id}));
+                                navigate("../Companies");
                             }
                         }
                     >Мои компании</a>

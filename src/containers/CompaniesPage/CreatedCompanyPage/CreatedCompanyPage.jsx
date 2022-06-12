@@ -3,7 +3,7 @@ import {useNavigate} from "react-router";
 import "../../mainStyle.css";
 import CompanyPagesMenu from "../../Menus/CompanyPagesManu/CompanyPagesMenu";
 import {useEffect} from "react";
-import {getCompanyById} from "../../../redux/reducers/authSlice";
+import {getCompanies, getCompanyById} from "../../../redux/reducers/authSlice";
 import {useSearchParams} from "react-router-dom";
 
 const CreatedCompanyPage = function () {
@@ -14,15 +14,15 @@ const CreatedCompanyPage = function () {
     const elementId = searchParams.get("elementId");
 
     useEffect(() => {
-        dispatch(getCompanyById({id: elementId}))
-    }, []);
+        dispatch(getCompanies({}))
+    },[])
 
     return (
         <div className="container container-m">
             <CompanyPagesMenu/>
             <h1 className="container__h">Личный кабинет компании</h1>
             {
-                authSlice.companyById === null
+                authSlice.myCompanies === null
                     ? "..."
                     : <div className="container__inner">
                         <div className="row">
@@ -30,7 +30,7 @@ const CreatedCompanyPage = function () {
                                 <p className="container-p container-p_wm">Название компании:</p>
                             </div>
                             <div className="col-md-9">
-                                <p className="container-p">{authSlice.companyById.name}</p>
+                                <p className="container-p">{authSlice.myCompanies.name}</p>
                             </div>
                         </div>
                         <div className="row">
@@ -39,7 +39,7 @@ const CreatedCompanyPage = function () {
                             </div>
                             <div className="col-md-9">
                                 <p className="container-p">
-                                    {authSlice.companyById.description}
+                                    {authSlice.myCompanies.description}
                                 </p>
                             </div>
                         </div>
@@ -48,7 +48,7 @@ const CreatedCompanyPage = function () {
                                 <p className="container-p container-p_wm">ИНН:</p>
                             </div>
                             <div className="col-md-9">
-                                <p className="container-p">{authSlice.companyById.inn}</p>
+                                <p className="container-p">{authSlice.myCompanies.inn}</p>
                             </div>
                         </div>
                         <div className="row">
@@ -56,7 +56,7 @@ const CreatedCompanyPage = function () {
                                 <p className="container-p container-p_wm">Адрес главного офиса:</p>
                             </div>
                             <div className="col-md-9">
-                                <p className="container-p">{authSlice.companyById.addressMainOffice}</p>
+                                <p className="container-p">{authSlice.myCompanies.addressMainOffice}</p>
                             </div>
                         </div>
                         <div className="row">
@@ -64,7 +64,7 @@ const CreatedCompanyPage = function () {
                                 <p className="container-p container-p_wm">Номер телефона:</p>
                             </div>
                             <div className="col-md-9">
-                                <p className="container-p">{authSlice.companyById.phone}</p>
+                                <p className="container-p">{authSlice.myCompanies.phone}</p>
                             </div>
                         </div>
                         <div className="row">
@@ -72,7 +72,7 @@ const CreatedCompanyPage = function () {
                                 <p className="container-p container-p_wm">Email:</p>
                             </div>
                             <div className="col-md-9">
-                                <p className="container-p">{authSlice.companyById.email}</p>
+                                <p className="container-p">{authSlice.myCompanies.email}</p>
                             </div>
                         </div>
                         <div className="row">

@@ -18,17 +18,17 @@ const Companies = function () {
     const elementId = searchParams.get("elementId");
 
     useEffect(() => {
-        dispatch(getCompanyById({id: elementId}))
-    },[]);
+        dispatch(getCompanies({}))
+    },[])
 
     return (
         <div className="main">
             <LeftMenu/>
             <div className="main__inner" id="main__inner">
                 {
-                    authSlice.companyById === null
-                        ? <CreateCompanies/>
-                        : <CreatedCompanyPage/>
+                    (authSlice.myCompanies !== null && authSlice.myCompanies)
+                        ? <CreatedCompanyPage/>
+                        : <CreateCompanies/>
                 }
                 <RightMenu/>
             </div>
