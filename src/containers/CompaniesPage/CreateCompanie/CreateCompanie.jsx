@@ -6,7 +6,6 @@ import {
     createCompany, updateCompanyAddressInput,
     updateCompanyDescriptionInput, updateCompanyEmailInput, updateCompanyINNInput,
     updateCompanyNameInput, updateCompanyPhoneInput,
-    updateNameInput
 } from "../../../redux/reducers/authSlice";
 
 const CreateCompanies = function () {

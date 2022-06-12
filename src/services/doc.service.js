@@ -62,6 +62,24 @@ const getCurrentContract = (id) => {
         });
 };
 
+const approveContract = (id) => {
+    return axios
+        .get(`${API_URL}approveContract?contractId=${id}`,
+            {headers: {...headers}})
+        .then((response) => {
+            return response.data;
+        });
+};
+
+const disApproveContract = (id) => {
+    return axios
+        .get(`${API_URL}disapproveContract?contractId=${id}`,
+            {headers: {...headers}})
+        .then((response) => {
+            return response.data;
+        });
+};
+
 
 const docService = {
     getPremisesInDocPage,
@@ -69,5 +87,7 @@ const docService = {
     postDocument,
     getAllContracts,
     getCurrentContract,
+    approveContract,
+    disApproveContract
 };
 export default docService;

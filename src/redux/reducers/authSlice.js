@@ -11,12 +11,6 @@ import docService from "../../services/doc.service";
 
 const user = JSON.parse(localStorage.getItem("user"));
 const authError = JSON.parse(localStorage.getItem("authError"));
-const mapAll = JSON.parse(localStorage.getItem("mapAll"));
-const mapElem = JSON.parse(localStorage.getItem("mapElem"));
-const myCompanies = JSON.parse(localStorage.getItem("myCompanies"));
-const currentPlace = JSON.parse(localStorage.getItem("currentPlace"));
-const companyById = JSON.parse(localStorage.getItem("companyById"));
-const allPremises = JSON.parse(localStorage.getItem("allPremises"));
 
 const headers = {
     'Authorization': user ? user.token : "",
@@ -103,7 +97,7 @@ export const sendNewPasswordToBackEnd = createAsyncThunk(
 /*Map*/
 
 export const getAllMapData = createAsyncThunk(
-    "auth/mapAllData",
+    "auth/getAllMapData",
     async ({}, thunkAPI) => {
         try {
             const mapData = await mapService.getMapData();
@@ -126,7 +120,6 @@ export const getMapElemData = createAsyncThunk(
     async ({id}, thunkAPI) => {
         try {
             const mapElemData = await mapService.getMapElemData(id);
-            thunkAPI.dispatch(setMapElemData(mapElemData));
             return mapElemData;
         } catch (error) {
             const message =
@@ -191,7 +184,7 @@ export const getCompanies = createAsyncThunk(
     async ({}, thunkAPI) => {
         try {
             const response = await companyService.getMyCompanies();
-            return response.data;
+            return response;
         } catch (error) {
             const message =
                 (error.response &&
@@ -210,7 +203,7 @@ export const createCompany = createAsyncThunk(
     async ({name, description, inn, addressMainOffice, phone, email}, thunkAPI) => {
         try {
             const response = await companyService.makeCompanies(name, description, inn, addressMainOffice, phone, email);
-            thunkAPI(getCompanies());
+            thunkAPI(getCompanies({}));
             return response.data;
         } catch (error) {
             const message =
@@ -230,7 +223,7 @@ export const getCompanyById = createAsyncThunk(
     async ({id}) => {
         try {
             const response = await companyService.getMyCompanyById(id);
-            return response.data;
+            return response;
         } catch (error) {
             const message =
                 (error.response &&
@@ -314,7 +307,7 @@ export const getPremise = createAsyncThunk(
     async ({id}) => {
         try {
             const response = await premiseService.getPremise(id);
-            return response.data;
+            return response;
         } catch (error) {
             const message =
                 (error.response &&
@@ -328,11 +321,11 @@ export const getPremise = createAsyncThunk(
 );
 
 export const getAllPremises = createAsyncThunk(
-    "auth/getPremise",
+    "auth/getAllPremises",
     async ({}) => {
         try {
             const response = await premiseService.getAllPremises();
-            return response.data;
+            return response;
         } catch (error) {
             const message =
                 (error.response &&
@@ -505,7 +498,7 @@ export const postFileForDocument = createAsyncThunk(
 
 export const getAllContracts = createAsyncThunk(
     "auth/getAllContracts",
-    async ({},thunkAPI) => {
+    async ({}, thunkAPI) => {
         try {
             const response = await docService.getAllContracts();
             return response;
@@ -541,7 +534,7 @@ export const getCurrentContract = createAsyncThunk(
 
 export const downloadDocument = createAsyncThunk(
     "auth/downloadDocument",
-    async ({id,documentName}) => {
+    async ({id, documentName}) => {
         try {
             axios({
                 url: `http://localhost:8081/contract/downloadDocument?contractId=${id}`,
@@ -551,7 +544,7 @@ export const downloadDocument = createAsyncThunk(
                 const url = window.URL.createObjectURL(new Blob([response.data]));
                 const link = document.createElement('a');
                 link.href = url;
-                link.setAttribute('download', documentName+".pdf");
+                link.setAttribute('download', documentName + ".pdf");
                 document.body.appendChild(link);
                 link.click();
             });
@@ -569,14 +562,48 @@ export const downloadDocument = createAsyncThunk(
     }
 );
 
+export const approveContract = createAsyncThunk(
+    "auth/approveContract",
+    async ({id}) => {
+        try {
+            const response = await docService.approveContract(id);
+            return response.data;
+        } catch (error) {
+            const message =
+                (error.response &&
+                    error.response.data &&
+                    error.response.data.message) ||
+                error.message ||
+                error.toString();
+            return message;
+        }
+    }
+);
+
+export const disApproveContract = createAsyncThunk(
+    "auth/disApproveContract",
+    async ({id}) => {
+        try {
+            const response = await docService.disApproveContract(id);
+            return response.data;
+        } catch (error) {
+            const message =
+                (error.response &&
+                    error.response.data &&
+                    error.response.data.message) ||
+                error.message ||
+                error.toString();
+            return message;
+        }
+    }
+);
+
 const initialState = user
     ? {
-        isLoggedIn: true, user, mapAll, mapElem, authError: false,
-        myCompanies, currentPlace, companyById, allPremises, ...basicData
+        isLoggedIn: true, user, authError: false, ...basicData
     }
     : {
-        isLoggedIn: false, user: null, mapAll: null, mapElem: null, authError, myCompanies: null,
-        currentPlace: null, companyById: null, allPremises: null, ...basicData
+        isLoggedIn: false, user: null, authError, ...basicData
     };
 
 const authSlice = createSlice({
@@ -606,9 +633,6 @@ const authSlice = createSlice({
         },
         updateRegOrLogVisibility(state) {
             state.regOrLogVisibility = !state.regOrLogVisibility;
-        },
-        setMapElemData(state, action) {
-            state.mapElem = action.payload;
         },
         updateCurrentOnClickCoords(state, action) {
             state.currentOnClickCoords = action.payload;
@@ -746,6 +770,12 @@ const authSlice = createSlice({
         [getAddressByCoords.rejected]: (state, action) => {
             state.currentOnClickAddress = "ERROR";
         },
+        [getCompanies.fulfilled]: (state, action) => {
+            state.myCompanies = action.payload;
+        },
+        [getCompanyById.fulfilled]: (state, action) => {
+            state.companyById = action.payload;
+        },
         [getAllMessages.fulfilled]: (state, action) => {
             console.log(action.payload);
         },
@@ -755,8 +785,17 @@ const authSlice = createSlice({
         [getAllMapData.fulfilled]: (state, action) => {
             state.mapAll = action.payload;
         },
+        [getMapElemData.fulfilled]: (state, action) => {
+            state.mapElem = action.payload;
+        },
         [getAllCompanyBid.fulfilled]: (state, action) => {
             state.bidData = action.payload;
+        },
+        [getPremise.fulfilled]: (state, action) => {
+            state.currentPlace = action.payload;
+        },
+        [getAllPremises.fulfilled]: (state, action) => {
+            state.allPremises = action.payload;
         },
         [getPremisesInDocPage.fulfilled]: (state, action) => {
             state.docPremisesData = action.payload;
@@ -783,7 +822,6 @@ export const {
     updateRegPasswordChecker,
     updateRegOrLogVisibility,
     leftMenuToggler,
-    setMapElemData,
     updateCurrentOnClickCoords,
     updateCompanyNameInput,
     updateCompanyDescriptionInput,

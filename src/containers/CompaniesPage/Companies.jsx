@@ -5,28 +5,30 @@ import LeftMenu from "../Menus/MenuLeft/LeftMenu";
 import RightMenu from "../Menus/MenuRightLogined/MenuRightLogined";
 import CreateCompanies from "./CreateCompanie/CreateCompanie";
 import {useEffect} from "react";
-import {getCompanies} from "../../redux/reducers/authSlice";
+import {getCompanies, getCompanyById} from "../../redux/reducers/authSlice";
 import CompanyPagesMenu from "../Menus/CompanyPagesManu/CompanyPagesMenu";
 import CreatedCompanyPage from "./CreatedCompanyPage/CreatedCompanyPage";
+import {useSearchParams} from "react-router-dom";
 
 const Companies = function () {
     const authSlice = useSelector(state => state.auth);
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const myCompanies = JSON.parse(localStorage.getItem("myCompanies"));
+    const [searchParams] = useSearchParams();
+    const elementId = searchParams.get("elementId");
 
     useEffect(() => {
-        dispatch(getCompanies({}));
-    });
+        dispatch(getCompanyById({id: elementId}))
+    },[]);
 
     return (
         <div className="main">
             <LeftMenu/>
             <div className="main__inner" id="main__inner">
                 {
-                    myCompanies
-                        ? <CreatedCompanyPage/>
-                        : <CreateCompanies/>
+                    authSlice.companyById === null
+                        ? <CreateCompanies/>
+                        : <CreatedCompanyPage/>
                 }
                 <RightMenu/>
             </div>

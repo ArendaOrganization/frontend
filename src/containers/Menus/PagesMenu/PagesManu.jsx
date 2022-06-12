@@ -1,12 +1,18 @@
 import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router";
 import "../../mainStyle.css";
-import {getCompanies, logout} from "../../../redux/reducers/authSlice";
+import {getCompanies, getCompanyById, logout} from "../../../redux/reducers/authSlice";
+import {useEffect} from "react";
 
 const PagesMenu = function () {
     const authSlice = useSelector(state => state.auth);
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
+    useEffect(() => {
+        dispatch(getCompanies({}))
+    },[])
+
     return (
         <div className="pages-menu">
             <ul className="pages-menu__ul">
@@ -15,8 +21,8 @@ const PagesMenu = function () {
                         className="active"
                         onClick={
                             () => {
-                                navigate("../Companies", {replace: true});
-                                dispatch(getCompanies({}));
+                                navigate("../Companies?elementId=" + authSlice.myCompanies.id);
+                                dispatch(getCompanyById({id: authSlice.myCompanies.id}));
                             }
                         }
                     >Мои компании</a>

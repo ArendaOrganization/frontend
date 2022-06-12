@@ -5,7 +5,12 @@ import CompanyPagesMenu from "../../Menus/CompanyPagesManu/CompanyPagesMenu";
 import LeftMenu from "../../Menus/MenuLeft/LeftMenu";
 import {useSearchParams} from "react-router-dom";
 import {useEffect} from "react";
-import {downloadDocument, getCurrentContract} from "../../../redux/reducers/authSlice";
+import {
+    approveContract,
+    disApproveContract,
+    downloadDocument,
+    getCurrentContract
+} from "../../../redux/reducers/authSlice";
 
 const OneDocument = function () {
     const authSlice = useSelector(state => state.auth);
@@ -112,7 +117,9 @@ const OneDocument = function () {
                                                     <p className="request__p">
                                                         <a href="" className="form-link">
                                                             <a
-                                                                onClick={() => {navigate("../NotMyCompany",{replace:true})}}
+                                                                onClick={() => {
+                                                                    navigate("../Companies?elementId="+authSlice.currentContract.landlord.id)
+                                                                }}
                                                                 className="form-link"
                                                             >
                                                                 {authSlice.currentContract.landlord.name}
@@ -131,7 +138,9 @@ const OneDocument = function () {
                                                     <p className="request__p">
                                                         <a href="" className="form-link">
                                                             <a
-                                                                onClick={() => {navigate("../Companies",{replace:true})}}
+                                                                onClick={() => {
+                                                                    navigate("../Companies?elementId="+authSlice.currentContract.tenant.id)
+                                                                }}
                                                                 className="form-link"
                                                             >
                                                                 {authSlice.currentContract.tenant.name}
@@ -170,9 +179,23 @@ const OneDocument = function () {
                                                 </div>
                                                 <div className="col-md-6">
                                                     <p className="request__p">
-                                                        <a href="" className="form-link">Подписать</a> /
-                                                        <a href="" className="form-link">Отказаться</a> /
-                                                        <a href="" className="form-link">Расторгнуть</a>
+                                                        <a
+                                                            className="form-link"
+                                                            onClick={
+                                                                () => {
+                                                                    dispatch(approveContract({id: authSlice.currentContract.id}))
+                                                                }
+                                                            }
+                                                        >Подписать</a>
+                                                        /
+                                                        <a
+                                                            className="form-link"
+                                                            onClick={
+                                                                () => {
+                                                                    dispatch(disApproveContract({id: authSlice.currentContract.id}))
+                                                                }
+                                                            }
+                                                        >Отказаться</a>
                                                     </p>
                                                 </div>
                                             </div>

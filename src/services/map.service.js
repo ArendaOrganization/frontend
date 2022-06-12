@@ -27,7 +27,6 @@ const getMapData = () => {
     return axios
         .get(ALL_API_URL, {headers: {...headers}})
         .then((response) => {
-            localStorage.setItem("mapAll", JSON.stringify(response.data));
             return response.data;
         });
 };
@@ -35,9 +34,8 @@ const getMapData = () => {
 const getMapElemData = (id) => {
     console.log(id);
     return axios
-            .get(ELEM_API_URL+id, {headers: {...headers}})
+        .get(ELEM_API_URL+id, {headers: {...headers}})
         .then((response) => {
-            localStorage.setItem("mapElem", JSON.stringify(response.data));
             return response.data;
         });
 };

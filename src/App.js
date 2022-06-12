@@ -15,7 +15,6 @@ import PasswordChangeConfirmation from "./containers/ChangePassword/PasswordChan
 import WrongData from "./containers/AuthRegPage/AuthorisationErrors/WrongAuthData";
 import HelpPage from "./containers/HelpPage/HelpPage";
 import Place from "./containers/MapPage/Place/Place";
-import NotMyCompany from "./containers/CompaniesPage/NotMyCompany/NotMyCompany";
 import CreatePremise from "./containers/Premises/CreatePremise/CreatePremise";
 import Bid from "./containers/Bid/Bid";
 import Documents from "./containers/Documents/Documants";
@@ -34,7 +33,7 @@ function App() {
                 <Route path="*" element={<h1>Wrong address!</h1>}/>
                 <Route path="/SendEmailToChangePassword" element={<SendEmailToChangePassword/>}/>
                 <Route path="/user/verifyEmail" element={<EmailVerification/>}/>
-                <Route path="user/resetPassword" element={<ChangePassword/>}/>
+                <Route path="/user/resetPassword" element={<ChangePassword/>}/>
                 <Route path="/CheckYourEmailSign" element={<CheckYourEmailSign/>}/>
                 <Route path="/PasswordChangeConfirmation" element={<PasswordChangeConfirmation/>}/>
                 <Route path="/WrongData" element={<WrongData/>}/>
@@ -47,7 +46,6 @@ function App() {
                     <Route path="/Companies" element={<Companies/>}/>
                     <Route path="/Premises" element={<Premises/>}/>
                     <Route path="/Place" element={<Place/>}/>
-                    <Route path="/NotMyCompany" element={<NotMyCompany/>}/>
                     <Route path="/CreatePremise" element={<CreatePremise/>}/>
                     <Route path="/Bid" element={<Bid/>}/>
                     <Route path="/Documents" element={<Documents/>}/>

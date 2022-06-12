@@ -4,12 +4,25 @@ import "../mainStyle.css";
 import LeftMenu from "../Menus/MenuLeft/LeftMenu";
 import MenuRightLogined from "../Menus/MenuRightLogined/MenuRightLogined";
 import CompanyPagesMenu from "../Menus/CompanyPagesManu/CompanyPagesMenu";
-import {getCompanyById, getPremise, updatePremisesFilter} from "../../redux/reducers/authSlice";
+import {
+    getAllPremises,
+    getCompanies,
+    getCompanyById,
+    getPremise,
+    updatePremisesFilter
+} from "../../redux/reducers/authSlice";
+import {useEffect} from "react";
 
 const PremisesPage = function () {
     const authSlice = useSelector(state => state.auth);
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
+    useEffect(() => {
+        dispatch(getAllPremises({}))
+        dispatch(getCompanies({}))
+    }, [])
+
     return (
         <div className="main">
             <LeftMenu/>
@@ -24,7 +37,7 @@ const PremisesPage = function () {
                                     className="main-btn"
                                     onClick={
                                         () => {
-                                            navigate("../CreatePremise", {replace: true})
+                                            navigate("../CreatePremise")
                                         }
                                     }
                                 >Добавить помещение</a>
@@ -33,7 +46,9 @@ const PremisesPage = function () {
                         <div className="filters">
                             <select
                                 className="filter"
-                                onChange={(e) => {dispatch(updatePremisesFilter(e.target.value))}}
+                                onChange={(e) => {
+                                    dispatch(updatePremisesFilter(e.target.value))
+                                }}
                             >
                                 <option value="all">Все</option>
                                 <option value="mine">Мои</option>
@@ -56,7 +71,7 @@ const PremisesPage = function () {
                                             onClick={
                                                 () => {
                                                     dispatch(getPremise({id: elem.id}));
-                                                    navigate("../Place", {replace: true});
+                                                    navigate("../Place?elementId=" + elem.id);
                                                 }
                                             }
                                         >
@@ -118,7 +133,7 @@ const PremisesPage = function () {
                                                                 onClick={
                                                                     () => {
                                                                         dispatch(getCompanyById({id: elem.company.id}));
-                                                                        navigate("../NotMyCompany", {replace: true});
+                                                                        navigate("../Companies?elementId=" + elem.company.id);
                                                                     }
                                                                 }
                                                             >

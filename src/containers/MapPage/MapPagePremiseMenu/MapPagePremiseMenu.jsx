@@ -10,9 +10,7 @@ const MapPagePremiseMenu = function () {
 
     return (
         <div
-            id={
-                authSlice.isMapMenuVisible ? "opened" : ""
-            }
+            id={authSlice.isMapMenuVisible ? "opened" : ""}
             className="map__info"
         >
             <div
@@ -34,8 +32,7 @@ const MapPagePremiseMenu = function () {
                                 className="map__info-block"
                                 onClick={
                                     () => {
-                                        dispatch(getPremise({id:elem.id}));
-                                        navigate("../Place", {replace: true});
+                                        navigate("../Place?elementId="+elem.id);
                                     }
                                 }
                             >

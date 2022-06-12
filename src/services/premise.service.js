@@ -78,7 +78,6 @@ const getPremise = (id) => {
                 }
             })
         .then(response => {
-            localStorage.setItem("currentPlace", JSON.stringify(response.data));
             return response.data;
         }).catch(error => {
             console.log(error);
@@ -95,7 +94,6 @@ const getAllPremises = () => {
                 }
             })
         .then(response => {
-            localStorage.setItem("allPremises", JSON.stringify(response.data));
             return response.data;
         }).catch(error => {
             console.log(error);

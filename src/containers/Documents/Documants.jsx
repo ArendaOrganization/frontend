@@ -82,7 +82,7 @@ const Documents = function () {
                                                             <div className="col-md-6">
                                                                 <p className="request__p">
                                                                     <a
-                                                                        onClick={() => {navigate("../NotMyCompany",{replace:true})}}
+                                                                        onClick={() => {navigate("../Companies?elementId="+elem.landlord.id)}}
                                                                         className="form-link">{elem.landlord.name}</a>
                                                                 </p>
                                                             </div>
@@ -96,7 +96,7 @@ const Documents = function () {
                                                             <div className="col-md-6">
                                                                 <p className="request__p">
                                                                     <a
-                                                                        onClick={() => {navigate("../Companies",{replace:true})}}
+                                                                        onClick={() => {navigate("../Companies?elementId="+elem.tenant.id)}}
                                                                         className="form-link"
                                                                     >{elem.tenant.name}</a>
                                                                 </p>

@@ -2,7 +2,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router";
 import "../../mainStyle.css";
 import {useEffect} from "react";
-import {approveBid, disApproveBid, getAllCompanyBid} from "../../../redux/reducers/authSlice";
+import {approveBid, disApproveBid, getAllCompanyBid, getCompanies} from "../../../redux/reducers/authSlice";
 
 const BidElement = function () {
     const authSlice = useSelector(state => state.auth);
@@ -10,11 +10,12 @@ const BidElement = function () {
     const navigate = useNavigate();
     useEffect(() => {
         dispatch(getAllCompanyBid({}));
+        dispatch(getCompanies({}));
     }, []);
     return (
         <div>
             {
-                authSlice.bidData.length === 0 ? "..."
+                (authSlice.bidData.length === 0 || authSlice.myCompanies === null) ? "..."
                     : authSlice.bidData.map((elem) => {
                         if (authSlice.bidsFilter === "incoming" && elem.landlord.id !== authSlice.myCompanies.id) {
                             return ("");
@@ -42,7 +43,7 @@ const BidElement = function () {
                                                 <a
                                                     className="request__a"
                                                     onClick={() => {
-                                                        navigate("../Place", {replace: true})
+                                                        navigate("../Place?elementId=" + elem.premises.id)
                                                     }}
                                                 >{elem.premises.name}</a>
                                             </div>
@@ -69,7 +70,7 @@ const BidElement = function () {
                                                 <a
                                                     className="request__a"
                                                     onClick={() => {
-                                                        navigate("../NotMyCompany", {replace: true})
+                                                        navigate("../Companies?elementId=" + elem.landlord.id)
                                                     }}
                                                 >{elem.landlord.name}</a>
                                             </div>
@@ -86,7 +87,7 @@ const BidElement = function () {
                                                 <a
                                                     className="request__a"
                                                     onClick={() => {
-                                                        navigate("../Companies", {replace: true})
+                                                        navigate("../Companies?elementId=" + elem.tenant.id)
                                                     }}
                                                 >{elem.tenant.name}</a>
                                             </div>

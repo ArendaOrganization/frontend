@@ -12,7 +12,6 @@ const getMyCompanies = () => {
     return axios
         .get(COMPANY_URL, {headers: {...headers}})
         .then(response => {
-            localStorage.setItem("myCompanies", JSON.stringify(response.data));
             return response.data;
         }).catch(error => {
             console.log(error);
@@ -38,7 +37,6 @@ const getMyCompanyById = (id) => {
     return axios
         .get(`${COMPANY_URL}/getCompany?companyId=${id}`, {headers: {...headers}})
         .then(response => {
-            localStorage.setItem("companyById", JSON.stringify(response.data));
             return response.data;
         }).catch(error => {
             console.log(error);
