@@ -5,11 +5,19 @@ import MenuRightLogined from "../Menus/MenuRightLogined/MenuRightLogined";
 import PagesManu from "../Menus/PagesMenu/PagesManu";
 import LeftMenu from "../Menus/MenuLeft/LeftMenu";
 import MessengerDialogElement from "./MessengerDialogELement/MessengerDialogELement";
+import dialogLogo from "../Menus/img/user.png";
+import {useEffect} from "react";
+import {connect, sendMessage} from "../../webSocket/sokcet";
+import {updateCurrentMessageTextInput} from "../../redux/reducers/authSlice";
 
 const Messenger = function () {
     const authSlice = useSelector(state => state.auth);
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
+    useEffect(() => {
+        connect();
+    }, [])
 
     return (
         <div className="main">
@@ -26,10 +34,10 @@ const Messenger = function () {
                             <div className="dialog">
                                 <div className="dialog__header">
                                     <div className="dialog__avatar">
-                                        <img src="img/user.png" alt=""/>
+                                        <img src={dialogLogo} alt=""/>
                                     </div>
                                     <div className="dialog__username">
-                                        <p>Имя пользователя</p>
+                                        <p>{authSlice.currentDialogCompany}</p>
                                     </div>
                                 </div>
                                 <div className="dialog__center">
@@ -109,14 +117,32 @@ const Messenger = function () {
                                 </div>
                                 <form className="dialog__form">
                                     <div className="dialog__form-left">
-                                        <textarea name="" id="" cols="30" rows="10"
-                                                  className="dialog__textarea"></textarea>
+                                        <textarea
+                                            cols="30"
+                                            rows="10"
+                                            className="dialog__textarea"
+                                            onChange={(e) => {
+                                                updateCurrentMessageTextInput(e.target.value)
+                                            }}
+                                        ></textarea>
                                     </div>
                                     <div className="dialog__form-right">
                                         <label htmlFor="" className="dialog__file">
                                             <input type="file" className="dialog__file-input"/>
                                         </label>
-                                        <button className="dialog__send"></button>
+                                        <button
+                                            className="dialog__send"
+                                            onClick={
+                                                () => {
+                                                    sendMessage({
+                                                            messages: authSlice.currentMessageTextInput,
+                                                            dialogId: authSlice.currentDialogId,
+                                                            companyId: authSlice.companyAuthorId
+                                                        }
+                                                    )
+                                                }
+                                            }
+                                        ></button>
                                     </div>
                                 </form>
                             </div>

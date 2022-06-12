@@ -37,14 +37,11 @@ export function disconnect() {
     console.log("Disconnected")
 }
 
-export function sendMessage(message) {
-    stompClient.send("/app/changeMessage", {}, JSON.stringify(
+export function sendMessage({messages,dialogId,companyId}) {
+    stompClient.send("/app/changeMessage/"+dialogId+"/"+companyId, {}, JSON.stringify(
         {
-            value: message,
-            author: {
-                id: 2
-            }
-        }
+            value: messages
+        },
     ))
 }
 

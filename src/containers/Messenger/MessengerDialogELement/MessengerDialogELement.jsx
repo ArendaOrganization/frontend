@@ -2,7 +2,15 @@ import {useDispatch, useSelector} from "react-redux";
 import "../../mainStyle.css";
 import {useNavigate} from "react-router";
 import {useEffect} from "react";
-import {getAllDialogs} from "../../../redux/reducers/authSlice";
+import {
+    getAllDialogs,
+    getAllMessages,
+    updateCurrentDialogAuthorId,
+    updateCurrentDialogCompany,
+    updateCurrentDialogId
+} from "../../../redux/reducers/authSlice";
+import dialogLogo from "../../Menus/img/user.png";
+
 const MessengerDialogElement = function () {
     const authSlice = useSelector(state => state.auth);
     const dispatch = useDispatch();
@@ -10,26 +18,40 @@ const MessengerDialogElement = function () {
 
     useEffect(() => {
         dispatch(getAllDialogs({}));
-    },[])
+    }, [])
 
     return (
         <div>
             {
                 authSlice.AllDialogs === null
                     ? "..."
-                    : <div className="messenger-list__item">
-                        <div className="messenger-list__avatar">
-                            <img src="img/user.png" alt=""/>
-                        </div>
-                        <div className="messenger-list__info">
-                            <p className="messenger-list__username">
-                                Имя пользователя
-                            </p>
-                            <p className="messenger-list__text">
-                                Есть много вариантов Lorem...
-                            </p>
-                        </div>
-                    </div>
+                    : authSlice.AllDialogs.map((elem) => {
+                        return (
+                            <div
+                                className="messenger-list__item"
+                                onClick={
+                                    () => {
+                                        dispatch(getAllMessages({id: elem.id}))
+                                        dispatch(updateCurrentDialogCompany(elem.name))
+                                        dispatch(updateCurrentDialogId(elem.id))
+                                        dispatch(updateCurrentDialogAuthorId(elem.companyAuthorId))
+                                    }
+                                }
+                            >
+                                <div className="messenger-list__avatar">
+                                    <img src={dialogLogo} alt=""/>
+                                </div>
+                                <div className="messenger-list__info">
+                                    <p className="messenger-list__username">
+                                        {elem.name}
+                                    </p>
+                                    {/*<p className="messenger-list__text">
+                                        Есть много вариантов Lorem...
+                                    </p>*/}
+                                </div>
+                            </div>
+                        );
+                    })
             }
         </div>
     );

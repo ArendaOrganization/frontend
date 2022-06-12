@@ -615,6 +615,24 @@ export const getAllDialogs = createAsyncThunk(
     }
 )
 
+export const getAllMessages = createAsyncThunk(
+    "auth/getAllMessages",
+    async ({id}) => {
+        try {
+            const response = await messengerService.getAllMessages(id);
+            return response;
+        } catch (error) {
+            const message =
+                (error.response &&
+                    error.response.data &&
+                    error.response.data.message) ||
+                error.message ||
+                error.toString();
+            return message;
+        }
+    }
+)
+
 const initialState = user
     ? {
         isLoggedIn: true, user, authError: false, ...basicData
@@ -760,6 +778,18 @@ const authSlice = createSlice({
                 state.whichQuestionIsOpened = action.payload;
             }
         },
+        updateCurrentDialogCompany(state, action) {
+            state.currentDialogCompany = action.payload;
+        },
+        updateCurrentMessageTextInput(state, action) {
+            state.currentMessageTextInput = action.payload;
+        },
+        updateCurrentDialogId(state, action) {
+            state.currentDialogId = action.payload;
+        },
+        updateCurrentDialogAuthorId(state, action) {
+            state.companyAuthorId = action.payload;
+        },
     },
     extraReducers: {
         [register.fulfilled]: (state, action) => {
@@ -796,10 +826,13 @@ const authSlice = createSlice({
             state.companyById = action.payload;
         },
         [getAllMessagesByCompanyId.fulfilled]: (state, action) => {
-            state.currentDialogMessages = action.payload;
+            state.currentDialogMessagesFromPlace = action.payload;
         },
         [getAllDialogs.fulfilled]: (state, action) => {
             state.AllDialogs = action.payload;
+        },
+        [getAllMessages.fulfilled]: (state, action) => {
+            state.currentDialogMessages = action.payload;
         },
         [getAllMapData.fulfilled]: (state, action) => {
             state.mapAll = action.payload;
@@ -874,6 +907,10 @@ export const {
     updateCurrentDocumentDescriptionInput,
     updateCurrentChosenPremiseId,
     addDocumentFileToState,
-    openQuestionById
+    openQuestionById,
+    updateCurrentDialogCompany,
+    updateCurrentMessageTextInput,
+    updateCurrentDialogAuthorId,
+    updateCurrentDialogId
 } = authSlice.actions
 export default authSlice.reducer
