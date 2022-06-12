@@ -8,6 +8,7 @@ import premiseService from "../../services/premise.service";
 import axios from "axios";
 import bidService from "../../services/bid.service";
 import docService from "../../services/doc.service";
+import messengerService from "../../services/messenger.service";
 
 const user = JSON.parse(localStorage.getItem("user"));
 const authError = JSON.parse(localStorage.getItem("authError"));
@@ -158,25 +159,6 @@ export const postRentAddress = createAsyncThunk(
         }
     }
 );*/
-/*Messenger*/
-export const getAllMessages = createAsyncThunk(
-    "auth/getMessages",
-    async ({}, thunkAPI) => {
-        try {
-            const response = await mapService.getAllMessages();
-            return response.data;
-        } catch (error) {
-            const message =
-                (error.response &&
-                    error.response.data &&
-                    error.response.data.message) ||
-                error.message ||
-                error.toString();
-            thunkAPI.dispatch(setMessage(message));
-            return thunkAPI.rejectWithValue();
-        }
-    }
-)
 /*Companies*/
 
 export const getCompanies = createAsyncThunk(
@@ -596,6 +578,43 @@ export const disApproveContract = createAsyncThunk(
     }
 );
 
+/*Messenger*/
+export const getAllMessagesByCompanyId = createAsyncThunk(
+    "auth/getAllMessagesByCompanyId",
+    async ({id}) => {
+        try {
+            const response = await messengerService.getAllMessagesByCompanyId(id);
+            return response;
+        } catch (error) {
+            const message =
+                (error.response &&
+                    error.response.data &&
+                    error.response.data.message) ||
+                error.message ||
+                error.toString();
+            return message;
+        }
+    }
+)
+
+export const getAllDialogs = createAsyncThunk(
+    "auth/getAllDialogs",
+    async ({}) => {
+        try {
+            const response = await messengerService.getAllDialogs();
+            return response;
+        } catch (error) {
+            const message =
+                (error.response &&
+                    error.response.data &&
+                    error.response.data.message) ||
+                error.message ||
+                error.toString();
+            return message;
+        }
+    }
+)
+
 const initialState = user
     ? {
         isLoggedIn: true, user, authError: false, ...basicData
@@ -776,8 +795,11 @@ const authSlice = createSlice({
         [getCompanyById.fulfilled]: (state, action) => {
             state.companyById = action.payload;
         },
-        [getAllMessages.fulfilled]: (state, action) => {
-            console.log(action.payload);
+        [getAllMessagesByCompanyId.fulfilled]: (state, action) => {
+            state.currentDialogMessages = action.payload;
+        },
+        [getAllDialogs.fulfilled]: (state, action) => {
+            state.AllDialogs = action.payload;
         },
         [getAllMapData.fulfilled]: (state, action) => {
             state.mapAll = action.payload;

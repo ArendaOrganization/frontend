@@ -4,14 +4,11 @@ import "../../mainStyle.css";
 import CompanyPagesMenu from "../../Menus/CompanyPagesManu/CompanyPagesMenu";
 import {useEffect} from "react";
 import {getCompanies, getCompanyById} from "../../../redux/reducers/authSlice";
-import {useSearchParams} from "react-router-dom";
 
 const CreatedCompanyPage = function () {
     const authSlice = useSelector(state => state.auth);
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const [searchParams] = useSearchParams();
-    const elementId = searchParams.get("elementId");
 
     useEffect(() => {
         dispatch(getCompanies({}))

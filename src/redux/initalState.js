@@ -14,6 +14,8 @@ const initialState = {
     mapElem: null,
     myCompanies: null,
     companyById: null,
+    currentDialogMessages: null,
+    AllDialogs: null,
     currentCompanyNameInput: "",
     currentCompanyDescriptionInput: "",
     currentCompanyINNInput: "",

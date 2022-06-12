@@ -39,6 +39,7 @@ const LeftMenu = function () {
                             () => {
                                 navigate("../MapPage", {replace: true});
                                 dispatch(getAllMapData({}));
+                                window.location.reload(false);
                             }
                         }
                         className="leftMenuA"

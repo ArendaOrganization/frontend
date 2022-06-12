@@ -4,6 +4,7 @@ import {useNavigate} from "react-router";
 import MenuRightLogined from "../Menus/MenuRightLogined/MenuRightLogined";
 import PagesManu from "../Menus/PagesMenu/PagesManu";
 import LeftMenu from "../Menus/MenuLeft/LeftMenu";
+import MessengerDialogElement from "./MessengerDialogELement/MessengerDialogELement";
 
 const Messenger = function () {
     const authSlice = useSelector(state => state.auth);
@@ -19,111 +20,7 @@ const Messenger = function () {
                     <h1 className="container__h">Мои сообщения</h1>
                     <div className="container__inner messenger">
                         <div className="messenger-list">
-                            <div className="messenger-list__item">
-                                <div className="messenger-list__avatar">
-                                    <img src="img/user.png" alt=""/>
-                                </div>
-                                <div className="messenger-list__info">
-                                    <p className="messenger-list__username">
-                                        Имя пользователя
-                                    </p>
-                                    <p className="messenger-list__text">
-                                        Есть много вариантов Lorem Есть много вариантов Lorem
-                                    </p>
-                                    <span className="messenger__counter">1</span>
-                                </div>
-                            </div>
-                            <div className="messenger-list__item">
-                                <div className="messenger-list__avatar">
-                                    <img src="img/user.png" alt=""/>
-                                </div>
-                                <div className="messenger-list__info">
-                                    <p className="messenger-list__username">
-                                        Имя пользователя
-                                    </p>
-                                    <p className="messenger-list__text">
-                                        Есть много вариантов Lorem...
-                                    </p>
-                                </div>
-                            </div>
-                            <div className="messenger-list__item current">
-                                <div className="messenger-list__avatar">
-                                    <img src="img/user.png" alt=""/>
-                                </div>
-                                <div className="messenger-list__info">
-                                    <p className="messenger-list__username">
-                                        Имя пользователя
-                                    </p>
-                                    <p className="messenger-list__text">
-                                        Есть много вариантов Lorem...
-                                    </p>
-                                </div>
-                            </div>
-                            <div className="messenger-list__item">
-                                <div className="messenger-list__avatar">
-                                    <img src="img/user.png" alt=""/>
-                                </div>
-                                <div className="messenger-list__info">
-                                    <p className="messenger-list__username">
-                                        Имя пользователя
-                                    </p>
-                                    <p className="messenger-list__text">
-                                        Есть много вариантов Lorem...
-                                    </p>
-                                </div>
-                            </div>
-                            <div className="messenger-list__item">
-                                <div className="messenger-list__avatar">
-                                    <img src="img/user.png" alt=""/>
-                                </div>
-                                <div className="messenger-list__info">
-                                    <p className="messenger-list__username">
-                                        Имя пользователя
-                                    </p>
-                                    <p className="messenger-list__text">
-                                        Есть много вариантов Lorem...
-                                    </p>
-                                </div>
-                            </div>
-                            <div className="messenger-list__item">
-                                <div className="messenger-list__avatar">
-                                    <img src="img/user.png" alt=""/>
-                                </div>
-                                <div className="messenger-list__info">
-                                    <p className="messenger-list__username">
-                                        Имя пользователя
-                                    </p>
-                                    <p className="messenger-list__text">
-                                        Есть много вариантов Lorem...
-                                    </p>
-                                </div>
-                            </div>
-                            <div className="messenger-list__item">
-                                <div className="messenger-list__avatar">
-                                    <img src="img/user.png" alt=""/>
-                                </div>
-                                <div className="messenger-list__info">
-                                    <p className="messenger-list__username">
-                                        Имя пользователя
-                                    </p>
-                                    <p className="messenger-list__text">
-                                        Есть много вариантов Lorem...
-                                    </p>
-                                </div>
-                            </div>
-                            <div className="messenger-list__item">
-                                <div className="messenger-list__avatar">
-                                    <img src="img/user.png" alt=""/>
-                                </div>
-                                <div className="messenger-list__info">
-                                    <p className="messenger-list__username">
-                                        Имя пользователя
-                                    </p>
-                                    <p className="messenger-list__text">
-                                        Есть много вариантов Lorem...
-                                    </p>
-                                </div>
-                            </div>
+                            <MessengerDialogElement/>
                         </div>
                         <div className="messenger__right">
                             <div className="dialog">

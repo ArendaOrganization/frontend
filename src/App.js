@@ -22,6 +22,7 @@ import DocumentCreator from "./containers/Documents/DocumentCreator/DocumentCrea
 import OneDocument from "./containers/Documents/OneDocuments/OneDocuments";
 import MainPage from "./containers/MainPage/MainPage";
 import CompanyBiId from "./containers/CompaniesPage/CompanyById/CompanyById";
+import Messenger from "./containers/Messenger/Messenger";
 
 function App() {
     const authSlice = useSelector(state => state.auth);
@@ -53,6 +54,7 @@ function App() {
                     <Route path="/OneDocument" element={<OneDocument/>}/>
                     <Route path="/DocumentCreator" element={<DocumentCreator/>}/>
                     <Route path="/CompanyBiId" element={<CompanyBiId/>}/>
+                    <Route path="/Messenger" element={<Messenger/>}/>
                 </Route>
             </Routes>
         </BrowserRouter>

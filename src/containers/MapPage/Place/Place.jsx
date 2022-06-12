@@ -6,7 +6,12 @@ import MenuRightLogined from "../../Menus/MenuRightLogined/MenuRightLogined";
 import SwiperTeg from "./Swiper/Swiper";
 import {useNavigate} from "react-router";
 import {Clusterer, Map, Placemark, YMaps} from "react-yandex-maps";
-import {getCompanies, getCompanyById, getPremise, makeNewBid} from "../../../redux/reducers/authSlice";
+import {
+    getAllMessagesByCompanyId,
+    getCompanies,
+    getPremise,
+    makeNewBid
+} from "../../../redux/reducers/authSlice";
 import {useSearchParams} from "react-router-dom";
 import {useEffect} from "react";
 
@@ -52,7 +57,13 @@ const PlacePage = function () {
                                                 {
                                                     (authSlice.myCompanies !== null && currentPlace.company.id !== authSlice.myCompanies.id)
                                                         ? <div>
-                                                            <a href="" className="main-btn">Написать</a>
+                                                            <a
+                                                                className="main-btn"
+                                                                onClick={() => {
+                                                                    dispatch(getAllMessagesByCompanyId({id: currentPlace.company.id}))
+                                                                    navigate("../Messenger")
+                                                                }}
+                                                            >Написать</a>
                                                             <a
                                                                 className="main-btn"
                                                                 onClick={() => dispatch(makeNewBid({id: currentPlace.id}))}
@@ -104,7 +115,7 @@ const PlacePage = function () {
                                                         className="request__a"
                                                         onClick={
                                                             () => {
-                                                                navigate("../Companies?elementId=" + currentPlace.company.id);
+                                                                navigate("../CompanyBiId?elementId=" + currentPlace.company.id);
                                                             }
                                                         }
                                                     >{currentPlace.company.name}</a>

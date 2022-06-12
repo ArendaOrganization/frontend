@@ -37,7 +37,13 @@ const CompanyPagesMenu = function () {
                     >Заявки</a>
                 </li>
                 <li>
-                    <a href="">Мессенджер</a>
+                    <a
+                        onClick={
+                            () => {
+                                navigate("../Messenger");
+                            }
+                        }
+                    >Мессенджер</a>
                 </li>
             </ul>
         </div>

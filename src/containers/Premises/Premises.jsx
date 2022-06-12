@@ -133,7 +133,7 @@ const PremisesPage = function () {
                                                                 onClick={
                                                                     () => {
                                                                         dispatch(getCompanyById({id: elem.company.id}));
-                                                                        navigate("../Companies?elementId=" + elem.company.id);
+                                                                        navigate("../CompanyBiId?elementId=" + elem.company.id);
                                                                     }
                                                                 }
                                                             >

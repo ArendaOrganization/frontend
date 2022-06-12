@@ -118,7 +118,7 @@ const OneDocument = function () {
                                                         <a href="" className="form-link">
                                                             <a
                                                                 onClick={() => {
-                                                                    navigate("../Companies?elementId="+authSlice.currentContract.landlord.id)
+                                                                    navigate("../CompanyBiId?elementId="+authSlice.currentContract.landlord.id)
                                                                 }}
                                                                 className="form-link"
                                                             >
@@ -139,7 +139,7 @@ const OneDocument = function () {
                                                         <a href="" className="form-link">
                                                             <a
                                                                 onClick={() => {
-                                                                    navigate("../Companies?elementId="+authSlice.currentContract.tenant.id)
+                                                                    navigate("../CompanyBiId?elementId="+authSlice.currentContract.tenant.id)
                                                                 }}
                                                                 className="form-link"
                                                             >

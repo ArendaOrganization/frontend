@@ -5,6 +5,7 @@ import Registration from "./RegistrationPage/Registration";
 import {useLocation, useNavigate} from "react-router";
 import LeftMenu from "../Menus/MenuLeft/LeftMenu";
 import "../mainStyle.css";
+import {useEffect} from "react";
 
 const AuthReg = function () {
     const authSlice = useSelector(state => state.auth);

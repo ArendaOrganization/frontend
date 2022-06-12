@@ -28,7 +28,7 @@ const Documents = function () {
                                 <a
                                     className="main-btn"
                                     onClick={() => {
-                                        navigate("../DocumentCreator", {replace: true})
+                                        navigate("../DocumentCreator")
                                     }}
                                 >Добавить документ</a>
                             </div>
@@ -52,7 +52,7 @@ const Documents = function () {
                                                                 className="request__a"
                                                                 onClick={
                                                                     () => {
-                                                                        navigate("../OneDocument" + "?elementId=" + elem.id, {replace: true})
+                                                                        navigate("../OneDocument" + "?elementId=" + elem.id)
                                                                     }
                                                                 }
                                                             >
@@ -82,7 +82,7 @@ const Documents = function () {
                                                             <p className="request__p">
                                                                 <a
                                                                     onClick={() => {
-                                                                        navigate("../Companies?elementId=" + elem.landlord.id)
+                                                                        navigate("../CompanyBiId?elementId=" + elem.landlord.id)
                                                                     }}
                                                                     className="form-link">{elem.landlord.name}</a>
                                                             </p>
@@ -98,7 +98,7 @@ const Documents = function () {
                                                             <p className="request__p">
                                                                 <a
                                                                     onClick={() => {
-                                                                        navigate("../Companies?elementId=" + elem.tenant.id)
+                                                                        navigate("../CompanyBiId?elementId=" + elem.tenant.id)
                                                                     }}
                                                                     className="form-link"
                                                                 >{elem.tenant.name}</a>

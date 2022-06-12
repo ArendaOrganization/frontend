@@ -27,8 +27,18 @@ const getAllMessagesByCompanyId = (id) => {
         });
 };
 
+const getAllDialogs = () => {
+    return axios
+        .get(`${API_URL}getAllDialogs`,
+            {headers: {...headers}})
+        .then((response) => {
+            return response.data;
+        });
+};
+
 const messengerService = {
     getAllMessagesByCompanyId,
+    getAllDialogs
 };
 
 export default messengerService;

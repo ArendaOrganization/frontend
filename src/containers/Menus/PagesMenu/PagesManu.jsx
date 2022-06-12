@@ -18,15 +18,27 @@ const PagesMenu = function () {
                         onClick={
                             () => {
                                 navigate("../Companies");
+                                window.location.reload(false);
                             }
                         }
                     >Мои компании</a>
                 </li>
                 <li>
-                    <a href="">Мессенджер</a>
+                    <a
+                        onClick={
+                            () => {
+                                navigate("../Messenger");
+                            }
+                        }
+                    >Мессенджер</a>
                 </li>
                 <li>
-                    <a onClick={() => dispatch(logout())}>Выйти</a>
+                    <a onClick={
+                        () => {
+                            dispatch(logout());
+                            window.location.reload(false);
+                        }
+                    }>Выйти</a>
                 </li>
             </ul>
         </div>

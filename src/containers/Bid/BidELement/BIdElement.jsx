@@ -70,7 +70,7 @@ const BidElement = function () {
                                                 <a
                                                     className="request__a"
                                                     onClick={() => {
-                                                        navigate("../Companies?elementId=" + elem.landlord.id)
+                                                        navigate("../CompanyBiId?elementId=" + elem.landlord.id)
                                                     }}
                                                 >{elem.landlord.name}</a>
                                             </div>
@@ -87,7 +87,7 @@ const BidElement = function () {
                                                 <a
                                                     className="request__a"
                                                     onClick={() => {
-                                                        navigate("../Companies?elementId=" + elem.tenant.id)
+                                                        navigate("../CompanyBiId?elementId=" + elem.tenant.id)
                                                     }}
                                                 >{elem.tenant.name}</a>
                                             </div>
