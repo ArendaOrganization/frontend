@@ -8,16 +8,19 @@ import MessengerDialogElement from "./MessengerDialogELement/MessengerDialogELem
 import dialogLogo from "../Menus/img/user.png";
 import {useEffect} from "react";
 import {connect, sendMessage} from "../../webSocket/sokcet";
+import {useSearchParams} from "react-router-dom";
 import {updateCurrentMessageTextInput} from "../../redux/reducers/authSlice";
 
 const Messenger = function () {
     const authSlice = useSelector(state => state.auth);
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const [searchParams] = useSearchParams();
+    const elementId = searchParams.get("elementId");
 
     useEffect(() => {
-        connect();
-    }, [])
+        connect(elementId);
+    },[])
 
     return (
         <div className="main">
@@ -115,14 +118,14 @@ const Messenger = function () {
                                         </div>
                                     </div>
                                 </div>
-                                <form className="dialog__form">
+                                <div className="dialog__form">
                                     <div className="dialog__form-left">
                                         <textarea
                                             cols="30"
                                             rows="10"
                                             className="dialog__textarea"
                                             onChange={(e) => {
-                                                updateCurrentMessageTextInput(e.target.value)
+                                                dispatch(updateCurrentMessageTextInput(e.target.value));
                                             }}
                                         ></textarea>
                                     </div>
@@ -144,7 +147,7 @@ const Messenger = function () {
                                             }
                                         ></button>
                                     </div>
-                                </form>
+                                </div>
                             </div>
                         </div>
                     </div>

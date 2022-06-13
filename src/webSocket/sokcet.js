@@ -11,16 +11,18 @@ const headers = {
 let stompClient = null;
 const handlers = [
     function hello(message) {
-        console.log(JSON.parse(message.body));
+        console.log(message.value);
     },
 ];
 
-export function connect() {
+export let messagesArr = [];
+
+export function connect(id) {
     const socket = new SockJS('http://localhost:8081/gs-guide-websocket')
     stompClient = Stomp.over(socket)
     stompClient.connect({}, frame => {
         console.log('Connected: ' + frame)
-        stompClient.subscribe('/topic/activity', message => {
+        stompClient.subscribe(`/topic/activity`, message => {
             handlers.forEach(handler => handler(JSON.parse(message.body)));
         })
     })

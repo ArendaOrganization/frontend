@@ -10,6 +10,7 @@ import {
     updateCurrentDialogId
 } from "../../../redux/reducers/authSlice";
 import dialogLogo from "../../Menus/img/user.png";
+import {connect, disconnect} from "../../../webSocket/sokcet";
 
 const MessengerDialogElement = function () {
     const authSlice = useSelector(state => state.auth);
@@ -31,10 +32,13 @@ const MessengerDialogElement = function () {
                                 className="messenger-list__item"
                                 onClick={
                                     () => {
+                                        disconnect();
+                                        navigate("../Messenger?elementId=" + elem.id, {replace: true})
                                         dispatch(getAllMessages({id: elem.id}))
                                         dispatch(updateCurrentDialogCompany(elem.name))
                                         dispatch(updateCurrentDialogId(elem.id))
                                         dispatch(updateCurrentDialogAuthorId(elem.companyAuthorId))
+                                        connect(elem.id);
                                     }
                                 }
                             >

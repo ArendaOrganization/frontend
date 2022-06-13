@@ -17,7 +17,7 @@ const initialState = {
     currentDialogMessages: null,
     currentDialogMessagesFromPlace: null,
     currentDialogCompany: null,
-    currentMessageTextInput: null,
+    currentMessageTextInput: "",
     currentDialogId: null,
     companyAuthorId: null,
     AllDialogs: null,
