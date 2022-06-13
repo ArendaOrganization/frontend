@@ -1,5 +1,5 @@
 import {useDispatch, useSelector} from "react-redux";
-import {register} from "../../../redux/reducers/authSlice";
+import {register, updateRegOrLogVisibility} from "../../../redux/reducers/authSlice";
 import {
     updateEmailInput,
     updateMobileInput,
@@ -22,7 +22,7 @@ const Registration = function () {
         <div className="container container-sm">
             <h1 className="container__h">Регистрация</h1>
             <div className="container__inner">
-                <div  className="main-form">
+                <div className="main-form">
                     <div className="row">
                         <div className="col-md-6">
                             <div className="form-row">
@@ -123,15 +123,20 @@ const Registration = function () {
                                 </div>
                                 <button
                                     className="main-btn"
-                                    onClick={() => dispatch(
-                                        register({
-                                            name: authSlice.currentNameInput,
-                                            surname: authSlice.currentSurnameInput,
-                                            patronymic: authSlice.currentPatronymicInput,
-                                            email: authSlice.currentEmailInput,
-                                            mobile: authSlice.currentMobileInput,
-                                            password: authSlice.currentPasswordInput
-                                        }))}
+                                    onClick={
+                                        () => {
+                                            dispatch(
+                                                register({
+                                                    name: authSlice.currentNameInput,
+                                                    surname: authSlice.currentSurnameInput,
+                                                    patronymic: authSlice.currentPatronymicInput,
+                                                    email: authSlice.currentEmailInput,
+                                                    mobile: authSlice.currentMobileInput,
+                                                    password: authSlice.currentPasswordInput
+                                                }))
+                                            dispatch(updateRegOrLogVisibility())
+                                        }
+                                    }
                                 >
                                     Зарегестрироваться
                                 </button>
