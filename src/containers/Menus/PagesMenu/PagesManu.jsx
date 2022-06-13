@@ -24,15 +24,6 @@ const PagesMenu = function () {
                     >Мои компании</a>
                 </li>
                 <li>
-                    <a
-                        onClick={
-                            () => {
-                                navigate("../Messenger");
-                            }
-                        }
-                    >Мессенджер</a>
-                </li>
-                <li>
                     <a onClick={
                         () => {
                             dispatch(logout());

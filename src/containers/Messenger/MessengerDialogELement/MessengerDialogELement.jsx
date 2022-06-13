@@ -3,6 +3,7 @@ import "../../mainStyle.css";
 import {useNavigate} from "react-router";
 import {useEffect} from "react";
 import {
+    clearJustSendMessageArr,
     getAllDialogs,
     getAllMessages,
     updateCurrentDialogAuthorId,
@@ -38,6 +39,7 @@ const MessengerDialogElement = function () {
                                         dispatch(updateCurrentDialogCompany(elem.name))
                                         dispatch(updateCurrentDialogId(elem.id))
                                         dispatch(updateCurrentDialogAuthorId(elem.companyAuthorId))
+                                        dispatch(clearJustSendMessageArr())
                                         connect(elem.id);
                                     }
                                 }

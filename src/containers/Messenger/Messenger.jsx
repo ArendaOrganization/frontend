@@ -40,7 +40,9 @@ const Messenger = function () {
                                         <img src={dialogLogo} alt=""/>
                                     </div>
                                     <div className="dialog__username">
-                                        <p>{authSlice.currentDialogCompany}</p>
+                                        <p onClick={() => navigate("../CompanyBiId?elementId="+authSlice.companyAuthorId)}>
+                                            {authSlice.currentDialogCompany}
+                                        </p>
                                     </div>
                                 </div>
                                 <div className="dialog__center">
@@ -73,7 +75,7 @@ const Messenger = function () {
                                                 })
                                         }
                                         {
-                                            authSlice.justSendMessageArr === null
+                                            authSlice.justSendMessageArr.length === 0
                                                 ? ""
                                                 : authSlice.justSendMessageArr.map((elem) => {
                                                     if (elem.dialog.id === authSlice.currentDialogId) {
@@ -99,23 +101,12 @@ const Messenger = function () {
                                                     }
                                                 })
                                         }
-                                        {/*
-                                        <div className="dialog__user-message">
-                                            <p>Есть много вариантов Lorem Ipsum, но большинство из них имеет
-                                                <span className="time">05:35</span>
-                                            </p>
-                                        </div>
-                                        <div className="dialog__answer">
-                                            <p>Есть много вариантов Lorem Ipsum, но большинство из них имеет
-                                                <span className="time">05:35</span>
-                                            </p>
-                                        </div>
-                                        */}
                                     </div>
                                 </div>
                                 <div className="dialog__form">
                                     <div className="dialog__form-left">
                                         <textarea
+                                            value={authSlice.currentMessageTextInput}
                                             cols="30"
                                             rows="10"
                                             className="dialog__textarea"
@@ -138,7 +129,6 @@ const Messenger = function () {
                                                             companyId: authSlice.companyAuthorId
                                                         }
                                                     )
-                                                    dispatch(updateCurrentMessageTextInput(""));
                                                 }
                                             }
                                         ></button>

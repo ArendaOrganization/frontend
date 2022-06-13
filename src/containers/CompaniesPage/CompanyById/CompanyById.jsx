@@ -3,7 +3,7 @@ import {useNavigate} from "react-router";
 import "../../mainStyle.css";
 import {useEffect} from "react";
 import {useSearchParams} from "react-router-dom";
-import {getCompanyById} from "../../../redux/reducers/authSlice";
+import {getAllMessagesByCompanyId, getCompanyById} from "../../../redux/reducers/authSlice";
 import img from "../../img/example-place.png"
 import MenuRightLogined from "../../Menus/MenuRightLogined/MenuRightLogined";
 import PagesManu from "../../Menus/PagesMenu/PagesManu";
@@ -35,7 +35,13 @@ const CompanyBiId = function () {
                                     <div className="col-md-3">
                                         <div className="page-avatar">
                                             <img src={img} alt="" className="page-avatar__img"/>
-                                            <a className="main-btn">Написать</a>
+                                            <a
+                                                className="main-btn"
+                                                onClick={() => {
+                                                    dispatch(getAllMessagesByCompanyId({id: elementId}))
+                                                    navigate("../Messenger")
+                                                }}
+                                            >Написать</a>
                                         </div>
                                     </div>
                                     <div className="col-md-9">
