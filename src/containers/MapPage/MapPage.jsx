@@ -14,7 +14,7 @@ import {useEffect} from "react";
 const MapPage = function () {
     const authSlice = useSelector(state => state.auth);
     const dispatch = useDispatch();
-    const centerCoords = authSlice.mapAll !== null
+    const centerCoords = (authSlice.mapAll) && (authSlice.mapAll.length > 0)
         ? [authSlice.mapAll[0].latitude, authSlice.mapAll[0].longitude]
         : [56.845130, 60.626060];
     
@@ -69,7 +69,7 @@ const MapPage = function () {
                                                                 />
                                                             )
                                                         })
-                                                        : null
+                                                        : ""
                                                 }
                                             </Clusterer>
                                         </Map>

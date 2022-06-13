@@ -109,6 +109,7 @@ const CreateCompanies = function () {
                                                 phone: authSlice.currentCompanyPhoneInput,
                                                 email: authSlice.currentCompanyEmailInput
                                             }))
+                                        window.location.reload(false);
                                     }
                                 }
                             >Зарегестрировать
