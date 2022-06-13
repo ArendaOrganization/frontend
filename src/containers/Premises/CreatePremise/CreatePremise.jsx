@@ -329,7 +329,7 @@ const CreatePremise = function () {
                                                         }
                                                     ))
                                                     navigate("../Premises");
-                                                    window.location.reload(false);
+                                                    // window.location.reload(false);
                                                 }
                                             }
                                         >Отправить

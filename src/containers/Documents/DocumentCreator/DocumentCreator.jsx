@@ -84,7 +84,7 @@ const DocumentCreator = function () {
                                                     }
                                                 ))
                                                 navigate("../Documents", {replace: true})
-                                                window.location.reload(false);
+                                                //window.location.reload(false);
                                             }}
                                         >Создать и отправить</a>
                                     </div>
