@@ -184,6 +184,8 @@ const OneDocument = function () {
                                                             onClick={
                                                                 () => {
                                                                     dispatch(approveContract({id: authSlice.currentContract.id}))
+                                                                    navigate("../Documents",{replace:true})
+                                                                    window.location.reload(false);
                                                                 }
                                                             }
                                                         >Подписать</a>
@@ -193,6 +195,8 @@ const OneDocument = function () {
                                                             onClick={
                                                                 () => {
                                                                     dispatch(disApproveContract({id: authSlice.currentContract.id}))
+                                                                    navigate("../Documents",{replace:true})
+                                                                    window.location.reload(false);
                                                                 }
                                                             }
                                                         >Отказаться</a>

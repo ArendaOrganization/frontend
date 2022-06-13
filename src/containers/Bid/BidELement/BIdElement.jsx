@@ -116,12 +116,14 @@ const BidElement = function () {
                                                                 className="form-link"
                                                                 onClick={() => {
                                                                     dispatch(approveBid({id: elem.id}))
+                                                                    window.location.reload(false);
                                                                 }}
                                                             >Да</a>
                                                             <a
                                                                 className="form-link"
                                                                 onClick={() => {
                                                                     dispatch(disApproveBid({id: elem.id}))
+                                                                    window.location.reload(false);
                                                                 }}
                                                             >Нет</a>
                                                         </p>

@@ -64,10 +64,14 @@ const PlacePage = function () {
                                                                     navigate("../Messenger")
                                                                 }}
                                                             >Написать</a>
-                                                            <a
-                                                                className="main-btn"
-                                                                onClick={() => dispatch(makeNewBid({id: currentPlace.id}))}
-                                                            >Отправить заявку</a>
+                                                            {
+                                                                currentPlace.tenant !== null
+                                                                    ? ""
+                                                                    : <a
+                                                                        className="main-btn"
+                                                                        onClick={() => dispatch(makeNewBid({id: currentPlace.id}))}
+                                                                    >Отправить заявку</a>
+                                                            }
                                                         </div>
                                                         : ""
                                                 }
@@ -121,6 +125,20 @@ const PlacePage = function () {
                                                     >{currentPlace.company.name}</a>
                                                 </div>
                                             </div>
+                                            {
+                                                currentPlace.tenant === null
+                                                    ? ""
+                                                    : <div className="row">
+                                                        <div className="col-md-6">
+                                                            <p className="request__p">
+                                                                <b>Арендатор:</b>
+                                                            </p>
+                                                        </div>
+                                                        <div className="col-md-6">
+                                                            <p className="request__p">{currentPlace.tenant.name}</p>
+                                                        </div>
+                                                    </div>
+                                            }
                                             <div className="row">
                                                 <div className="col-md-12">
                                                     <SwiperTeg imgsLinqs={imgsLinqs}/>

@@ -17,16 +17,20 @@ const HelpPage = function () {
             <div className="main__inner" id="main__inner">
 
                 <div className="container container-m">
-                    {authSlice.user ? <PagesManu/> : ""}
                     <h1 className="container__h">Вопросы и ответы / Помощь / Поддержка</h1>
                     <div className="container__inner">
                         <p className="form-p">
-                            <b>Не нашли свой вопрос? <a href="" className="form-link">Задайте его нам здесь.</a></b>
+                            <b>
+                                Не нашли свой вопрос? Задайте его нам здесь:
+                                <span className="form-link">arendaru.mail@gmail.com</span>
+                            </b>
                         </p>
                         <div className={authSlice.whichQuestionIsOpened === 1 ? "question opened" : "question"}>
                             <p
                                 className="question__h"
-                                onClick={() => {dispatch(openQuestionById(1))}}
+                                onClick={() => {
+                                    dispatch(openQuestionById(1))
+                                }}
                             >
                                 Некий часто задаваемый вопрос
                             </p>
@@ -53,7 +57,9 @@ const HelpPage = function () {
                         <div className={authSlice.whichQuestionIsOpened === 2 ? "question opened" : "question"}>
                             <p
                                 className="question__h"
-                                onClick={() => {dispatch(openQuestionById(2))}}
+                                onClick={() => {
+                                    dispatch(openQuestionById(2))
+                                }}
                             >
                                 Некий часто задаваемый вопрос
                             </p>
@@ -80,7 +86,9 @@ const HelpPage = function () {
                         <div className={authSlice.whichQuestionIsOpened === 3 ? "question opened" : "question"}>
                             <p
                                 className="question__h"
-                                onClick={() => {dispatch(openQuestionById(3))}}
+                                onClick={() => {
+                                    dispatch(openQuestionById(3))
+                                }}
                             >
                                 Некий часто задаваемый вопрос
                             </p>
