@@ -1,5 +1,7 @@
 import SockJS from 'sockjs-client';
 import {Stomp} from '@stomp/stompjs';
+import store from "../redux/store";
+import {addMessageToJustSendMessageArr} from "../redux/reducers/authSlice";
 
 const user = JSON.parse(localStorage.getItem("user"));
 
@@ -9,20 +11,23 @@ const headers = {
 };
 
 let stompClient = null;
+export let messagesArr = [];
+
+
 const handlers = [
     function hello(message) {
-        console.log(message.value);
+        messagesArr.push(message);
+        store.dispatch(addMessageToJustSendMessageArr(message));
+        //console.log(store.getState().auth.justSendMessageArr);
     },
 ];
-
-export let messagesArr = [];
 
 export function connect(id) {
     const socket = new SockJS('http://localhost:8081/gs-guide-websocket')
     stompClient = Stomp.over(socket)
     stompClient.connect({}, frame => {
         console.log('Connected: ' + frame)
-        stompClient.subscribe(`/topic/activity`, message => {
+        stompClient.subscribe(`/topic/activity/${id}`, message => {
             handlers.forEach(handler => handler(JSON.parse(message.body)));
         })
     })

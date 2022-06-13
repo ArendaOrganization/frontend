@@ -45,11 +45,61 @@ const Messenger = function () {
                                 </div>
                                 <div className="dialog__center">
                                     <div className="dialog__center-inner">
-                                        <div className="dialog__answer">
-                                            <p>Ответ
-                                                <span className="time">05:35</span>
-                                            </p>
-                                        </div>
+                                        {
+                                            authSlice.currentDialogMessages === null
+                                                ? ""
+                                                : authSlice.currentDialogMessages.map((elem) => {
+                                                    if (elem.dialog.id === authSlice.currentDialogId) {
+                                                        if (elem.companyId === authSlice.companyAuthorId) {
+                                                            return (
+                                                                <div className="dialog__user-message">
+                                                                    <p>
+                                                                        {elem.value}
+                                                                        <span className="time">17:15</span>
+                                                                    </p>
+                                                                </div>
+                                                            );
+                                                        } else {
+                                                            return (
+                                                                <div className="dialog__answer">
+                                                                    <p>
+                                                                        {elem.value}
+                                                                        <span className="time">05:35</span>
+                                                                    </p>
+                                                                </div>
+                                                            );
+                                                        }
+                                                    }
+                                                })
+                                        }
+                                        {
+                                            authSlice.justSendMessageArr === null
+                                                ? ""
+                                                : authSlice.justSendMessageArr.map((elem) => {
+                                                    if (elem.dialog.id === authSlice.currentDialogId) {
+                                                        if (elem.companyId === authSlice.companyAuthorId) {
+                                                            return (
+                                                                <div className="dialog__user-message">
+                                                                    <p>
+                                                                        {elem.value}
+                                                                        <span className="time">17:15</span>
+                                                                    </p>
+                                                                </div>
+                                                            );
+                                                        } else {
+                                                            return (
+                                                                <div className="dialog__answer">
+                                                                    <p>
+                                                                        {elem.value}
+                                                                        <span className="time">05:35</span>
+                                                                    </p>
+                                                                </div>
+                                                            );
+                                                        }
+                                                    }
+                                                })
+                                        }
+                                        {/*
                                         <div className="dialog__user-message">
                                             <p>Есть много вариантов Lorem Ipsum, но большинство из них имеет
                                                 <span className="time">05:35</span>
@@ -60,62 +110,7 @@ const Messenger = function () {
                                                 <span className="time">05:35</span>
                                             </p>
                                         </div>
-                                        <div className="dialog__user-message">
-                                            <p>Ответ
-                                                <span className="time">05:35</span>
-                                            </p>
-                                        </div>
-                                        <div className="dialog__answer">
-                                            <p>Ответ
-                                                <span className="time">05:35</span>
-                                            </p>
-                                        </div>
-                                        <div className="dialog__user-message">
-                                            <p>Есть много вариантов Lorem Ipsum, но большинство из них имеет
-                                                <span className="time">05:35</span>
-                                            </p>
-                                        </div>
-                                        <div className="dialog__answer">
-                                            <p>Есть много вариантов Lorem Ipsum, но большинство из них имеет
-                                                <span className="time">05:35</span>
-                                            </p>
-                                        </div>
-                                        <div className="dialog__user-message">
-                                            <p>Ответ
-                                                <span className="time">05:35</span>
-                                            </p>
-                                        </div>
-                                        <div className="dialog__answer">
-                                            <p>Есть много вариантов Lorem Ipsum, но большинство из них имеет
-                                                <span className="time">05:35</span>
-                                            </p>
-                                        </div>
-                                        <div className="dialog__user-message">
-                                            <p>Есть много вариантов Lorem Ipsum, но большинство из них имеет
-                                                <span className="time">05:35</span>
-                                            </p>
-                                        </div>
-                                        <div className="dialog__answer">
-                                            <p>Есть много вариантов Lorem Ipsum, но большинство из них имеет
-                                                <span className="time">05:35</span>
-                                            </p>
-                                        </div>
-                                        <div className="dialog__user-message">
-                                            <p>Ответ
-                                                <span className="time">05:35</span>
-                                            </p>
-                                        </div>
-                                        <div className="dialog__answer">
-                                            <p>
-                                                <img src="img/main.png" alt="" className="dialog__photo"/>
-                                                <span className="time">05:35</span>
-                                            </p>
-                                        </div>
-                                        <div className="dialog__user-message">
-                                            <p>Есть много вариантов Lorem Ipsum, но большинство из них имеет
-                                                <span className="time">05:35</span>
-                                            </p>
-                                        </div>
+                                        */}
                                     </div>
                                 </div>
                                 <div className="dialog__form">
@@ -143,6 +138,7 @@ const Messenger = function () {
                                                             companyId: authSlice.companyAuthorId
                                                         }
                                                     )
+                                                    dispatch(updateCurrentMessageTextInput(""));
                                                 }
                                             }
                                         ></button>

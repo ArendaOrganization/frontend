@@ -790,6 +790,9 @@ const authSlice = createSlice({
         updateCurrentDialogAuthorId(state, action) {
             state.companyAuthorId = action.payload;
         },
+        addMessageToJustSendMessageArr(state,action) {
+            state.justSendMessageArr.push(action.payload);
+        },
     },
     extraReducers: {
         [register.fulfilled]: (state, action) => {
@@ -911,6 +914,7 @@ export const {
     updateCurrentDialogCompany,
     updateCurrentMessageTextInput,
     updateCurrentDialogAuthorId,
-    updateCurrentDialogId
+    updateCurrentDialogId,
+    addMessageToJustSendMessageArr
 } = authSlice.actions
 export default authSlice.reducer

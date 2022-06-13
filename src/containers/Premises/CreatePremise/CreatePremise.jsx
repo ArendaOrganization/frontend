@@ -11,10 +11,12 @@ import {
 } from "../../../redux/reducers/authSlice";
 import RentYourPage from "../../RentYourPage/RentYourPage";
 import LeftMenu from "../../Menus/MenuLeft/LeftMenu";
+import {useNavigate} from "react-router";
 
 const CreatePremise = function () {
     const authSlice = useSelector(state => state.auth);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     return (
         <div className="main">
@@ -326,6 +328,8 @@ const CreatePremise = function () {
                                                             imqsImg: authSlice.imgs
                                                         }
                                                     ))
+                                                    navigate("../Premises");
+                                                    window.location.reload(false);
                                                 }
                                             }
                                         >Отправить
