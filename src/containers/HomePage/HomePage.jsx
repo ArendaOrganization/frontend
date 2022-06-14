@@ -1,9 +1,10 @@
 import {useDispatch, useSelector} from "react-redux";
-import LogOut from "../AuthRegPage/LogOut/LogOut";
 import {useNavigate} from "react-router";
-import {Link} from "react-router-dom";
-import homePageStyle from "./HomePage.module.css"
-
+import LeftMenu from "../Menus/MenuLeft/LeftMenu";
+import avatar from "./img/user.png";
+import "../mainStyle.css"
+import PagesManu from "../Menus/PagesMenu/PagesManu";
+import MenuRightLogined from "../Menus/MenuRightLogined/MenuRightLogined";
 
 const HomePage = function () {
     const authSlice = useSelector(state => state.auth);
@@ -11,7 +12,75 @@ const HomePage = function () {
     const navigate = useNavigate();
 
     return (
-        <div>
+        <div className="main">
+            <LeftMenu/>
+            <div className="main__inner" id="main__inner">
+                <div className="container container-m">
+                    <PagesManu/>
+                    <h1 className="container__h">Личный кабинет пользователя</h1>
+                    <div className="container__inner">
+                        <div className="row">
+                            <div className="col-md-3">
+                                <p className="container-p container-p_wm">Фото профиля:</p>
+                            </div>
+                            <div className="col-md-9">
+                                <img src={avatar} alt="" className="user-avatar"/>
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className="col-md-3">
+                                <p className="container-p container-p_wm">Имя:</p>
+                            </div>
+                            <div className="col-md-9">
+                                <p className="container-p">{authSlice.user.name}</p>
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className="col-md-3">
+                                <p className="container-p container-p_wm">Фамилия:</p>
+                            </div>
+                            <div className="col-md-9">
+                                <p className="container-p">{authSlice.user.surname}</p>
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className="col-md-3">
+                                <p className="container-p container-p_wm">Отчество:</p>
+                            </div>
+                            <div className="col-md-9">
+                                <p className="container-p">{authSlice.user.patronymic}</p>
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className="col-md-3">
+                                <p className="container-p container-p_wm">Почта:</p>
+                            </div>
+                            <div className="col-md-9">
+                                <p className="container-p">{authSlice.user.email}</p>
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className="col-md-3">
+                                <p className="container-p container-p_wm">Номер телефона:</p>
+                            </div>
+                            <div className="col-md-9">
+                                <p className="container-p">{authSlice.user.mobile}</p>
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className="col-md-3">
+                                <a href="" className="main-btn">Редактировать</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <MenuRightLogined/>
+            </div>
+        </div>
+    );
+};
+/*
+<div>
             <h1>Hello world!</h1>
             <h3>You are:</h3>
             {authSlice.user.name}
@@ -21,8 +90,8 @@ const HomePage = function () {
             <Link to={"/MapPage"} className={homePageStyle.button}>
                 ToMapPage
             </Link>
+            <button onClick={() => dispatch(getAllMessages({}))}>Отправить сообщение</button>
         </div>
-    );
-};
+*/
 
 export default HomePage;
