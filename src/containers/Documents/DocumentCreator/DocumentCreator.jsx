@@ -5,7 +5,7 @@ import CompanyPagesMenu from "../../Menus/CompanyPagesManu/CompanyPagesMenu";
 import LeftMenu from "../../Menus/MenuLeft/LeftMenu";
 import {useEffect} from "react";
 import {
-    addDocumentFileToState, cleanCurrentPremiseTenantsData, getPremisesInDocPage,
+    addDocumentFileToState, cleanCurrentPremiseTenantsData, getAllContracts, getPremisesInDocPage,
     getPremiseTenantsData, postDocument, updateCurrentChosenPremiseId,
     updateCurrentChosenTenantId, updateCurrentDocumentDescriptionInput,
     updateCurrentDocumentNameInput, updateCurrentDocumentThemeInput,
@@ -82,9 +82,11 @@ const DocumentCreator = function () {
                                                         premisesId: authSlice.currentChosenPremiseId,
                                                         document: authSlice.currentDocumentFile,
                                                     }
-                                                ))
-                                                navigate("../Documents", {replace: true})
-                                                window.location.reload(false);
+                                                ));
+                                                dispatch(getAllContracts({}));
+                                                setTimeout(() => {
+                                                    navigate("../Documents", {replace: true})
+                                                },500);
                                             }}
                                         >Создать и отправить</a>
                                     </div>

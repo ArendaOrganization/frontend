@@ -7,8 +7,9 @@ import SwiperTeg from "./Swiper/Swiper";
 import {useNavigate} from "react-router";
 import {Clusterer, Map, Placemark, YMaps} from "react-yandex-maps";
 import {
+    getAllDialogs,
     getAllMessagesByCompanyId,
-    getCompanies,
+    getCompanies, getCompanyById,
     getPremise,
     makeNewBid
 } from "../../../redux/reducers/authSlice";
@@ -61,7 +62,10 @@ const PlacePage = function () {
                                                                 className="main-btn"
                                                                 onClick={() => {
                                                                     dispatch(getAllMessagesByCompanyId({id: currentPlace.company.id}))
-                                                                    navigate("../Messenger")
+                                                                    dispatch(getAllDialogs({}));
+                                                                    setTimeout(() => {
+                                                                        navigate("../Messenger")
+                                                                    }, 500)
                                                                 }}
                                                             >Написать</a>
                                                             {

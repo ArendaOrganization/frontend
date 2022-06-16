@@ -3,7 +3,7 @@ import {useNavigate} from "react-router";
 import "../../mainStyle.css";
 import {useEffect} from "react";
 import {useSearchParams} from "react-router-dom";
-import {getAllMessagesByCompanyId, getCompanyById} from "../../../redux/reducers/authSlice";
+import {getAllDialogs, getAllMessagesByCompanyId, getCompanyById} from "../../../redux/reducers/authSlice";
 import img from "../../img/example-place.png"
 import MenuRightLogined from "../../Menus/MenuRightLogined/MenuRightLogined";
 import PagesManu from "../../Menus/PagesMenu/PagesManu";
@@ -39,7 +39,10 @@ const CompanyBiId = function () {
                                                 className="main-btn"
                                                 onClick={() => {
                                                     dispatch(getAllMessagesByCompanyId({id: elementId}))
-                                                    navigate("../Messenger")
+                                                    dispatch(getAllDialogs({}));
+                                                    setTimeout(() => {
+                                                        navigate("../Messenger")
+                                                    }, 500)
                                                 }}
                                             >Написать</a>
                                         </div>

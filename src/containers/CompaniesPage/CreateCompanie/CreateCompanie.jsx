@@ -3,7 +3,7 @@ import {useNavigate} from "react-router";
 import "../../mainStyle.css";
 import PagesManu from "../../Menus/PagesMenu/PagesManu";
 import {
-    createCompany, updateCompanyAddressInput,
+    createCompany, getAllCompanyBid, getCompanies, updateCompanyAddressInput,
     updateCompanyDescriptionInput, updateCompanyEmailInput, updateCompanyINNInput,
     updateCompanyNameInput, updateCompanyPhoneInput,
 } from "../../../redux/reducers/authSlice";
@@ -109,7 +109,9 @@ const CreateCompanies = function () {
                                                 phone: authSlice.currentCompanyPhoneInput,
                                                 email: authSlice.currentCompanyEmailInput
                                             }))
-                                        window.location.reload(false);
+                                        setTimeout(() => {
+                                            dispatch(getCompanies({}))
+                                        },500);
                                     }
                                 }
                             >Зарегестрировать

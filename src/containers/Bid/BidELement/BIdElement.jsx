@@ -2,7 +2,13 @@ import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router";
 import "../../mainStyle.css";
 import {useEffect} from "react";
-import {approveBid, disApproveBid, getAllCompanyBid, getCompanies} from "../../../redux/reducers/authSlice";
+import {
+    approveBid,
+    disApproveBid,
+    getAllCompanyBid,
+    getCompanies,
+    getCurrentContract
+} from "../../../redux/reducers/authSlice";
 
 const BidElement = function () {
     const authSlice = useSelector(state => state.auth);
@@ -116,14 +122,20 @@ const BidElement = function () {
                                                                 className="form-link"
                                                                 onClick={() => {
                                                                     dispatch(approveBid({id: elem.id}))
-                                                                    window.location.reload(false);
+                                                                    setTimeout(() => {
+                                                                        dispatch(getAllCompanyBid({}));
+                                                                        dispatch(getCompanies({}));
+                                                                    },500);
                                                                 }}
                                                             >Да</a>
                                                             <a
                                                                 className="form-link"
                                                                 onClick={() => {
                                                                     dispatch(disApproveBid({id: elem.id}))
-                                                                    window.location.reload(false);
+                                                                    setTimeout(() => {
+                                                                        dispatch(getAllCompanyBid({}));
+                                                                        dispatch(getCompanies({}));
+                                                                    },500);
                                                                 }}
                                                             >Нет</a>
                                                         </p>
