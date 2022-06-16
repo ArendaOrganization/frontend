@@ -109,9 +109,9 @@ const CreateCompanies = function () {
                                                 phone: authSlice.currentCompanyPhoneInput,
                                                 email: authSlice.currentCompanyEmailInput
                                             }))
-                                        setTimeout(() => {
-                                            dispatch(getCompanies({}))
-                                        },500);
+                                        setTimeout(()=>{
+                                            window.location.reload(false);
+                                        }, 500);
                                     }
                                 }
                             >Зарегестрировать
