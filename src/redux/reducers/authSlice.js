@@ -261,6 +261,7 @@ export const postImgForPremise = createAsyncThunk(
                 formData.append("imgs", imqsImg[i]);
             }
             //const response = await premiseService.postPremiseImg(id);
+            console.log("lo123")
             const response = await axios({
                 method: "post",
                 url: `http://localhost:8081/premises/addPremisesImg?premisesId=${id}`,

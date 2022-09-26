@@ -82,6 +82,7 @@ const DocumentCreator = function () {
                                                         premisesId: authSlice.currentChosenPremiseId,
                                                         document: authSlice.currentDocumentFile,
                                                     }
+
                                                 ));
                                                 dispatch(getAllContracts({}));
                                                 setTimeout(() => {
