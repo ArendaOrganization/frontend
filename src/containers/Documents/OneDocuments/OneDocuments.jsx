@@ -184,8 +184,9 @@ const OneDocument = function () {
                                                             onClick={
                                                                 () => {
                                                                     dispatch(approveContract({id: authSlice.currentContract.id}))
-                                                                    navigate("../Documents",{replace:true})
-                                                                    window.location.reload(false);
+                                                                    setTimeout(() => {
+                                                                        dispatch(getCurrentContract({id: elementId}))
+                                                                    },500);
                                                                 }
                                                             }
                                                         >Подписать</a>
@@ -195,8 +196,9 @@ const OneDocument = function () {
                                                             onClick={
                                                                 () => {
                                                                     dispatch(disApproveContract({id: authSlice.currentContract.id}))
-                                                                    navigate("../Documents",{replace:true})
-                                                                    window.location.reload(false);
+                                                                    setTimeout(() => {
+                                                                        dispatch(getCurrentContract({id: elementId}))
+                                                                    },500);
                                                                 }
                                                             }
                                                         >Отказаться</a>

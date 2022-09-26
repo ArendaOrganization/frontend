@@ -10,14 +10,16 @@ import MenuRightLogined from "../Menus/MenuRightLogined/MenuRightLogined";
 import LeftMenu from "../Menus/MenuLeft/LeftMenu";
 import MapPagePremiseMenu from "./MapPagePremiseMenu/MapPagePremiseMenu";
 import {useEffect} from "react";
+import {useNavigate} from "react-router";
 
 const MapPage = function () {
     const authSlice = useSelector(state => state.auth);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const centerCoords = (authSlice.mapAll) && (authSlice.mapAll.length > 0)
         ? [authSlice.mapAll[0].latitude, authSlice.mapAll[0].longitude]
         : [56.845130, 60.626060];
-    
+
     useEffect(() => {
         dispatch(getAllMapData({}));
     }, [])
@@ -27,7 +29,7 @@ const MapPage = function () {
             <LeftMenu/>
             {
                 authSlice.mapAll === null
-                    ? "..."
+                    ? navigate("../HomePage", {replace: true})
                     : <div className="main__inner" id="main__inner">
 
                         <div className="map">

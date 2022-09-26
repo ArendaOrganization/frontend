@@ -5,9 +5,21 @@ import "../../mainStyle.css";
 import {useEffect} from "react";
 import examplePLace from "../../img/example-place.png";
 import {
-    addImgsToState, addMainImageToState, addPlanImageToState, postPremise, toggleIsMapOpenOnCreatePage,
-    updateCurrentPremiseArea, updateCurrentPremiseCost, updateCurrentPremiseDescription, updateCurrentPremiseFloor,
-    updateCurrentPremiseName, updateCurrentPremisePhone, updateIsPremisePrivate, updatePremiseHasInternet
+    addImgsToState,
+    addMainImageToState,
+    addPlanImageToState,
+    getAllPremises,
+    getCompanies,
+    postPremise,
+    toggleIsMapOpenOnCreatePage,
+    updateCurrentPremiseArea,
+    updateCurrentPremiseCost,
+    updateCurrentPremiseDescription,
+    updateCurrentPremiseFloor,
+    updateCurrentPremiseName,
+    updateCurrentPremisePhone,
+    updateIsPremisePrivate,
+    updatePremiseHasInternet
 } from "../../../redux/reducers/authSlice";
 import RentYourPage from "../../RentYourPage/RentYourPage";
 import LeftMenu from "../../Menus/MenuLeft/LeftMenu";
@@ -328,8 +340,11 @@ const CreatePremise = function () {
                                                             imqsImg: authSlice.imgs
                                                         }
                                                     ))
-                                                    navigate("../Premises");
-                                                    // window.location.reload(false);
+                                                    dispatch(getAllPremises({}));
+                                                    dispatch(getCompanies({}));
+                                                    setTimeout(() => {
+                                                        navigate("../Premises");
+                                                    },500);
                                                 }
                                             }
                                         >Отправить
